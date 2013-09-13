@@ -1,0 +1,11 @@
+<%= form_for [:entidade, @importacao] do |f| %>
+
+<%= render "#{@importacao.current_step}_step", :f => f %>
+
+<br />
+ <div class="form-actions">
+    <%= f.submit "Próximo", class: "btn btn-primary", data: { disable_with: "Próximo..." } %>
+    <%= f.submit "Anterior", class: "btn", name: "back_button" unless @importacao.first_step? %>
+  </div>
+
+<%end%>

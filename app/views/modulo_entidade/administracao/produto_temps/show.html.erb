@@ -1,0 +1,12 @@
+<% @produto_temp.error_messages.sort.each do |campo, erros| %>
+  <ul>
+    <b><%= campo.to_s.humanize.upcase %></b>
+    <li>
+      <%= erros.html_safe %>
+    </li>
+  </ul>
+<% end %>
+
+<div class="form-actions">
+  <%= link_to 'Voltar', [:entidade, :administracao, :produto_temps], class: 'btn' %>
+</div>

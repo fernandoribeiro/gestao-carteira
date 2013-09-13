@@ -1,0 +1,57 @@
+<%= form_tag [:entidade, :administracao, :cliente_temps], class: 'form-inline', method: :get do %>
+  <div class="row-fluid">
+    <div class="control-group">
+      <div class="controls">
+        <%= text_field_tag 'pesquisa[texto]', (params[:pesquisa][:texto] rescue ''), placeholder: 'insira aqui o nome/razão social ou código', class: 'input-xxlarge' %>
+        <%= submit_tag 'Pesquisar', class: 'btn' %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<hr/>
+
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>Código</th>
+      <th>Nome/Razão Social</th>
+      <th>Cidade</th>
+      <th>Estado</th>
+      <th>Unidade</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @cliente_temps.any? %>
+      <% @cliente_temps.each do |cliente_temp| %>
+        <tr>
+          <td><%= cliente_temp.codigo_sistema_legado %></td>
+          <td><%= cliente_temp.nome_razao_social %></td>
+          <td><%= cliente_temp.cidade.nome rescue cliente_temp.cidade_nome%></td>
+          <td><%= cliente_temp.estado %></td>
+          <td><%= cliente_temp.unidade.nome %></td>
+          <td>
+            <div class="btn-group">
+              <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+                Ações<span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <%= link_to [:entidade, :administracao, cliente_temp] do %>
+                    <i class='icon-eye-open'></i> Erros
+                  <% end %>
+                </li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="6">Nenhum dado para exibir!</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @cliente_temps %>

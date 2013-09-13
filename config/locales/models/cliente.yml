@@ -1,0 +1,12 @@
+pt-BR:
+  activerecord:
+    attributes:
+      cliente:
+        nome_razao_social: 'Nome/Razão Social'
+        codigo_sistema_legado: 'Código'
+        unidade: 'Unidade'
+    errors:
+      models:
+        cliente:
+    models:
+      cliente: 'Cliente'

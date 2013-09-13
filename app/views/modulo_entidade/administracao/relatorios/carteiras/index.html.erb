@@ -1,0 +1,103 @@
+<div class="accordion" id="filtros_pesquisa">
+  <div class="accordion-group">
+    <div class="accordion-heading" data-toggle="collapse" data-parent="#filtros_pesquisa" href="#filtros_master">
+      <!-- <a class="accordion-toggle" data-toggle="collapse" data-parent="#filtros_pesquisa" href="#filtros_master"> -->
+        <span>
+          PESQUISA
+        </span>
+      <!-- </a> -->
+    </div>
+
+    <%= render 'modulo_entidade/administracao/relatorios/general_filters' %>
+  </div>
+</div>
+
+<div id="result_table">
+  <table class="table table-striped table-bordered table-condensed table-hover">
+    <thead id="cabecalho_relatorio">
+      <tr>
+        <th>Faixa</th>
+        <th>Valor no Período</th>
+        <th>%</th>
+        <th>Tot. Clientes</th>
+        <th>%</th>
+        <th>Média Período</th>
+        <th>Média Semestre</th>
+        <th>Média Trimestre</th>
+        <th>Mês Atual</th>
+        <th>Projeção Mês Atual</th>
+        <th>Média Diária (Mês Atual)</th>
+        <th>Crítico</th>
+      </tr>
+    </thead>
+    <tbody id="resultado_relatorio">
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal -->
+<div id="modal_detalhes" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>TITULO</h3>
+  </div>
+  <div class="modal-body">
+    <table class="table table-striped table-bordered table-condensed table-hover">
+      <thead id="cabecalho_modal">
+        <tr>
+          <th>Cliente</th>
+          <th>Valor no Período</th>
+          <th>%</th>
+          <th>Tot. Clientes</th>
+          <th>Média Período</th>
+          <th>Média Semestre</th>
+          <th>Média Trimestre</th>
+          <th>Mês Atual</th>
+          <th>Projeção Mês Atual</th>
+          <th>Média Diária (Mês Atual)</th>
+          <th>Crítico</th>
+        </tr>
+      </thead>
+      <tbody id="modal_resultados">
+      </tbody>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+  </div>
+</div>
+
+<div id="box_filtros" data-status="open">
+  <div id="titulo_filtros">SELECIONADOS</div>
+  <div id="filtro_indicador"></div>
+  <div id="filtro_meta"></div>
+  <div id="filtro_unidade"></div>
+  <div id="filtro_produto"></div>
+  <div id="filtro_mes_ano"></div>
+  <div id="filtro_mes_corrente"></div>
+  <div id="filtro_dias"></div>
+</div>
+
+<div id="chart_id"></div>
+
+<div id="loading" class="progress progress-striped active modal hide" style="display: none;">
+  <div class="bar" style="width: 100%;"></div>
+</div>
+
+<script type="text/javascript">
+  var carregaMesesAnosUrl = '<%= url_for([:carrega_anos_meses, :entidade, :administracao, :relatorios, :carteiras]) %>';
+  var carregaDiasUteisUrl = '<%= url_for([:carrega_dias_uteis, :entidade, :administracao, :relatorios, :carteiras]) %>';
+  var carregaDadosDosIndicadoresUrl = '<%= url_for([:carrega_dados_indicadores, :entidade, :administracao, :relatorios, :carteiras]) %>';
+
+  jQuery(function($) {
+    corrige_tamanho_div_conteudo_da_pagina(); //DIMINUI A DIV DO CONTEÚDO
+    corrige_tamanho_div_titulo(); //DIMINUI A DIV DO TÍTULO
+    colocando_select_tag_nos_filtros(); //COLOCA O TEXTO DOS SELECTS NA CAIXA DE FILTROS ESCOLHIDOS
+    minimiza_maximiza_div_lista_filtros(); //MINIMIZA/MAXIMIZA A DIV DOS FILTROS ESCOLHIDOS
+
+    executa_dados_iniciais(); //CARREGA OS FILTROS INICIAIS
+
+    carrega_dias_uteis(); //CARREGA OS DIAS UTEIS COM BASE NA META ESCOLHIDA
+    verifica_mudancas_no_form(); //DISPARA A GERAÇÃO DO RELATÓRIO QUANDO QUALQUER FILTRO MUDA
+  })
+</script>

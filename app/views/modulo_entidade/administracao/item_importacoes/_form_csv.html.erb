@@ -1,0 +1,32 @@
+<div class="control-group <%= error_class_for f.object, :tabela_sistema_destino %>">
+    <%= f.label :tabela_sistema_destino, class: "control-label" %>
+    <div class="controls">
+      <%= f.select :tabela_sistema_destino,ItemImportacao.return_tables_of_the_system_to_select,{:include_blank=>true} %>
+      <%= error_info_for f.object, :tabela_sistema_destino %>
+      <span id="loading" style="display:none">
+          <%=image_tag 'loading.gif' %>
+      </span>
+    </div>
+</div>
+
+<div id="mapeamento">
+  <%= render :partial=>"mapeamento_edit" unless @item_importacao.new_record?%>
+  <%#= render :partial=>"modulo_entidade/administracao/importacoes/mapeamento"%>
+</div>
+
+<script type="text/javascript">
+ $("#item_importacao_tabela_sistema_destino").change(function(){
+   $("#loading").show();
+   $("#mapeamento").html("");
+   $.ajax({
+        type: "POST",
+        url: '<%= url_for([:load_header_of_spreadsheet,:entidade,:administracao,@importacao]) %>',
+        dataType: 'script',
+        data:{index_aba: $(this).val(), tabela_destino: $("#item_importacao_tabela_sistema_destino").val(), dependentes: $('#item_importacao_dependentes').is(':checked')},
+        success: function(){
+          $("#loading").hide();
+        }
+      });
+
+ })
+</script>

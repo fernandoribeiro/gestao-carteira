@@ -1,0 +1,9 @@
+<div class="alert alert-error">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Erro!</strong> Foi encontrado <%= pluralize(errors.count, 'erro', "errors") %>:
+  <ul>
+    <% errors.each do |error| %>
+      <li><%= error %></li>
+    <% end %>
+  </ul>
+</div>

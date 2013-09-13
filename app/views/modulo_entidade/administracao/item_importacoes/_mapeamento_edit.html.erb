@@ -1,0 +1,8 @@
+	<h3><b>Mapeamento</b></h3>
+	<%@item_importacao.de_para.each do |dados|%>
+        <div>
+          <p><b> Coluna Excel:</b> <%=dados.first%></p>
+          <p><b>Atributo:</b> <%= select_tag "item_importacao[de_para][#{dados.last}]",options_for_select(ItemImportacao.return_attributes_of_class(@item_importacao.tabela_sistema_destino,@item_importacao.dependentes.to_s),:selected=>@item_importacao.de_para.invert[dados.last].to_s)%> </p>
+        </div>
+        <br/>
+	<%end%>

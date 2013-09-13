@@ -1,0 +1,34 @@
+<h4>Tipo Importação</h4>
+<br />
+  
+  <div class="control-group <%= error_class_for f.object, :nome %>">
+    <%= f.label :nome, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :nome %>
+      <%= error_info_for f.object, :nome %>
+    </div>
+  </div>
+
+  <div class="control-group <%= error_class_for f.object, :tipo_arquivo %>">
+    <%= f.label :tipo_arquivo, class: "control-label" %>
+    <div class="controls">
+      <%= f.select :tipo_arquivo,Importacao.return_tipo_arquivo_for_select,{:include_blank=>true} %>
+      <%= error_info_for f.object, :tipo_arquivo %>
+    </div>
+  </div>
+
+  <div class="control-group <%= error_class_for f.object, :unidade %>">
+    <%= f.label :unidade, class: "control-label" %>
+    <div class="controls">
+      <%= f.select :unidade_id,Unidade.return_for_select,{:include_blank=>true} %>
+      <%= error_info_for f.object, :unidade %>
+    </div>
+  </div>
+
+    <div class="control-group <%= error_class_for f.object, :arquivo %>">
+    <%= f.label :arquivo, class: "control-label" %>
+    <div class="controls">
+      <%= f.file_field :arquivo %>
+      <%= error_info_for f.object, :arquivo %>
+    </div>
+  </div>

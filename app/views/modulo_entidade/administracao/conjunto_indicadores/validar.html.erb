@@ -1,0 +1,8 @@
+<script type="text/javascript">
+  <% if @valid %>
+    $NOTICE.info('Campos validados. Você já pode Salvar.');
+  <% else %>
+    $NOTICE.error('Foi encontrado <%= pluralize(@conjunto_indicador.errors.count, "erro", "errors") %> nos campos.');
+  <% end %>
+</script>
+<%= render "form" %>

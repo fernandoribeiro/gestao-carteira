@@ -1,0 +1,19 @@
+<%= show_if_present('Nome', @user.nome) %>
+<%= show_if_present('Login', @user.username) %>
+<%= show_if_present('E-mail', @user.email) %>
+<%= show_if_present('Status', @user.active_verbose) %>
+<%= show_if_present('É administrador?', @user.eh_administrador_verbose) %>
+
+<% if @user.notIsAdministrador? %>
+  <p><b>Unidades:</b></p>
+  <ul>
+    <% @user.unidades.order(:nome).each do |unidade| %>
+      <li><%= unidade.nome %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<div class="form-actions">
+  <%= link_to 'Editar', [:edit, :entidade, :administracao, @user], class: 'btn btn-primary' %>
+  <%= link_to 'Voltar', [:entidade, :administracao, :usuario_entidades], class: 'btn' %>
+</div>

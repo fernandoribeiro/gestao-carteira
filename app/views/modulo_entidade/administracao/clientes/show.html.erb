@@ -1,0 +1,14 @@
+<%= show_if_present('Tipo', @cliente.tipo_pessoa_verbose) %>
+<%= show_if_present(@cliente.label_nome_razao_social, @cliente.nome_razao_social) %>
+<%= show_if_present('Código', @cliente.codigo_sistema_legado) %>
+<%= show_if_present('Cidade', @cliente.cidade_nome) %>
+<%= show_if_present('Estado', @cliente.estado) %>
+<%= show_if_present('E-mail', @cliente.email) %>
+<%= show_if_present('Telefone', @cliente.telefone) %>
+<%= show_if_present('Outros', @cliente.outros_campos) %>
+<%= show_if_present('Unidade', @cliente.unidade.nome) %>
+<%= show_if_present('Status', @cliente.active_verbose) %>
+
+<div class="form-actions">
+  <%= link_to 'Voltar', [:entidade, :administracao, :clientes], class: 'btn' %>
+</div>

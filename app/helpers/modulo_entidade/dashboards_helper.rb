@@ -1,0 +1,2 @@
+module ModuloEntidade::DashboardsHelper
+end

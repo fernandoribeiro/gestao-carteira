@@ -1,0 +1,17 @@
+<%= form_for [:entidade,:administracao, @importacao,@item_importacao],:remote => true do |f| %>
+
+  <%if @importacao.tipo_arquivo == Importacao::XLS || @importacao.tipo_arquivo == Importacao::XLSX %>
+      <%=render :partial=>"form_excel",:locals=>{:f=>f} %>
+  <%elsif @importacao.tipo_arquivo == Importacao::CSV  %>
+      <%=render :partial=>"form_csv",:locals=>{:f=>f} %>
+  <%end%>
+
+  
+<div class="form-actions">
+    <%= f.submit "Salvar", class: "btn btn-primary", data: { disable_with: "Salvando..." } %>
+    <%= link_to 'Cancelar', [:entidade, :administracao, @importacao], class: 'btn' %>
+</div>
+
+<%end%>
+
+

@@ -1,0 +1,51 @@
+<%= form_tag [:entidade, :administracao, :produto_temps], class: 'form-inline', method: :get do %>
+  <div class="row-fluid">
+    <div class="control-group">
+      <div class="controls">
+        <%= text_field_tag 'pesquisa[texto]', (params[:pesquisa][:texto] rescue ''), placeholder: 'insira aqui o nome ou código', class: 'input-xxlarge' %>
+        <%= submit_tag 'Pesquisar', class: 'btn' %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<hr/>
+
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>Código</th>
+      <th>Nome</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @produto_temps.any? %>
+      <% @produto_temps.each do |produto_temp| %>
+        <tr>
+          <td><%= produto_temp.codigo_sistema_legado %></td>
+          <td><%= produto_temp.nome %></td>
+          <td>
+            <div class="btn-group">
+              <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+                Ações<span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <%= link_to [:entidade, :administracao, produto_temp] do %>
+                    <i class='icon-eye-open'></i> Erros
+                  <% end %>
+                </li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="6">Nenhum dado para exibir!</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @produto_temps %>

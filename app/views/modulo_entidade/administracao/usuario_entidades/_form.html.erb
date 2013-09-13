@@ -1,0 +1,83 @@
+
+<%= form_for [:entidade, :administracao, @user], html: { class: "form-horizontal" } do |f| %>
+  <div class="control-group <%= error_class_for f.object, :nome %>">
+    <%= f.label :nome, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :nome, maxlength: 255 %>
+      <%= error_info_for f.object, :nome %>
+    </div>
+  </div>
+  <div class="control-group <%= error_class_for f.object, :username %>">
+    <%= f.label :username, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :username, maxlength: 50 %>
+      <%= error_info_for f.object, :username %>
+    </div>
+  </div>
+  <div class="control-group <%= error_class_for f.object, :email %>">
+    <%= f.label :email, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :email, maxlength: 255 %>
+      <%= error_info_for f.object, :email %>
+    </div>
+  </div>
+  <div class="control-group <%= error_class_for f.object, :password %>">
+    <%= f.label :password, class: "control-label" %>
+    <div class="controls">
+      <%= f.password_field :password %>
+      <%= error_info_for f.object, :password %>
+    </div>
+  </div>
+  <div class="control-group <%= error_class_for f.object, :password_confirmation %>">
+    <%= f.label :password_confirmation, class: "control-label" %>
+    <div class="controls">
+      <%= f.password_field :password_confirmation %>
+      <%= error_info_for f.object, :password_confirmation %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :eh_administrador, class: "control-label" %>
+    <div class="controls">
+      <%= f.check_box :eh_administrador %>
+    </div>
+  </div>
+  <div class="control-group <%= error_class_for f.object, :unidade_ids %>" id="div_unidades">
+    <%= f.label :unidades, class: "control-label" %>
+    <div class="controls">
+      <% if current_entidade.unidades.any? %>
+        <% current_entidade.unidades.order(:nome).each do |unidade| %>
+          <%= label_tag dom_id(unidade), class: 'checkbox' do %>
+            <%= check_box_tag "usuario_entidade[unidade_ids][]", unidade.id, f.object.unidades.include?(unidade), id: dom_id(unidade) %>
+            <%= unidade.nome %>
+          <% end %>
+        <% end %>
+        <%= error_info_for(f.object, :unidade_ids) %>
+      <% else %>
+        <span class="help-block">Primeiro cadastre alguma unidade.</span>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit 'Salvar', class: "btn btn-primary", data: { disable_with: 'Salvando...' } %>
+    <%= link_to 'Cancelar', [:entidade, :administracao, :usuario_entidades], class: 'btn' %>
+  </div>
+
+<% end %>
+
+<script type="text/javascript">
+  var change_eh_administrador = function(){
+    if($('#usuario_entidade_eh_administrador').is(':checked')){
+      $('#div_unidades').hide();
+      $('#div_unidades input').removeAttr('checked');
+    } else {
+      $('#div_unidades').show();
+    }
+  }
+  $(function(){
+    change_eh_administrador();
+    $('#usuario_entidade_eh_administrador').change(function(){
+      change_eh_administrador();
+    });
+  });
+</script>

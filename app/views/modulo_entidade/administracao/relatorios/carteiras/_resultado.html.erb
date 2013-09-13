@@ -1,0 +1,34 @@
+<% if resultado.first != 'medias' %>
+  <tr data-indicador="<%= resultado.last['id_conjunto_indicador'] %>"
+      data-frequencia="<%= resultado.last['id_indicador_frequencia'] %>"
+      data-valor="<%= resultado.last['id_indicador_valor'] %>"
+      data-total="<%= resultado.last['total_comprado'] %>">
+    <td class="acessar_dados"><%= resultado.first %></td>
+    <td class="acessar_dados numeros"><%= resultado.last['total_comprado'] %></td>
+    <td class="acessar_dados numeros"><%= resultado.last['porcentagem_faturamento'] %></td>
+    <td class="acessar_dados numeros"><%= resultado.last['numero_de_clientes'] %></td>
+    <td class="acessar_dados numeros"><%= resultado.last['porcentagem_clientes'] %></td>
+    <td class="acessar_dados numeros"><%= resultado.last['media_no_periodo'] %></td>
+    <td class="acessar_dados numeros"><%= resultado.last['total_comprado_semestre'] %></td>
+    <td class="acessar_dados numeros"></td>
+    <td class="acessar_dados numeros"><%= resultado.last['total_comprado_mes_corrente'] %></td>
+    <td class="acessar_dados numeros"></td>
+    <td class="acessar_dados numeros"></td>
+    <td class="acessar_dados numeros critico"><%= resultado.last['critico'] %></td>
+  </tr>
+<% else %>
+  <tr>
+    <td class="totais">TOTAL</td>
+    <td class="numeros totais"></td>
+    <td class="numeros totais"></td>
+    <td class="numeros totais"></td>
+    <td class="numeros totais"></td>
+    <td class="numeros totais"><%= resultado.last['valor_no_periodo'] %></td>
+    <td class="numeros totais"></td>
+    <td class="numeros totais"></td>
+    <td class="numeros totais"><%= resultado.last['valor_faturado_mes_corrente'] %></td>
+    <td class="numeros totais"></td>
+    <td class="numeros totais"></td>
+    <td class="numeros totais critico"></td>
+  </tr>
+<% end %>

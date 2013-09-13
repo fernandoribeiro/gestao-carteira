@@ -1,0 +1,17 @@
+
+<% if @item_importacao.update_attributes(params[:item_importacao]) %>
+		alert('Item atualizado com sucesso!')
+		window.location = '<%=url_for([:entidade, :administracao, @importacao])%>'	
+<%else%>
+ <%
+ 	@retorno = []
+ 	@item_importacao.errors.messages.map do |k,v|
+ 		@retorno << " #{I18n.t("activerecord.attributes.item_importacao.#{k.to_s}")}: #{v.first}"
+ 	end
+ %>
+ 
+ $NOTICE.error('<%=@retorno.join(",").html_safe%>');
+ 
+
+<%end%>
+		

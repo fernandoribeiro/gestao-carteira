@@ -1,0 +1,47 @@
+<h3>Indicadores de Frequência</h3>
+
+<%= block_errors_for(f.object, :indicador_valores_frequencia) %>
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>Label</th>
+      <th>Operador</th>
+      <th>Frequência</th>
+      <th>Descrição</th>
+      <th><%= add_object_link "<i class=\"icon-plus-sign icon-white\"></i> Adiciona", f, IndicadorValor.init_frequencia, "add_form_frequencia", "#tbody_frequencia", "$CONJUNTO_INDICADORES_CONTROLLER.add_mask_frequencia();" %></th>
+    </tr>
+  </thead>
+  <tbody id="tbody_frequencia">
+    <%= f.fields_for :indicador_valores do |feq| %>
+      <% if feq.object.frequencia? %>
+        <%= render "form_frequencia", feq: feq %>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<hr/>
+
+<h3>Indicadores de Valores</h3>
+
+<%= block_errors_for(f.object, :indicador_valores_valor) %>
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>Label</th>
+      <th>Operador</th>
+      <th>Valor</th>
+      <th>Descrição</th>
+      <th><%= add_object_link "<i class=\"icon-plus-sign icon-white\"></i> Adiciona", f, IndicadorValor.init_valor, "add_form_valor", "#tbody_valor", "$CONJUNTO_INDICADORES_CONTROLLER.add_mask_valor();" %></th>
+    </tr>
+  </thead>
+  <tbody id="tbody_valor">
+    <%= f.fields_for :indicador_valores do |fv| %>
+      <% if fv.object.valor? %>
+        <%= render "form_valor", fv: fv %>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+<div id="div_destroy_fields">
+</div>

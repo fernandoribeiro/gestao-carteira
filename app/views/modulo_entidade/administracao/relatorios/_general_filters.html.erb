@@ -1,0 +1,51 @@
+<div id="filtros_master" class="accordion-body collapse in">
+  <div class="accordion-inner">
+    <%= form_tag [:run_carteira, :entidade, :administracao, :relatorios, :carteiras], id: 'form_relatorio', class: 'form-inline', method: :post, remote: true do %>
+      <div class="sub">
+        <%= select_tag 'relatorios[indicador_id]',
+            options_for_select(conjunto_indicadores_for_select, selected: ConjuntoIndicador.retorna_indicador_default(current_entidade.id)),
+            prompt: 'INDICADORES', :'data-filtro' => 'filtro_indicador', :'data-titulo' => 'Indicador',
+            class: 'medium-select run'
+        %>
+
+        <% if current_user_is_admin? %>
+          <%= select_tag 'relatorios[unidade_id]',
+              options_for_select(unidades_for_select, selected: params[:relatorios][:unidade_id]),
+              prompt: 'UNIDADES', :'data-filtro' => 'filtro_unidade', :'data-titulo' => 'Unidade',
+              class: 'medium-select run'
+          %>
+        <% end %>
+
+        <%#= select_tag 'relatorios[produto_id]',
+            options_for_select(produtos_for_select, selected: params[:relatorios][:produto_id]),
+            prompt: 'PRODUTOS', :'data-filtro' => 'filtro_produto', :'data-titulo' => 'Produto',
+            class: 'medium-select run'
+            # class: 'selectpicker show-tick medium-select', :'data-width' => '150px'
+        %>
+
+        <%#= select_mes_e_ano_corrente_tag %>
+
+        <%= select_tag 'relatorios[meta_id]',
+            options_for_select(metas_for_select, selected: params[:relatorios][:meta_id]),
+            prompt: 'METAS', :'data-filtro' => 'filtro_meta', :'data-titulo' => 'Meta',
+            class: 'medium-select'
+        %>
+
+        <%= text_field_tag 'relatorios[dias_uteis]', nil, maxlength: 2, disabled: true, class: 'small-input' %>
+        <span class="help-inline">dias úteis</span>
+      </div>
+
+      <div class="sub">
+        <div id="meses_e_anos">
+          <%#= select_mes_e_ano_tag(60) %>
+          <%= hidden_field_tag 'relatorios[meses]', nil, id: 'relatorios_meses' %>
+        </div>
+
+        <!-- <div id="dias_dos_meses"> -->
+          <%#= select_dias_tag %>
+          <%#= hidden_field_tag 'relatorios[dias]', nil, id: 'relatorios_dias' %>
+        <!-- </div> -->
+      </div>
+    <% end %>
+  </div>
+</div>

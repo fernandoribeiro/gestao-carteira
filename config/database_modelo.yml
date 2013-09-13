@@ -1,0 +1,26 @@
+development:
+  adapter: postgresql
+  host: localhost
+  database: gestao_carteira
+  password: qwe123@
+  pool: 5
+  username: postgres
+  timeout: 5000
+
+test:
+  adapter: postgresql
+  host: localhost
+  database: gestao_carteira
+  password: qwe123@
+  pool: 5
+  username: postgres
+  timeout: 5000
+
+production:
+  adapter: postgresql
+  host: localhost
+  database: gestao_carteira
+  password: qwe123@
+  pool: 5
+  username: postgres
+  timeout: 5000

@@ -1,0 +1,7 @@
+require "inrails/active_model/validations/cnpj"
+require "inrails/active_model/validations/cpf"
+require "inrails/active_model/validations/email_format"
+require "inrails/active_model/validations/interval"
+require "inrails/active_support/core_ext/array/remove_blanks"
+require "inrails/active_support/core_ext/hash/remove_blanks"
+require "inrails/active_support/core_ext/object/remove_blanks"

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gestão de Carteira</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <% unless notice.blank? %>
+    <%= render "notice", notice: notice %>
+  <% end %>
+  <div id="page_content" class="container">
+    <div class="page-header">
+      <h1><%= current_title %> <small><%= current_subtitle %></small></h1>
+    </div>
+    <%= yield %>
+  </div>
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <%= link_to "Gestão de Carteira", root_path, class: "brand" %>
+      </div>
+    </div>
+  </div>
+  <div id="notice_over">
+  </div>
+</body>
+</html>

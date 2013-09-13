@@ -1,0 +1,75 @@
+<%= form_for [:administracao, @entidade], html: { class: 'form-horizontal' } do |f| %>
+  <div class="control-group <%= error_class_for f.object, :nome %>">
+    <%= f.label :nome, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :nome, maxlength: 255 %>
+      <%= error_info_for f.object, :nome %>
+    </div>
+  </div>
+
+  <div class="control-group <%= error_class_for f.object, :slug %>">
+    <%= f.label :slug, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :slug, maxlength: 50 %>
+      <%= error_info_for f.object, :slug %>
+    </div>
+  </div>
+
+  <div class="control-group <%= error_class_for f.object, :numero_limite_usuarios %>">
+    <%= f.label :numero_limite_usuarios, class: "control-label" %>
+    <div class="controls">
+      <%= f.number_field :numero_limite_usuarios %>
+      <%= error_info_for f.object, :numero_limite_usuarios %>
+    </div>
+  </div>
+
+ <% cont = 0 %>
+  <legend>Administrador da Entidade</legend>
+  <%= f.fields_for :usuario_entidades, @administrador do |ff| %>
+    <% if cont == 0 %>
+      <div class="field control-group <%= error_class_for(ff.object, :nome) %>">
+        <%= ff.label :nome, class: "control-label" %>
+        <div class="controls">
+          <%= ff.text_field :nome, maxlength: 255 %>
+          <%= error_info_for(ff.object, :nome) %>
+        </div>
+      </div>
+      <div class="field control-group <%= error_class_for(ff.object, :username) %>">
+        <%= ff.label :username, class: "control-label" %>
+        <div class="controls">
+          <%= ff.text_field :username, maxlength: 50 %>
+          <%= error_info_for(ff.object, :username) %>
+        </div>
+      </div>
+      <div class="field control-group <%= error_class_for(ff.object, :email) %>">
+        <%= ff.label :email, class: "control-label"  %>
+        <div class="controls">
+          <%= ff.text_field :email, maxlength: 255 %>
+          <%= error_info_for(ff.object, :email) %>
+        </div>
+      </div>
+      <div class="field control-group <%= error_class_for(ff.object, :password) %>">
+        <%= ff.label :password, class: "control-label"  %>
+        <div class="controls">
+          <%= ff.password_field :password %>
+          <%= error_info_for(ff.object, :password) %>
+        </div>
+      </div>
+      <div class="field control-group <%= error_class_for(ff.object, :password_confirmation) %>">
+        <%= ff.label :password_confirmation, class: "control-label"  %>
+        <div class="controls">
+          <%= ff.password_field :password_confirmation %>
+          <%= error_info_for(ff.object, :password_confirmation) %>
+        </div>
+      </div>
+
+      <% cont += 1 %>
+    <% end %>
+  <% end %>
+
+  <div class="form-actions">
+    <%= f.submit 'Salvar', class: 'btn btn-primary', data: { disable_with: 'Salvando...' } %>
+    <%= link_to 'Cancelar', [:administracao, :entidades], class: 'btn' %>
+  </div>
+
+<% end %>

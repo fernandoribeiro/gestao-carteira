@@ -1,0 +1,13 @@
+pt-BR:
+  activerecord:
+    attributes:
+      entidade:
+        nome: "Nome"
+        slug: "Apelido"
+        numero_limite_usuarios: "Número Limite de Usuários"
+        active: "Situação"
+    errors:
+      models:
+        entidade:
+    models:
+      entidade: "Entidade"

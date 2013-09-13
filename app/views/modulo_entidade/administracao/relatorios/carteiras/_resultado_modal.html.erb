@@ -1,0 +1,15 @@
+<% @resultado.each do |resultado| %>
+  <tr>
+    <td id="res_cliente"><%= resultado.first %></td>
+    <td id="res_total" class="numeros"><%= resultado.last['total_comprado'] %></td>
+    <td id="res_porcent_compra" class="numeros"><%= resultado.last['porcentagem_compra'] %></td>
+    <td id="res_quantidade" class="numeros">1</td>
+    <td id="res_media_per" class="numeros"><%= resultado.last['media_no_periodo'] %></td>
+    <td id="res_media_sem" class="numeros"><%= resultado.last['valor_no_semestre'] %></td>
+    <td id="res_media_tri" class="numeros"><%= resultado.last['valor_no_trimestre'] %></td>
+    <td id="res_mes_atual" class="numeros"></td>
+    <td id="res_proj_mes_atual" class="numeros"></td>
+    <td id="res_media_diaria" class="numeros"></td>
+    <td id="res_critico" class="numeros critico"><%= resultado.last['critico'] %></td>
+  </tr>
+<% end %>

@@ -1,0 +1,2 @@
+module ModuloEntidade::AdminitracaoHelper
+end

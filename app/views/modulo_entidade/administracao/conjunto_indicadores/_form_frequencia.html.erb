@@ -1,0 +1,34 @@
+<tr>
+  <td>
+    <%= feq.hidden_field :tipo, value: IndicadorValor::FREQUENCIA %>
+    <%= feq.hidden_field :_destroy, value: 0 ,class: "field_destroy" %>
+    <div class="control-group <%= error_class_for feq.object, :legenda %>" style="margin-bottom: 0px;">
+      <%= feq.text_field :legenda, class: "span2" %>
+      <%= error_info_for feq.object, :legenda %>
+    </div>
+  </td>
+  <td>
+    <div class="control-group <%= error_class_for feq.object, :operador %>" style="margin-bottom: 0px;">
+      <%= feq.select :operador, operador_frequencia, {}, {class: "span2 operador_frequencia" } %>
+      <%= error_info_for feq.object, :operador %>
+    </div>
+  </td>
+  <td>
+    <div class="control-group div_frequencia_mimima <%= error_class_for feq.object, :frequencia_mimima %>" style="margin-bottom: 0px;">
+      <%= feq.text_field :frequencia_mimima, class: "span2 mask_frequencia" %>
+      <%= error_info_for feq.object, :frequencia_mimima %>
+    </div>
+    <span class="span_e_frequencia">e</span><br/>
+    <div class="control-group div_frequencia_maxima <%= error_class_for feq.object, :frequencia_maxima %>" style="margin-bottom: 0px;">
+      <%= feq.text_field :frequencia_maxima, class: "span2 mask_frequencia" %>
+      <%= error_info_for feq.object, :frequencia_maxima %>
+    </div>
+  </td>
+  <td>
+    <div class="control-group <%= error_class_for feq.object, :descricao %>" style="margin-bottom: 0px;">
+      <%= feq.text_area :descricao, rows: 3 %>
+      <%= error_info_for feq.object, :descricao %>
+    </div>
+  </td>
+  <td><a href="#" class="btn btn-danger remover_linha"><i class="icon-trash icon-white"></i> Remover</a></td>
+</tr>

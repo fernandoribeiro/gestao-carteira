@@ -1,0 +1,8 @@
+<%= show_if_present('Nome', @unidade.nome) %>
+<%= show_if_present('Apelido', @unidade.slug) %>
+<%= show_if_present('Status', @unidade.active_verbose) %>
+
+<div class="form-actions">
+  <%= link_to 'Editar', [:edit, :entidade, :administracao, @unidade], class: 'btn btn-primary' %>
+  <%= link_to 'Voltar', [:entidade, :administracao, :unidades], class: 'btn' %>
+</div>

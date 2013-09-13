@@ -1,0 +1,14 @@
+pt-BR:
+  activerecord:
+    attributes:
+      unidade:
+        nome: "Nome"
+        slug: "Apelido"
+        entidade_id: "Entidade"
+        entidade: "Entidade"
+        active: "Situação"
+    errors:
+      models:
+        unidade:
+    models:
+      unidade: "Unidade"

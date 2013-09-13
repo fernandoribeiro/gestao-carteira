@@ -1,0 +1,12 @@
+pt-BR:
+  activerecord:
+    attributes:
+      produto_temp:
+        nome: 'Nome'
+        codigo_sistema_legado: 'Código'
+        unidade: 'Unidade'
+    errors:
+      models:
+        produto_temp:
+    models:
+      produto_temp: 'Produto (Importação)'

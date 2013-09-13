@@ -1,0 +1,15 @@
+<script type="text/javascript">
+  $(function(){
+    <% if notice.is_a? String %>
+      $NOTICE.info('<%= notice %>');
+    <% elsif notice[:info].present? %>
+      $NOTICE.info('<%= notice[:info] %>');
+    <% elsif notice[:block].present? %>
+      $NOTICE.block('<%= notice[:block] %>');
+    <% elsif notice[:error].present? %>
+      $NOTICE.error('<%= notice[:error] %>');
+    <% elsif notice[:success].present? %>
+      $NOTICE.success('<%= notice[:success] %>');
+    <% end %>
+  });
+</script>

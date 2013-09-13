@@ -1,0 +1,43 @@
+<%= form_for [:entidade,:administracao, @importacao] do |f| %>
+
+  <div class="control-group <%= error_class_for f.object, :nome %>">
+    <%= f.label :nome, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :nome %>
+      <%= error_info_for f.object, :nome %>
+    </div>
+  </div>
+
+  <div class="control-group <%= error_class_for f.object, :tipo_arquivo %>">
+    <%= f.label :tipo_arquivo, class: "control-label" %>
+    <div class="controls">
+      <%= f.select :tipo_arquivo,Importacao.return_tipo_arquivo_for_select,{:include_blank=>true} %>
+      <%= error_info_for f.object, :tipo_arquivo %>
+    </div>
+  </div>
+
+  <div class="control-group <%= error_class_for f.object, :unidade %>">
+    <%= f.label :unidade, class: "control-label" %>
+    <div class="controls">
+      <%= f.select :unidade_id,Unidade.return_for_select(current_entidade),{:include_blank=>true} %>
+      <%= error_info_for f.object, :unidade %>
+    </div>
+  </div>
+
+
+
+    <div class="control-group <%= error_class_for f.object, :arquivo %>">
+    <%= f.label :arquivo, class: "control-label" %>
+    <div class="controls">
+      <%= f.file_field :arquivo %>
+       <%= f.hidden_field :arquivo_cache %>
+      <%= error_info_for f.object, :arquivo %>
+    </div>
+
+<br />
+ <div class="form-actions">
+    <%= f.submit "Salvar", class: "btn btn-primary", data: { disable_with: "Salvando..." } %>
+    <%= link_to 'Cancelar', [:entidade, :administracao, :importacoes], class: 'btn' %>
+  </div>
+
+<%end%>

@@ -1,0 +1,16 @@
+pt-BR:
+  activerecord:
+    attributes:
+      conjunto_indicador:
+        tipo_periodo: "Tipo de Periodo"
+        abrangencia: "Abrangência"
+        abrangencia_unidade: "Unidade"
+        abrangencia_entidade: "Entidade"
+        numero_minimo_periodos: "Número mínimo de periodos"
+        unidade_ids: "Unidades"
+        unidades: "Unidades"
+    errors:
+      models:
+        user:
+    models:
+      user: "Conjunto de Indicadores"

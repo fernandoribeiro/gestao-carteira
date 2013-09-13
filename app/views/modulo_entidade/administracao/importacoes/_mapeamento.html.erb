@@ -1,0 +1,22 @@
+<%if @importacao.tipo_arquivo == Importacao::XLS || @importacao.tipo_arquivo == Importacao::XLSX %>
+		<h3><b>Mapeamento</b></h3>
+		<%@retorno.each_with_index do |coluna_excel,index|%>
+			<div>
+				<p><b> Coluna Excel:</b> <%=coluna_excel%></p>
+				<p><b>Atributo:</b> <%= select_tag "item_importacao[de_para][#{index}]",options_for_select(ItemImportacao.return_attributes_of_class(params[:tabela_destino],params[:dependentes]))%> </p>
+			</div>
+			<br/>
+		<%end%>
+		<div>
+<%elsif @importacao.tipo_arquivo == Importacao::CSV %>
+		<h3><b>Mapeamento</b></h3>
+		<% p @retorno%>
+		<%(0..(@retorno.to_i-1)).each do |coluna| %>
+			<div>
+				<p><b> Coluna Arquivo CSV:</b> <%=coluna%></p>
+				<p><b>Atributo:</b> <%= select_tag "item_importacao[de_para][#{coluna}]",options_for_select(ItemImportacao.return_attributes_of_class(params[:tabela_destino],params[:dependentes]))%> </p>
+			</div>
+			<br/>
+		<%end%>
+
+<%end%>

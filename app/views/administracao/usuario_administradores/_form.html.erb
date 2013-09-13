@@ -1,0 +1,41 @@
+<%= form_for [:administracao, @user], html: { class: "form-horizontal" } do |f| %>
+  <div class="control-group <%= error_class_for f.object, :nome %>">
+    <%= f.label :nome, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :nome, maxlength: 255 %>
+      <%= error_info_for f.object, :nome %>
+    </div>
+  </div>
+  <div class="control-group <%= error_class_for f.object, :username %>">
+    <%= f.label :username, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :username, maxlength: 50 %>
+      <%= error_info_for f.object, :username %>
+    </div>
+  </div>
+  <div class="control-group <%= error_class_for f.object, :email %>">
+    <%= f.label :email, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :email, maxlength: 255 %>
+      <%= error_info_for f.object, :email %>
+    </div>
+  </div>
+  <div class="control-group <%= error_class_for f.object, :password %>">
+    <%= f.label :password, class: "control-label" %>
+    <div class="controls">
+      <%= f.password_field :password %>
+      <%= error_info_for f.object, :password %>
+    </div>
+  </div>
+  <div class="control-group <%= error_class_for f.object, :password_confirmation %>">
+    <%= f.label :password_confirmation, class: "control-label" %>
+    <div class="controls">
+      <%= f.password_field :password_confirmation %>
+      <%= error_info_for f.object, :password_confirmation %>
+    </div>
+  </div>
+  <div class="form-actions">
+    <%= f.submit 'Salvar', class: 'btn btn-primary', data: { disable_with: 'Salvando...' } %>
+    <%= link_to 'Cancelar', administracao_usuario_administradores_path, class: 'btn' %>
+  </div>
+<% end %>

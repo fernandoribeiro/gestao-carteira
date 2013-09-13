@@ -1,0 +1,69 @@
+<div class="control-group <%= error_class_for f.object, :tabela_sistema_destino %>">
+    <%= f.label :tabela_sistema_destino, class: "control-label" %>
+    <div class="controls">
+      <%= f.select :tabela_sistema_destino,ItemImportacao.return_tables_of_the_system_to_select,{:include_blank=>true} %>
+      <%= error_info_for f.object, :tabela_sistema_destino %>
+    </div>
+  </div>
+
+   <%if @item_importacao.new_record?%>
+    <div id="dependentes" class="control-group <%= error_class_for f.object, :dependentes %>" style="display:none;">
+  <%else%>
+    <div id="dependentes" class="control-group <%= error_class_for f.object, :dependentes %>" style="display:none;">
+  <%end%>
+
+    <%= f.label :dependentes, class: "control-label" %>
+    <div class="controls">
+      <%= f.check_box :dependentes %>
+      <%= error_info_for f.object, :dependentes %>
+    </div>
+  </div>  
+
+  <%if @importacao.tipo_arquivo != Importacao::CSV %>
+    <div class="control-group <%= error_class_for f.object, :aba_trabalho_index %>">
+    <%= f.label :aba_trabalho_index, class: "control-label" %>
+    <div class="controls">
+      <%= f.select :aba_trabalho_index,@importacao.return_sheets_of_spreadsheet_file,{:include_blank=>true} %>
+      <%= error_info_for f.object, :aba_trabalho_index %>
+        <span id="loading" style="display:none">
+          <%=image_tag 'loading.gif' %>
+        </span>
+    </div>
+  </div>
+  <%end%>
+
+<div id="mapeamento">
+  <%= render :partial=>"mapeamento_edit" unless @item_importacao.new_record?%>
+  <%#= render :partial=>"modulo_entidade/administracao/importacoes/mapeamento"%>
+</div>
+  
+<br  clear="both" />
+
+<script type="text/javascript">
+ $("#item_importacao_tabela_sistema_destino").change(function(){
+  $("#mapeamento").html("");
+  $("#item_importacao_aba_trabalho_index").val('');
+  //if($(this).val() == '<%=Importacao::NOTA_FISCAL%>')
+  //  $("#dependentes").show();
+//  else
+ // {
+  //  $('#item_importacao_dependentes').attr('checked',false)
+  //  $("#dependentes").hide();
+ // }
+ });
+
+ $("#item_importacao_aba_trabalho_index").change(function(){
+   $("#loading").show();
+   $("#mapeamento").html("");
+   $.ajax({
+        type: "POST",
+        url: '<%= url_for([:load_header_of_spreadsheet,:entidade,:administracao,@importacao]) %>',
+        dataType: 'script',
+        data:{index_aba: $(this).val(), tabela_destino: $("#item_importacao_tabela_sistema_destino").val(), dependentes: $('#item_importacao_dependentes').is(':checked')},
+        success: function(){
+          $("#loading").hide();
+        }
+      });
+
+ })
+</script>

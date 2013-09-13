@@ -1,0 +1,8 @@
+<%= show_if_present('Nome', @vendedor.nome) %>
+<%= show_if_present('Código', @vendedor.codigo_sistema_legado) %>
+<%= show_if_present('Status', @vendedor.active_verbose) %>
+<%= show_if_present('Unidade', @vendedor.unidade.nome) %>
+
+<div class="form-actions">
+  <%= link_to 'Voltar', [:entidade, :administracao, :vendedores], class: 'btn' %>
+</div>

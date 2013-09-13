@@ -1,0 +1,16 @@
+pt-BR:
+  activerecord:
+    attributes:
+      importacao:
+        tipo_arquivo: "Tipo Arquivo"
+        nome: "Nome"
+        unidade_id: "Unidade"
+        unidade: "Unidade"
+        situacao: "Situação"
+        entidade: "Entidade"
+        entidade_id: "Entidade"
+    errors:
+      models:
+        importacao:
+    models:
+      importacao: "Importação"

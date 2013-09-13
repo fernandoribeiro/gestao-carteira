@@ -1,0 +1,34 @@
+<tr>
+  <td>
+    <%= fv.hidden_field :tipo, value: IndicadorValor::VALOR %>
+    <%= fv.hidden_field :_destroy, value: 0 ,class: "field_destroy" %>
+    <div class="control-group <%= error_class_for fv.object, :legenda %>" style="margin-bottom: 0px;">
+      <%= fv.text_field :legenda, class: "span2" %>
+      <%= error_info_for fv.object, :legenda %>
+    </div>
+  </td>
+  <td>
+    <div class="control-group <%= error_class_for fv.object, :operador %>" style="margin-bottom: 0px;">
+      <%= fv.select :operador, operador_valor, {}, {class: "span2 operador_valor" } %>
+      <%= error_info_for fv.object, :operador %>
+    </div>
+  </td>
+  <td>
+    <div class="control-group <%= error_class_for fv.object, :valor_minimo %>" style="margin-bottom: 0px;">
+      <%= fv.text_field :valor_minimo, class: "span2 mask_valor" %>
+      <%= error_info_for fv.object, :valor_minimo %>
+    </div>
+    <span class="span_e_valor">e</span><br />
+    <div class="control-group div_valor_maximo <%= error_class_for fv.object, :valor_maximo %>" style="margin-bottom: 0px;">
+      <%= fv.text_field :valor_maximo, class: "span2 mask_valor" %>
+      <%= error_info_for fv.object, :valor_maximo %>
+    </div>
+  </td>
+  <td>
+    <div class="control-group <%= error_class_for fv.object, :descricao %>" style="margin-bottom: 0px;">
+      <%= fv.text_area :descricao, rows: 3 %>
+      <%= error_info_for fv.object, :descricao %>
+    </div>
+  </td>
+  <td><a href="#" class="btn btn-danger remover_linha"><i class="icon-trash icon-white"></i> Remover</a></td>
+</tr>

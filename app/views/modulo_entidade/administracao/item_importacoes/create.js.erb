@@ -1,0 +1,25 @@
+
+<% if @item_importacao.save %>
+	if(confirm("Item cadastrado com sucesso! Deseja cadastrar novo item?"))
+	{
+		window.location.reload();
+		$("#item_importacao_tabela_sistema_destino").val('');
+		$("#item_importacao_aba_trabalho_index").val('');
+	}
+	else
+	{
+		window.location = '<%=url_for([:entidade, :administracao, @importacao])%>'	
+	}
+	
+<%else%>
+ <%
+ 	@retorno = []
+ 	@item_importacao.errors.messages.map do |k,v|
+ 		@retorno << " #{I18n.t("activerecord.attributes.item_importacao.#{k.to_s}")}: #{v.first}"
+ 	end
+ %>
+ 
+ $NOTICE.error('<%=@retorno.join(",").html_safe%>');
+ 
+<%end%>
+		

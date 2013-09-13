@@ -1,0 +1,2 @@
+module Administracao::UsuarioAdministradoresHelper
+end

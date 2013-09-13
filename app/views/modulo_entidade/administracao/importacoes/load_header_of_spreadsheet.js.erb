@@ -1,0 +1,21 @@
+<%if @importacao.tipo_arquivo == Importacao::XLS || @importacao.tipo_arquivo == Importacao::XLSX %>
+	<%if !params[:index_aba].blank? && !params[:tabela_destino].blank? %>
+		<%@retorno = @importacao.return_headers_of_spreadsheet_file(params[:index_aba])%>
+		content = "<%= escape_javascript(render(partial: 'mapeamento')) %>";
+		$('#mapeamento').html("");
+		$('#mapeamento').html(content);
+	<%else%>
+		alert('Todos os campos são de preenchimento obrigatório!');
+		$('#mapeamento').html("");
+	<%end%>
+<%elsif @importacao.tipo_arquivo == Importacao::CSV %>
+	<%if !params[:tabela_destino].blank? %>
+		<%@retorno = @importacao.return_number_of_columns%>
+		content = "<%= escape_javascript(render(partial: 'mapeamento')) %>";
+		$('#mapeamento').html("");
+		$('#mapeamento').html(content);
+	<%else%>
+		alert('Todos os campos são de preenchimento obrigatório!');
+		$('#mapeamento').html("");
+	<%end%>
+<%end%>

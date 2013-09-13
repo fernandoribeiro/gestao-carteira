@@ -1,0 +1,45 @@
+<p>
+  <b>Nome:</b>
+  <%= @entidade.nome %>
+</p>
+<p>
+  <b>Apelido:</b>
+  <%= @entidade.slug %>
+</p>
+<p>
+  <b>Númeto limite de usuários:</b>
+  <%= @entidade.numero_limite_usuarios %>
+</p>
+<p>
+  <b>Situação:</b>
+  <%= @entidade.active_verbose %>
+</p>
+
+<hr />
+<h3>Administrador da entidade</h3>
+<p>
+  <b>Nome:</b>
+  <%= @entidade.usuarios.first.nome %>
+</p>
+<p>
+  <b>Login:</b>
+  <%= @entidade.usuarios.first.username %>
+</p>
+<p>
+  <b>E-mail:</b>
+  <%= @entidade.usuarios.first.email %>
+</p>
+<p>
+  <b>Administrador?:</b>
+  <%= @entidade.usuarios.first.eh_administrador_verbose %>
+</p>
+<p>
+  <b>Situação:</b>
+  <%= @entidade.usuarios.first.active_verbose %>
+</p>
+
+
+<div class="form-actions">
+  <%= link_to 'Editar', [:edit, :administracao, @entidade], class: 'btn btn-primary' %>
+  <%= link_to 'Voltar', [:administracao, :entidades], class: 'btn' %>
+</div>

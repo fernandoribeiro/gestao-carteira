@@ -1,0 +1,66 @@
+
+<%= form_for [:entidade, :administracao, @meta], html: { class: 'form-horizontal' } do |f| %>
+
+    <div class="control-group <%= error_class_for f.object, :data_inicio %>">
+      <%= f.label :data_inicio, class: "control-label" %>
+        <div class="controls">
+          <%= f.text_field :data_inicio, maxlength: 255 %>
+          <%= error_info_for f.object, :data_inicio %>
+        </div>
+      </div>
+
+      <div class="control-group <%= error_class_for f.object, :data_final %>">
+        <%= f.label :data_final, class: "control-label" %>
+          <div class="controls">
+            <%= f.text_field :data_final, maxlength: 255 %>
+            <%= error_info_for f.object, :data_final %>
+          </div>
+        </div>
+
+        <div class="control-group <%= error_class_for f.object, :unidade %>">
+          <%= f.label :unidade, class: "control-label" %>
+            <div class="controls">
+              <%= f.select :unidade_id,Unidade.return_for_select(current_entidade),{:include_blank=>true} %>
+              <%= error_info_for f.object, :unidade %>
+            </div>
+          </div>
+
+          <div class="control-group <%= error_class_for f.object, :dias_uteis %>">
+            <%= f.label :dias_uteis, class: "control-label" %>
+              <div class="controls">
+                <%= f.text_field :dias_uteis, maxlength: 255, :class=>'numeric' %>
+                <%= error_info_for f.object, :dias_uteis %>
+              </div>
+            </div>
+
+            <div class="control-group <%= error_class_for f.object, :valor_de_faturamento %>">
+              <%= f.label :valor_de_faturamento, class: "control-label" %>
+                <div class="controls">
+                  <%= f.text_field :valor_de_faturamento, maxlength: 255,:class=>'decimal' %>
+                  <%= error_info_for f.object, :valor_de_faturamento  %>
+                </div>
+              </div>
+
+
+              <div class="form-actions">
+                <%= f.submit 'Salvar', class: 'btn btn-primary', data: { disable_with: 'Salvando...' } %>
+                  <%= link_to 'Cancelar', [:entidade, :administracao, :metas], class: 'btn' %>
+                  </div>
+
+<% end %>
+
+<script type="text/javascript">
+  
+  $("#meta_data_inicio").datepicker({
+    dateFormat: 'dd/mm/yy'
+  });
+  $("#meta_data_final").datepicker({
+    dateFormat: 'dd/mm/yy'
+  });
+  
+  jQuery(function($) {
+    initializeDecimalMask();
+    initializeNumericMask();
+  });
+</script>
+

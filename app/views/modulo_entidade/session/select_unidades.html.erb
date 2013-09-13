@@ -1,0 +1,12 @@
+<%= form_tag [:entidade, :save_unidades], class: "form-horizontal" do %>
+  <div class="control-group">
+    <%= label_tag :unidades_ids, "Unidades", class: "control-label" %>
+    <div class="controls">
+      <%= select_tag :unidades_ids, unidades_for_select_session %>
+      <%= error_info_for @user, :unidade_id %>
+    </div>
+  </div>
+  <div class="form-actions">
+    <%= submit_tag "Continuar", class: "btn btn-primary", data: { disable_with: "Continuando..." } %>
+  </div>
+<% end %>

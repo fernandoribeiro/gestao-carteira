@@ -1,0 +1,17 @@
+pt-BR:
+  activerecord:
+    attributes:
+      meta:
+        unidade_id: 'Unidade'
+        unidade: 'Unidade'
+        data_inicio: 'Data Inicial'
+        data_final: 'Data Final'
+        dias_uteis: 'Dias Utéis'
+        valor_de_faturamento: 'Valor de Faturamento'
+        codigo_sistema_legado: 'Código'
+        unidade: 'Unidade'
+    errors:
+      models:
+        meta:
+    models:
+      meta: 'Meta'

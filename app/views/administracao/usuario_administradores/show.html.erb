@@ -1,0 +1,17 @@
+<p>
+  <b>Nome:</b>
+  <%= @user.nome %>
+</p>
+<p>
+  <b>Login:</b>
+  <%= @user.username %>
+</p>
+<p>
+  <b>E-mail:</b>
+  <%= @user.email %>
+</p>
+
+<div class="form-actions">
+  <%= link_to "Editar", edit_administracao_usuario_administrador_path(@user), class: 'btn btn-primary' %>
+  <%= link_to "Voltar", administracao_usuario_administradores_path, class: 'btn' %>
+</div>

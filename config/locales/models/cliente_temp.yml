@@ -1,0 +1,12 @@
+pt-BR:
+  activerecord:
+    attributes:
+      cliente_temp:
+        nome_razao_social: 'Nome/Razão Social'
+        codigo_sistema_legado: 'Código'
+        unidade: 'Unidade'
+    errors:
+      models:
+        cliente_temp:
+    models:
+      cliente_temp: 'Cliente (Importação)'

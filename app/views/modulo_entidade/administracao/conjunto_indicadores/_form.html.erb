@@ -1,0 +1,79 @@
+
+<%= form_for [:entidade, :administracao, @conjunto_indicador], html: { class: "form-horizontal", id: "form_conjunto_indicadores"} do |f| %>
+  <%= f.hidden_field :id %>
+  <div class="control-group <%= error_class_for f.object, :nome %>">
+    <%= f.label :nome, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :nome, maxlength: 255 %>
+      <%= error_info_for f.object, :nome %>
+    </div>
+  </div>
+  <div class="control-group <%= error_class_for f.object, :tipo_periodo %>">
+    <%= f.label :tipo_periodo, class: "control-label" %>
+    <div class="controls">
+      <%= f.select :tipo_periodo, tipo_periodo_for_select %>
+      <%= error_info_for f.object, :tipo_periodo %>
+    </div>
+  </div>
+  <div class="control-group <%= error_class_for f.object, :numero_minimo_periodos %>">
+    <%= f.label :numero_minimo_periodos, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :numero_minimo_periodos, maxlength: 255 %>
+      <%= error_info_for f.object, :numero_minimo_periodos %>
+    </div>
+  </div>
+  <hr/>
+  <%= render "form_indicador_valores", f: f %>
+  <hr/>
+  <div class="control-group <%= error_class_for f.object, :abrangencia %>">
+    <label class="control-label">Abranências<%= error_info_for f.object, :abrangencia %></label>
+    <div class="controls">
+      <label class="checkbox" for="conjunto_indicador_abrangencia_entidade">
+        <%= f.check_box :abrangencia_entidade %> Entidade
+      </label>
+      <div class="control-group <%= error_class_for f.object, :default %>" id="div_controls_entidade">
+          <label class="checkbox span3" for="conjunto_indicador_default"><%= f.check_box :default %> Padrão?</label>
+          <%= error_info_for f.object, :default %>
+      </div>
+    </div>
+  </div>
+  <div class="control-group <%= error_class_for f.object, :abrangencia %> <%= error_class_for f.object, :unidade_ids %>">
+    <div class="controls">
+      <label class="checkbox" for="conjunto_indicador_abrangencia_unidade">
+        <%= f.check_box :abrangencia_unidade %> Unidade
+      </label>
+      <div class="control-group <%= error_class_for f.object, :unidade_ids %>" id="div_controls_unidades">
+        <%= error_info_for f.object, :unidade_ids %>
+        <% if current_entidade.unidades.any? %>
+          <% current_entidade.unidades.active.order(:nome).each do |unidade| %>
+            <%= label_tag dom_id(unidade), class: 'checkbox span3' do %>
+              <%= check_box_tag "conjunto_indicador[unidade_ids][]", unidade.id, f.object.unidades.include?(unidade), id: dom_id(unidade) %>
+              <%= unidade.nome %>
+            <% end %>
+          <% end %>
+        <% else %>
+          <span class="help-block">Primeiro cadastre alguma unidade.</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <% if @conjunto_indicador.new_record? %>
+      <%= link_to 'Validar', validar_new_entidade_administracao_conjunto_indicadores_path, class: 'btn btn-primary', id: "link_validar" %>
+    <% else %>
+      <%= link_to 'Validar', validar_edit_entidade_administracao_conjunto_indicador_path(@conjunto_indicador), class: 'btn btn-primary', id: "link_validar" %>
+    <% end %>
+    <% if @valid %>
+      <%= f.submit 'Salvar', class: "btn btn-primary", id: "button_save", data: { disable_with: 'Salvando...' } %>
+    <% else %>
+      <%= f.submit 'Salvar', class: "btn btn-primary", disabled: "disabled", id: "button_save",  data: { disable_with: 'Salvando...' } %>
+    <% end %>
+    <%= link_to 'Cancelar', [:entidade, :administracao, :conjunto_indicadores], class: 'btn' %>
+  </div>
+
+  <script type="text/javascript">
+    $CONJUNTO_INDICADORES_CONTROLLER.form();
+  </script>
+
+<% end %>
