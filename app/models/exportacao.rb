@@ -6,8 +6,8 @@ class Exportacao
 		begin
 			folder = Rails.root.join('app', 'assets', 'exportacoes')
 			Dir::mkdir(folder) unless Dir.exists?(folder)
-  		file = File.open("#{folder}/#{unidade.slug}_#{DateTime.now.strftime('%Y%m%d_%H:%M')}", 'w')
-  		NotaFiscal.where(unidade_id: unidade.id).limit(10).each do |item_nota|
+  		file = File.open("#{folder}/#{unidade.slug}_#{DateTime.now.strftime('%Y%m%d_%H%M')}.txt", 'w')
+  		NotaFiscal.where(unidade_id: unidade.id).each do |item_nota|
   			### RJUST = Numérico
   			### LJUST = Alfanumérico
 	  		
