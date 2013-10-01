@@ -28,7 +28,8 @@ class Exportacao
 				### Nome do Vendedor | 030
 				file.write(item_nota.vendedor.nome.to_s[0..29].ljust(30) + ';')
 				### Código de CNPJ | 014
-				file.write(item_nota.cliente.cpf_cnpj.to_s.trata_cnpj[0..13].ljust(14) + ';')
+				# file.write(item_nota.cliente.cpf_cnpj.to_s.trata_cnpj[0..13].ljust(14) + ';')
+				file.write(item_nota.cliente.outros_campos.to_s.trata_cnpj[0..13].ljust(14) + ';')
 				### Nome do cliente | 040
 				file.write(item_nota.cliente.nome_razao_social.to_s[0..39].ljust(40) + ';')
 				### Classificação do Cliente | 020

@@ -37,7 +37,8 @@ class NotaFiscal < ActiveRecord::Base
    validates :unidade, presence: true
 
    def calcula_valor_total_item
-      (valor * quantidade) rescue 0.00
+      # (valor * quantidade) rescue 0.00
+      valor rescue 0.00
    end
 
 end
