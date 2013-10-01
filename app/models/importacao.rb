@@ -25,8 +25,10 @@ class Importacao < ActiveRecord::Base
  	RETORNAR_CABECALHO = 3
  	RETORNAR_ABAS = 4
 
- 	PATH_JAVA = "/Users/Marco/projetos/projetos_pessoais/projetos_rails/tripping-octo-java/target/import_gestao_carteira-1.0.jar"
+ 	#PATH_JAVA = "/Users/Marco/projetos/projetos_pessoais/projetos_rails/tripping-octo-java/target/import_gestao_carteira-1.0.jar"
  	#PATH_JAVA = "/home/guizao/projetos/dev/gestao_carteira_java/target/import_gestao_carteira-1.0.jar"
+ 	PATH_JAVA = "/Users/paulozeferino/projetos/devconnit/pdvcheck/gestao-carteira-java/target/import_gestao_carteira-1.0.jar"
+
 
 	attr_accessible :nome
 	attr_accessible :unidade_id
@@ -109,7 +111,9 @@ class Importacao < ActiveRecord::Base
 	    item_importacao = 0
 	    tabela_destino = 0
 	    de_para = "null"
+	    p "java -jar -Xmx1024m #{PATH_JAVA} #{path} #{operacao} #{tipo_importacao} #{index_sheet} #{importacao_id} #{item_importacao} #{tabela_destino} #{de_para} #{unidade_id}"
 	    saida = %x{java -jar -Xmx1024m #{PATH_JAVA} #{path} #{operacao} #{tipo_importacao} #{index_sheet} #{importacao_id} #{item_importacao} #{tabela_destino} #{de_para} #{unidade_id}}
+	    p saida
 		saida.split("\t").reject!(&:blank?)
 	end
 
@@ -138,7 +142,9 @@ class Importacao < ActiveRecord::Base
 	    item_importacao = 0
 	    tabela_destino = 0
 	    de_para = "null"
+	    p "java -jar -Xmx1024m #{PATH_JAVA} #{path} #{operacao} #{tipo_importacao} #{index_sheet} #{importacao_id} #{item_importacao} #{tabela_destino} #{de_para} #{unidade_id}"
 	    saida = %x{java -jar -Xmx1024m #{PATH_JAVA} #{path} #{operacao} #{tipo_importacao} #{index_sheet} #{importacao_id} #{item_importacao} #{tabela_destino} #{de_para} #{unidade_id}}
+
 	    saida.split("\n").each_with_index do |dado,index|
 	      retorno << [dado, index]
 	    end

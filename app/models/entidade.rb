@@ -29,8 +29,8 @@ class Entidade < ActiveRecord::Base
 
 
   def initialize(attributes = {})
+    attributes["active"] ||= ATIVO
     super
-    set_active
   end
 
   def self.pesquisa_entidades(pesquisa)

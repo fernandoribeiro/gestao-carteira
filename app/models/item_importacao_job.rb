@@ -67,10 +67,15 @@ class ItemImportacaoJob < ActiveRecord::Base
        tabela_destino = @item_importacao.tabela_sistema_destino
        de_para = @item_importacao.de_para.to_json
        unidade_id = @item_importacao.importacao.unidade_id
+       p "asiuhfisuhdfiuashdfuihasuidfhasiudfhuisad"
+       p "java -jar -Xmx1024m #{ItemImportacao::PATH_JAVA} #{path} #{operacao} #{tipo_importacao} #{index_sheet} #{importacao_id} #{item_importacao} #{tabela_destino} '#{de_para}' #{unidade_id}"
        saida = %x{java -jar -Xmx1024m #{ItemImportacao::PATH_JAVA} #{path} #{operacao} #{tipo_importacao} #{index_sheet} #{importacao_id} #{item_importacao} #{tabela_destino} '#{de_para}' #{unidade_id}}
        ActiveRecord::Base.connection.execute(saida)
        return true
       rescue Exception => e
+        p "************"
+        p e
+        p e.backtrace
          FileUtils.mkdir_p("#{Rails.root.to_s}/log/java/importacoes/#{self.item_importacao.importacao.id}/")
          File.open("#{Rails.root.to_s}/log/java/importacoes/#{self.item_importacao.importacao.id}/erros_#{self.item_importacao.importacao.id}_#{self.item_importacao_id}_#{self.id}.log", "wb") do |f|     
             f.write(e)   

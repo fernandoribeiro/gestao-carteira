@@ -1,6 +1,7 @@
 <%if @importacao.tipo_arquivo == Importacao::XLS || @importacao.tipo_arquivo == Importacao::XLSX %>
 	<%if !params[:index_aba].blank? && !params[:tabela_destino].blank? %>
 		<%@retorno = @importacao.return_headers_of_spreadsheet_file(params[:index_aba])%>
+		<%p @retorno %>
 		content = "<%= escape_javascript(render(partial: 'mapeamento')) %>";
 		$('#mapeamento').html("");
 		$('#mapeamento').html(content);

@@ -1,0 +1,3 @@
+PG::Error: ERROR:  invalid input syntax for type numeric: "1.795.50"
+CONTEXT:  COPY nota_fiscal_temps, line 33, column valor: "1.795.50"
+: COPY nota_fiscal_temps(produto_id,descricao,cliente_id,data_emissao,numero_documento,quantidade,valor,vendedor_id,unidade_id) FROM '/Users/paulozeferino/projetos/devconnit/pdvcheck/gestao-carteira/public/uploads/importacao/arquivo/3/4.csv' DELIMITER ';' CSV

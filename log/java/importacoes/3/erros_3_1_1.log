@@ -1,0 +1,5 @@
+PG::Error: ERROR:  syntax error at or near "PATH"
+LINE 1: PATH DO CSV:/Users/paulozeferino/projetos/devconnit/pdvcheck...
+        ^
+: PATH DO CSV:/Users/paulozeferino/projetos/devconnit/pdvcheck/gestao-carteira/public/uploads/importacao/arquivo/3/1.csv
+COPY cliente_temps(codigo_sistema_legado,nome_razao_social,cidade_nome,outros_campos,unidade_id) FROM '/Users/paulozeferino/projetos/devconnit/pdvcheck/gestao-carteira/public/uploads/importacao/arquivo/3/1.csv' DELIMITER ';' CSV

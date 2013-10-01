@@ -28,8 +28,9 @@ class ItemImportacao < ActiveRecord::Base
   EXECUTADA = 45
   PROCESSADA_COM_SUCESSO = 45
   PROCESSADA_COM_ERROS = 46
-  PATH_JAVA = "/Users/Marco/projetos/projetos_pessoais/projetos_rails/tripping-octo-java/target/import_gestao_carteira-1.0.jar"
+ # PATH_JAVA = "/Users/Marco/projetos/projetos_pessoais/projetos_rails/tripping-octo-java/target/import_gestao_carteira-1.0.jar"
   #PATH_JAVA = "/home/guizao/projetos/dev/gestao_carteira_java/target/import_gestao_carteira-1.0.jar"
+  PATH_JAVA = "/Users/paulozeferino/projetos/devconnit/pdvcheck/gestao-carteira-java/target/import_gestao_carteira-1.0.jar"
 
   def situacao_verbose
     case situacao
