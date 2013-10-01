@@ -6,6 +6,7 @@ class Cliente < ActiveRecord::Base
   JURIDICA = 19632
 
 	attr_accessible :nome_razao_social
+  attr_accessible :cpf_cnpj
 	attr_accessible :tipo_pessoa
 	attr_accessible :codigo_sistema_legado
 	attr_accessible :cidade_id
@@ -63,6 +64,10 @@ class Cliente < ActiveRecord::Base
                     entidade.id, params[:texto].like, params[:texto].like)
              .order('clientes.nome_razao_social')
     end
+  end
+
+  def pesquisa_data_primeira_compra
+    NotaFiscal.where(cliente_id: self.id).minimum(:data_emissao)
   end
 
 end
