@@ -59,13 +59,9 @@ nbactions.xml
 #Ignore Importations Logs
 /app/assets/log_importation
 
-#Ignore Reports e Extratos
-/app/assets/reports
-/app/assets/files_generated
-
-#Ignore answers_zip
-/app/assets/answers_zip
-
 #Ignore Importation Logs
 /lib/importation
 /lib/importation/
+
+#Ignore Exportation files
+/app/assets/exportacoes

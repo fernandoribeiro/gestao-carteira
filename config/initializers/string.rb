@@ -4,4 +4,17 @@ class String
     "%#{self}%"
   end
 
+  def trata_cnpj
+  	self.gsub(/\W/, '') rescue ''
+  end
+
+  def trata_data
+  	self.to_date.strftime('%Y%m%d') rescue ''
+  end
+
+  def trata_valores(tamanho)
+  	valor = self[0..(tamanho-2)].rjust((tamanho-1), '0')
+  	self.to_f >= 0 ? "+#{valor}" : "-#{valor}"
+  end
+
 end

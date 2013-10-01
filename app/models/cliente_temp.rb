@@ -47,6 +47,7 @@ class ClienteTemp < ActiveRecord::Base
         params = {
                     codigo_sistema_legado: (cliente_temp.codigo_sistema_legado.upcase rescue nil),
                     nome_razao_social: (cliente_temp.nome_razao_social.upcase rescue nil),
+                    cpf_cnpj: (cliente_temp.cpf_cnpj.upcase rescue nil),
                     tipo_pessoa: (cliente_temp.tipo_pessoa.upcase rescue nil),
                     cidade_nome: (cliente_temp.cidade_nome.upcase rescue nil),
                     estado: (cliente_temp.estado.upcase rescue nil),
@@ -73,6 +74,7 @@ class ClienteTemp < ActiveRecord::Base
         params = {
                     codigo_sistema_legado: (cliente_temp.codigo_sistema_legado.upcase rescue nil),
                     nome_razao_social: (cliente_temp.nome_razao_social.upcase rescue nil),
+                    cpf_cnpj: (cliente_temp.cpf_cnpj.upcase rescue nil),
                     tipo_pessoa: (cliente_temp.tipo_pessoa.upcase rescue nil),
                     cidade_nome: (cliente_temp.cidade_nome.upcase rescue nil),
                     estado: (cliente_temp.estado.upcase rescue nil),
