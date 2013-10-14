@@ -2,6 +2,138 @@
 
 class Exportacao
 
+	def self.gera_arquivo_agile_41(unidade)
+		begin
+			folder = Rails.root.join('app', 'assets', 'exportacoes',"modelo_41")
+			Dir::mkdir(folder) unless Dir.exists?(folder)
+  			file = File.open("#{folder}/#{unidade.slug}_#{DateTime.now.strftime('%Y%m%d_%H:%M')}", 'w')
+  			NotaFiscal.where(unidade_id: unidade.id).limit(10).each do |item_nota|
+  				### RJUST = Numérico
+  				### LJUST = Alfanumérico
+	  			### Código da empresa no sistema | 005
+	  			file.write(item_nota.unidade.entidade.id.to_s[0..4].rjust(5, '0') + ';')
+				### Código da filial | 006
+				file.write(item_nota.unidade.id.to_s[0..5].rjust(6, '0') + ';')
+				### Código do fabricante ou fornecedor | 006
+				file.write(''.to_s[0..5].rjust(6, '0') + ';')
+				### Nome do fabricante ou fornecedor | 050
+				file.write(''.to_s[0..49].ljust(50) + ';')
+				### Prazo de compra da Fábrica | 005
+				file.write(''.to_s[0..4].rjust(5, '0') + ';')
+				### Campo Livre | 007
+				file.write(''.to_s[0..6].rjust(7, '0') + ';')
+				### Código do item do fabricante | 033
+				file.write(item_nota.produto.codigo_sistema_legado.to_s[0..32].ljust(33) + ';')
+				### Nome do Item | 050
+				file.write(item_nota.produto.nome.to_s[0..49].ljust(50) + ';')
+				### Especificação do Item | 020
+				file.write(''.to_s[0..19].ljust(20) + ';')
+				### Abreviatura de Especificação do Item | 020
+				file.write(''.to_s[0..4].ljust(5) + ';')
+				### Ano das Demandas | 004
+				file.write(item_nota.data_emissao.to_date.year.to_s[0..3].ljust(4) + ';')
+				### Quantidade de demanda do mês de janeiro | 007
+				file.write(''.to_s[0..6].rjust(7, '0') + ';')
+				### Quantidade de demanda do mês de fevereiro | 007
+				file.write(''.to_s[0..6].rjust(7, '0') + ';')
+				### Quantidade de demanda do mês de marco | 007
+				file.write(''.to_s[0..6].rjust(7, '0') + ';')
+				### Quantidade de demanda do mês de abril | 007
+				file.write(''.to_s[0..6].rjust(7, '0') + ';')
+				### Quantidade de demanda do mês de maio | 007
+				file.write(''.to_s[0..6].rjust(7, '0') + ';')
+				### Quantidade de demanda do mês de junho | 007
+				file.write(''.to_s[0..6].rjust(7, '0') + ';')
+				### Quantidade de demanda do mês de julho | 007
+				file.write(''.to_s[0..6].rjust(7, '0') + ';')
+				### Quantidade de demanda do mês de agosto | 007
+				file.write(''.to_s[0..6].rjust(7, '0') + ';')
+				### Quantidade de demanda do mês de setembro | 007
+				file.write(''.to_s[0..6].rjust(7, '0') + ';')
+				### Quantidade de demanda do mês de outubro | 007
+				file.write(''.to_s[0..6].rjust(7, '0') + ';')
+				### Quantidade de demanda do mês de novembro | 007
+				file.write(''.to_s[0..6].rjust(7, '0') + ';')
+				### Quantidade de demanda do mês de dezembro | 007
+				file.write(''.to_s[0..6].rjust(7, '0') + ';')
+				file.write("\n")
+			end
+		rescue IOError => e
+  		p e.message
+		ensure
+  		file.close unless file == nil
+		end
+	end
+
+	def self.gera_arquivo_agile_42(unidade)
+		begin
+			folder = Rails.root.join('app', 'assets', 'exportacoes',"modelo_42")
+			Dir::mkdir(folder) unless Dir.exists?(folder)
+  			file = File.open("#{folder}/#{unidade.slug}_#{DateTime.now.strftime('%Y%m%d_%H:%M')}", 'w')
+  			NotaFiscal.where(unidade_id: unidade.id).limit(10).each do |item_nota|
+  				### RJUST = Numérico
+  				### LJUST = Alfanumérico
+	  			
+	  			### Código da empresa no sistema | 005
+	  			file.write(item_nota.unidade.entidade.id.to_s[0..4].rjust(5, '0') + ';')
+				### Código da filial | 006
+				file.write(item_nota.unidade.id.to_s[0..5].rjust(6, '0') + ';')
+				### Coluna Livre| 007
+				file.write(''.to_s[0..6].rjust(7, '0') + ';')
+				### Código da Versão | 005
+				file.write('00009'.to_s[0..4].rjust(5, '0') + ';')
+				### Grupo de Desconto | 010
+				file.write(''.to_s[0..9].ljust(10) + ';')
+				### Valor total vendido do item | 010
+				file.write(item_nota.calcula_valor_total_item.to_s.trata_valores(10) + ';')
+				### Custo Médio Contábil do Item | 010
+				file.write(''.to_s[0..9].rjust(10, '0') + ';')
+				### Preço de Garantia do Item 
+				file.write(''.to_s[0..9].rjust(10, '0') + ';')
+				### Preço de Reposição do Item 
+				file.write(''.to_s[0..9].rjust(10, '0') + ';')
+				### Data da primeira compra
+				file.write(''.to_s[0..7].rjust(8, '0') + ';')
+				### Data da última compra
+				file.write(''.to_s[0..7].rjust(8, '0') + ';')
+				### Data da última venda
+				file.write(''.to_s[0..7].rjust(8, '0') + ';')
+				### Localização Física do item no estoque
+				file.write(''.to_s[0..19].rjust(20, '0') + ';')
+				### Quantidade disponível
+				file.write(''.to_s[0..6].rjust(7, '0') + ';')
+				### Quantidade contabilmente
+				file.write(''.to_s[0..6].rjust(7, '0') + ';')
+				### Quantidade pendente
+				file.write(''.to_s[0..6].rjust(7, '0') + ';')
+				### Quantidade do item por embalagem
+				file.write(''.to_s[0..6].rjust(7, '0') + ';')
+				### Demanda do ultimo mês analisado
+				file.write(''.to_s[0..6].rjust(7, '0') + ';')
+				### Demanda do mês corrente
+				file.write(''.to_s[0..6].rjust(7, '0') + ';')
+				### Código do item do fabricante
+				file.write(item_nota.produto.codigo_sistema_legado.to_s[0..32].ljust(33) + ';')
+				### Código do Fabricante
+				file.write(''.to_s[0..5].rjust(6, '0') + ';')
+				### Item está bloqueado para a compra
+				file.write('N'.to_s[0..0].ljust(1) + ';')
+				### Código do ultimo fabricante ou fornecedor
+				file.write(''.to_s[0..5].rjust(6, '0') + ';')
+				### Nome do último fabricante 
+				file.write(''.to_s[0..49].ljust(50) + ';')
+				### Quantidade em BO
+				file.write(''.to_s[0..6].rjust(7, '0') + ';')
+				file.write("\n")
+			end
+		rescue IOError => e
+  		p e.message
+		ensure
+  		file.close unless file == nil
+		end
+	end
+
+
 	def self.gera_arquivo_agile(unidade)
 		begin
 			folder = Rails.root.join('app', 'assets', 'exportacoes')

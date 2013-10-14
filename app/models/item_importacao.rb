@@ -19,7 +19,7 @@ class ItemImportacao < ActiveRecord::Base
 
 
   validate :verifica_integridade_de_para
-  validate :verifica_se_possui_importacoes_de_outro_tipo
+ # validate :verifica_se_possui_importacoes_de_outro_tipo
   validates :tabela_sistema_destino, presence: true
   validates :de_para, presence: true
   validates :aba_trabalho_index, presence: true, :if=>:is_spreadsheet_file?
