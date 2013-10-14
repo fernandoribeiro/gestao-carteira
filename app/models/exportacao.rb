@@ -7,7 +7,7 @@ class Exportacao
 			folder = Rails.root.join('app', 'assets', 'exportacoes',"modelo_41")
 			Dir::mkdir(folder) unless Dir.exists?(folder)
   			file = File.open("#{folder}/#{unidade.slug}_#{DateTime.now.strftime('%Y%m%d_%H:%M')}", 'w')
-  			NotaFiscal.where(unidade_id: unidade.id).limit(10).each do |item_nota|
+  			NotaFiscal.where(unidade_id: unidade.id).each do |item_nota|
   				### RJUST = Numérico
   				### LJUST = Alfanumérico
 	  			### Código da empresa no sistema | 005
@@ -19,6 +19,8 @@ class Exportacao
 				### Nome do fabricante ou fornecedor | 050
 				file.write(''.to_s[0..49].ljust(50) + ';')
 				### Prazo de compra da Fábrica | 005
+				file.write(''.to_s[0..4].rjust(5, '0') + ';')
+				### Percentual de desconto adicional do fabricante | 005
 				file.write(''.to_s[0..4].rjust(5, '0') + ';')
 				### Campo Livre | 007
 				file.write(''.to_s[0..6].rjust(7, '0') + ';')
@@ -70,7 +72,7 @@ class Exportacao
 			folder = Rails.root.join('app', 'assets', 'exportacoes',"modelo_42")
 			Dir::mkdir(folder) unless Dir.exists?(folder)
   			file = File.open("#{folder}/#{unidade.slug}_#{DateTime.now.strftime('%Y%m%d_%H:%M')}", 'w')
-  			NotaFiscal.where(unidade_id: unidade.id).limit(10).each do |item_nota|
+  			NotaFiscal.where(unidade_id: unidade.id).each do |item_nota|
   				### RJUST = Numérico
   				### LJUST = Alfanumérico
 	  			
@@ -85,7 +87,7 @@ class Exportacao
 				### Grupo de Desconto | 010
 				file.write(''.to_s[0..9].ljust(10) + ';')
 				### Valor total vendido do item | 010
-				file.write(item_nota.calcula_valor_total_item.to_s.trata_valores(10) + ';')
+				file.write(item_nota.calcula_valor_total_item.to_s.trata_valores_42(10) + ';')
 				### Custo Médio Contábil do Item | 010
 				file.write(''.to_s[0..9].rjust(10, '0') + ';')
 				### Preço de Garantia do Item 
