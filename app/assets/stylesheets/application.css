@@ -29,8 +29,20 @@ div.medium {
   font-size: 10px !important;
 }
 
+.medium-select-multilpe {
+  height: 70px !important;
+  width: 450px !important;
+  font-size: 10px !important; 
+}
+
 .small-input {
   width: 25px;
+  height: 15px !important;
+  font-size: 10px !important;
+}
+
+.auto-datepicker {
+  width: 55px;
   height: 15px !important;
   font-size: 10px !important;
 }
@@ -82,7 +94,7 @@ div#filtros_master {
   background-color: #4F4F4F;
 }
 
-div.sub {;
+div.sub {
   margin: 10px;
 }
 
@@ -249,4 +261,16 @@ ol.titulo {
   background-color: #FF7256 !important;
   font-weight: bold;
   color: #000000;
+}
+
+td.right {
+  text-align: right !important;
+}
+
+td.left {
+  text-align: left !important;
+}
+
+td.center {
+  text-align: center !important;
 }

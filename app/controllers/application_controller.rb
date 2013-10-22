@@ -6,7 +6,9 @@ class ApplicationController < ActionController::Base
   helper_method :current_title
   helper_method :current_subtitle
 
-  private
+
+private
+
   def current_title
     @title
   end
@@ -19,4 +21,5 @@ class ApplicationController < ActionController::Base
     @title = "Title"
     @subtitle = "SubTitle"
   end
+  
 end

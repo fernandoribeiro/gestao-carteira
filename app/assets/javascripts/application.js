@@ -6,7 +6,7 @@
 
 jQuery(function($) {
   // inicializar_selectpickers();
-  inicializar_selectable();
+  // inicializar_selectable();
   // inicializar_um_selectable();
 });
 

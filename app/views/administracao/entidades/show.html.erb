@@ -19,23 +19,23 @@
 <h3>Administrador da entidade</h3>
 <p>
   <b>Nome:</b>
-  <%= @entidade.usuarios.first.nome %>
+  <%= @entidade.usuarios.first.nome rescue nil %>
 </p>
 <p>
   <b>Login:</b>
-  <%= @entidade.usuarios.first.username %>
+  <%= @entidade.usuarios.first.username rescue nil %>
 </p>
 <p>
   <b>E-mail:</b>
-  <%= @entidade.usuarios.first.email %>
+  <%= @entidade.usuarios.first.email rescue nil %>
 </p>
 <p>
   <b>Administrador?:</b>
-  <%= @entidade.usuarios.first.eh_administrador_verbose %>
+  <%= @entidade.usuarios.first.eh_administrador_verbose rescue nil %>
 </p>
 <p>
   <b>Situação:</b>
-  <%= @entidade.usuarios.first.active_verbose %>
+  <%= @entidade.usuarios.first.active_verbose rescue nil %>
 </p>
 
 

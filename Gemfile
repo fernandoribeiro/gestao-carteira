@@ -50,7 +50,7 @@ gem 'libv8', '~> 3.11.8'
 gem 'daemons'
 
 #Schedule Methods
-gem 'whenever', :require => false
+gem 'whenever', require: false
 
 #Leitura de xls,xlsx,csv,etc...
 gem 'roo'

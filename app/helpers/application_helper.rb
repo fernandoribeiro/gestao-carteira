@@ -24,4 +24,18 @@ module ApplicationHelper
     image_tag('ajax-loader.gif', id: id, class: classe)
   end
 
+  def tipo_rankings_for_select
+    [
+      ['Faturamento', RelatorioDistribuidor::FATURAMENTO],
+      ['Quantidade', RelatorioDistribuidor::QUANTIDADE]
+    ]
+  end
+
+  def tipo_ordenacao_for_select
+    [
+      ['Maiores', RelatorioDistribuidor::MAIORES],
+      ['Menores', RelatorioDistribuidor::MENORES]
+    ]
+  end
+
 end

@@ -76,6 +76,13 @@ TrippingOcto::Application.routes.draw do
           end
         end
 
+        resources :distribuidores do
+          collection do
+            get  :ranking_produtos_index
+            post :ranking_produtos_run
+          end
+        end
+
       end
 
 
