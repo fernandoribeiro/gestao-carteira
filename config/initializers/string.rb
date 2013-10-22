@@ -17,4 +17,9 @@ class String
   	self.to_f >= 0 ? "+#{valor}" : "-#{valor}"
   end
 
+  def trata_valores_42(tamanho)
+    valor = self[0..(tamanho-2)].rjust((tamanho-1), '0')
+    self.to_f >= 0 ? "0#{valor}" : "0#{valor}"
+  end
+
 end

@@ -29,8 +29,8 @@ class NotaFiscal < ActiveRecord::Base
                           numericality: { greater_than: 0 }
    validates :valor, presence: true,
                      inclusion: 0.00..99999999999999.99
-   validates :valor_desconto, inclusion: 0.00..99999999999999.99
-   validates :valor_porcentagem_desconto, inclusion: 0.00..99999999999999.99
+  # validates :valor_desconto, inclusion: 0.00..99999999999999.99
+  # validates :valor_porcentagem_desconto, inclusion: 0.00..99999999999999.99
    validates :vendedor, presence: true
    validates :cliente, presence: true
    validates :produto, presence: true
