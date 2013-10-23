@@ -1,13 +1,18 @@
 //= require jquery
-//= require jquery_ujs
 //= require jquery-ui
+//= require jquery_ujs
+//= require jquery.maskedinput
+//= require jquery.maskmoney
+//= require bootstrap
 //= require bootstrap-select
+//= require bootstrap-datepicker
 //= require_tree .
 
 jQuery(function($) {
   // inicializar_selectpickers();
   // inicializar_selectable();
   // inicializar_um_selectable();
+  initializeDatePickers();
 });
 
 var $NOTICE = {
@@ -77,4 +82,14 @@ function initializeDecimalMask() {
 
 function initializeNumericMask() {
   $('.numeric').ForceNumericOnly();
+}
+
+function initializeDatePickers() {
+  $('.auto-datepicker').datepicker({
+    format: 'dd/mm/yyyy',
+    language: 'pt-BR',
+    weekStart: 1,
+    autoclose: true,
+    orientation: 'top auto',
+  })
 }

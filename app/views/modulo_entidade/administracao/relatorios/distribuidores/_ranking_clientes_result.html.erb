@@ -1,7 +1,7 @@
 <% if @resultado.first %>
 	<% @resultado[1].each do |ranking| %>
 		<tr>
-			<td><%= "#{ranking[:codigo_sistema_legado]} - #{ranking[:nome]}" %></td>
+			<td><%= "#{ranking[:codigo_sistema_legado]} - #{ranking[:nome_razao_social]}" %></td>
 			<td class="right"><%= number_to_currency(ranking[:faturamento], unit: '', precision: 2, separator: ',', delimiter: '.') %></td>
 			<td class="right"><%= number_to_currency(ranking[:quantidade], unit: '', precision: 2, separator: ',', delimiter: '') %></td>
 		</tr>

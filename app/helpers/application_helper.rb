@@ -33,8 +33,8 @@ module ApplicationHelper
 
   def tipo_ordenacao_for_select
     [
-      ['Maiores', RelatorioDistribuidor::MAIORES],
-      ['Menores', RelatorioDistribuidor::MENORES]
+      ['Decrescente', RelatorioDistribuidor::MAIORES],
+      ['Crescente', RelatorioDistribuidor::MENORES]
     ]
   end
 

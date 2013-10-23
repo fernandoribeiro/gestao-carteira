@@ -22,8 +22,8 @@
       <div class="sub">
         <%= select_tag 'relatorios[unidade_ids]',
             options_for_select(unidades_for_select, selected: params[:relatorios][:unidade_ids]),
-            multiple: true, :'data-filtro' => 'filtro_unidade', :'data-titulo' => 'Unidade',
-            class: 'medium-select-multilpe'
+            prompt: 'DISTRIBUIDORES', multiple: true, :'data-filtro' => 'filtro_unidade',
+            :'data-titulo' => 'Unidade', class: 'medium-select-multilpe'
         %>
       </div>
     <% end %>

@@ -79,13 +79,13 @@
                   <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
-                  <li><%= link_to 'Curva ABC de Produtos', [:ranking_produtos_index, :entidade, :administracao, :relatorios, :distribuidores] %></li>
-                  <li class="divider"></li>
-                  <li><%= link_to 'Ranking de Clientes', [:ranking_produtos_index, :entidade, :administracao, :relatorios, :distribuidores] %></li>
+                  <!-- <li><%#= link_to 'Curva ABC de Produtos', [:ranking_produtos_index, :entidade, :administracao, :relatorios, :distribuidores] %></li> -->
+                  <!-- <li class="divider"></li> -->
+                  <li><%= link_to 'Ranking de Clientes', [:ranking_clientes_index, :entidade, :administracao, :relatorios, :distribuidores] %></li>
                   <li class="divider"></li>
                   <li><%= link_to 'Ranking de Produtos', [:ranking_produtos_index, :entidade, :administracao, :relatorios, :distribuidores] %></li>
                   <li class="divider"></li>
-                  <li><%= link_to 'Vendas por Distribuidor', [:ranking_produtos_index, :entidade, :administracao, :relatorios, :distribuidores] %></li>
+                  <li><%= link_to 'Vendas por Distribuidor', [:vendas_distribuidores_index, :entidade, :administracao, :relatorios, :distribuidores] %></li>
                 </ul>
               </li>
 

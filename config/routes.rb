@@ -80,6 +80,10 @@ TrippingOcto::Application.routes.draw do
           collection do
             get  :ranking_produtos_index
             post :ranking_produtos_run
+            get  :ranking_clientes_index
+            post :ranking_clientes_run
+            get  :vendas_distribuidores_index
+            post :vendas_distribuidores_run
           end
         end
 
