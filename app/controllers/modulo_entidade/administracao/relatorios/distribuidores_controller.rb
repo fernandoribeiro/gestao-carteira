@@ -45,6 +45,20 @@ class ModuloEntidade::Administracao::Relatorios::DistribuidoresController < Modu
 ### VENDAS POR DISTRIBUIDOR
 
 
+### CURVA ABC DE RODUTOS
+  def curva_abc_produtos_index
+    params[:relatorios] ||= {}
+  end
+
+  def curva_abc_produtos_run
+    @resultado = RelatorioDistribuidor.curva_abc_produtos(params[:relatorios])
+    respond_to do |format|
+      format.js
+    end
+  end
+### CURVA ABC DE RODUTOS
+
+
   private
 
     def load_title_end_subtitle
@@ -53,6 +67,7 @@ class ModuloEntidade::Administracao::Relatorios::DistribuidoresController < Modu
         when 'ranking_produtos_index' then 'Ranking de Produtos (Quantidade e Faturamento)'
         when 'ranking_clientes_index' then 'Ranking de Clientes (Quantidade e Faturamento)'
         when 'vendas_distribuidores_index' then 'Vendas por Distribuidor'
+        when 'curva_abc_produtos_index' then 'Curva ABC de Produtos'
         else 'Subtitle'
       end
     end

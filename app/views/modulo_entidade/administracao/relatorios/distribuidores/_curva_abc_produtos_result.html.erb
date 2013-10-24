@@ -2,7 +2,10 @@
 	<% @resultado[1].each do |ranking| %>
 		<tr>
 			<td>
-				<%= ranking[:nome] %>
+				<%= "#{ranking[:codigo_sistema_legado]} - #{ranking[:nome_produto]}" %>
+			</td>
+			<td>
+				<%= ranking[:distribuidor] %>
 			</td>
 			<td class="right">
 				<%= number_to_currency(ranking[:total_vendas], unit: '', precision: 2, separator: ',', delimiter: '.') %>
@@ -12,13 +15,13 @@
 
 	<tr class="totais">
 		<td>TOTAL</td>
-		<td class="right">
+		<td class="right" colspan="2">
 			<%= number_to_currency(@resultado[2], precision: 2, separator: ',', delimiter: '.')  %>
 		</td>
 	</tr>
 <% else %>
 	<tr>
-		<td class="totais" colspan="2">
+		<td class="totais" colspan="3">
 			<%= @resultado.last %>
 		</td>
 	</tr>

@@ -84,6 +84,8 @@ TrippingOcto::Application.routes.draw do
             post :ranking_clientes_run
             get  :vendas_distribuidores_index
             post :vendas_distribuidores_run
+            get  :curva_abc_produtos_index
+            post :curva_abc_produtos_run
           end
         end
 

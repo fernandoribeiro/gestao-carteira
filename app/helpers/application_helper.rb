@@ -38,4 +38,12 @@ module ApplicationHelper
     ]
   end
 
+  def tipo_agrupamento_for_select
+    [
+      # ['Categoria', RelatorioDistribuidor::CATEGORIA],
+      ['Distribuidor', RelatorioDistribuidor::DISTRIBUIDOR],
+      ['Venda geral', RelatorioDistribuidor::VENDA_GERAL]
+    ]
+  end
+
 end
