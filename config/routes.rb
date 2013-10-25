@@ -91,6 +91,16 @@ TrippingOcto::Application.routes.draw do
 
       end
 
+      namespace :graficos do
+
+        resources :distribuidores do
+          collection do
+            post :graficos_run
+          end
+        end
+
+      end
+
 
     end
 

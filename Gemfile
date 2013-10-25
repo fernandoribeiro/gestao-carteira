@@ -63,3 +63,6 @@ gem 'delayed_job_web'
 
 # Bootstrap Datepicker
 gem 'bootstrap-datepicker-rails'
+
+# Google Charts
+gem 'google_visualr', '>= 2.1'

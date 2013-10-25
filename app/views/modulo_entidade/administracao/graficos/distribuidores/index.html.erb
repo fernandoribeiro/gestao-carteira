@@ -1,0 +1,45 @@
+<div class="accordion-inner">
+  <%= form_tag [:entidade, :administracao, :graficos, :distribuidores], method: :get, id: 'form_grafico', class: 'form-inline' do %>
+    <%= select_tag 'graficos[mes]', options_for_select(meses_to_graficos_for_select, selected: params[:graficos][:mes]),
+        class: 'medium-select' %>
+    <%= select_tag 'graficos[ano]', options_for_select(anos_to_graficos_for_select, selected: params[:graficos][:ano]),
+        class: 'medium-select' %>
+    <%= submit_tag 'Pesquisar', class: 'btn btn-inverse', data: { disable_with: 'Pesquisando...' } %>
+  <% end %>
+</div>
+
+<div id="graficos">
+  <div class="sub-graficos">
+    <h4>RANKINGS DE CLIENTES</h4>
+    <hr />
+    <div id="ranking_clientes_quantidade" class="graficos"></div>
+    <div id="ranking_clientes_faturamento" class="graficos"></div>
+  </div>
+
+  <div class="sub-graficos">
+    <h4>RANKINGS DE PRODUTOS</h4>
+    <hr />
+    <div id="ranking_produtos_quantidade" class="graficos"></div>
+    <div id="ranking_produtos_faturamento" class="graficos"></div>
+  </div>
+
+  <div class="sub-graficos">
+    <h4>VENDAS POR DISTRIBUIDOR</h4>
+    <hr />
+    <div id="vendas_por_distribuidor" class="graficos"></div>
+  </div>
+</div>
+
+<%= render_chart(@ranking_clientes_quantidade, 'ranking_clientes_quantidade') %>
+<%= render_chart(@ranking_clientes_faturamento, 'ranking_clientes_faturamento') %>
+<%= render_chart(@ranking_produtos_quantidade, 'ranking_produtos_quantidade') %>
+<%= render_chart(@ranking_produtos_faturamento, 'ranking_produtos_faturamento') %>
+<%= render_chart(@vendas_por_distribuidor, 'vendas_por_distribuidor') %>
+
+<script type="text/javascript">
+  jQuery(function($) {
+    corrige_tamanho_div_conteudo_da_pagina(); //DIMINUI A DIV DO CONTEÚDO
+    corrige_tamanho_div_titulo(); //DIMINUI A DIV DO TÍTULO
+    corrige_fonte_graficos(); //DIMINUI A FONTE DAS LABELS
+  })
+</script>

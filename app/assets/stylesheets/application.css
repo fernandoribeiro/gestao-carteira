@@ -275,3 +275,8 @@ td.left {
 td.center {
   text-align: center !important;
 }
+
+div.graficos {
+  float: left;
+  padding-bottom: 50px;
+}
