@@ -17,6 +17,7 @@ class Entidade < ActiveRecord::Base
   has_many :unidades
   has_many :usuario_entidades
   has_many :importacoes
+  has_many :agendamentos
   accepts_nested_attributes_for :usuario_entidades, limit: 1
   alias_method :usuarios, :usuario_entidades
 

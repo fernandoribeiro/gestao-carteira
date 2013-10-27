@@ -1,0 +1,25 @@
+<p>
+  <b>Nome:</b>
+  <%= @agendamento.nome %>
+</p>
+
+<p>
+  <b>Unidade:</b>
+  <%= @agendamento.unidade.nome %>
+</p>
+
+<p>
+  <b>Arquivo:</b>
+  <%= @agendamento.arquivo_url %>
+</p>
+
+<p>
+  <b>Situação:</b>
+  <%= @agendamento.status_verbose %>
+</p>
+
+<div class="form-actions">
+  <%= link_to 'Editar', [:edit, :entidade, :administracao, @agendamento], class: 'btn btn-primary' %>
+  <%= link_to 'Voltar', [:entidade, :administracao, :agendamentos], class: 'btn' %>
+</div>
+

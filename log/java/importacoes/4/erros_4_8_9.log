@@ -1,0 +1,3 @@
+PG::Error: ERROR:  invalid input syntax for type date: "0000581090"
+CONTEXT:  COPY nota_fiscal_temps, line 506, column data_emissao: "0000581090"
+: COPY nota_fiscal_temps(produto_id,descricao,cliente_id,data_emissao,numero_documento,valor_desconto,quantidade,valor,vendedor_id,unidade_id) FROM '/Users/paulozeferino/projetos/devconnit/pdvcheck/gestao-carteira/public/uploads/importacao/arquivo/4/8.csv' DELIMITER ';' CSV

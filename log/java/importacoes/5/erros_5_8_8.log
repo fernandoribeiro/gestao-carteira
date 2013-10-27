@@ -1,0 +1,3 @@
+PG::Error: ERROR:  extra data after last expected column
+CONTEXT:  COPY nota_fiscal_temps, line 1: "9990102;CERVEJA (ABC) (P);009376-9;Fri Mar 01 00:00:00 BRT 2013;0000150711;31.02;0.00;0.00;1.00;31.0..."
+: COPY nota_fiscal_temps(produto_id,descricao,cliente_id,data_emissao,numero_documento,outros_campos,valor_desconto,quantidade,valor,vendedor_id,unidade_id) FROM '/Users/paulozeferino/projetos/devconnit/pdvcheck/gestao-carteira/public/uploads/importacao/arquivo/5/8.csv' DELIMITER ';' CSV

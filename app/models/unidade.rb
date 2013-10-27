@@ -19,6 +19,7 @@ class Unidade < ActiveRecord::Base
   has_many :usuarios, through: :usuario_entidade_unidades
   has_many :vendedores
   has_many :metas
+  has_many :agendamentos
 
   validates :nome, presence: true, uniqueness: { case_sensitive: false, scope: [:entidade_id] }, length: { maximum: 255 }
   validates :slug, presence: true, uniqueness: { case_sensitive: false, scope: [:entidade_id] }, length: { maximum: 50 }, format: { with: /\A[a-z0-9]+\z/ }
