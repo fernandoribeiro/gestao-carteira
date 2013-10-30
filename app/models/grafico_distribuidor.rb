@@ -41,13 +41,13 @@ class GraficoDistribuidor < ActiveRecord::Base
 
 		itens = NotaFiscal.select('clientes.codigo_sistema_legado')
 											.select('clientes.nome_razao_social')
-											.select('SUM((nota_fiscais.quantidade * nota_fiscais.valor)) AS faturamento')
+											.select('SUM(nota_fiscais.valor) AS faturamento')
 											.joins(:cliente)
 											.where('data_emissao >= ?', data_inicial)
 											.where('data_emissao <= ?', data_final)
 											.where(unidade_id: unidade_ids)
 											.group('clientes.codigo_sistema_legado, clientes.nome_razao_social')
-											.order('SUM(nota_fiscais.quantidade * nota_fiscais.valor) DESC')
+											.order('SUM(nota_fiscais.valor) DESC')
 											.limit(10)
 
 		data_table = GoogleVisualr::DataTable.new
@@ -108,13 +108,13 @@ class GraficoDistribuidor < ActiveRecord::Base
 
 		itens = NotaFiscal.select('produtos.codigo_sistema_legado')
 											.select('produtos.nome')
-											.select('SUM((nota_fiscais.quantidade * nota_fiscais.valor)) AS faturamento')
+											.select('SUM(nota_fiscais.valor) AS faturamento')
 											.joins(:produto)
 											.where('data_emissao >= ?', data_inicial)
 											.where('data_emissao <= ?', data_final)
 											.where(unidade_id: unidade_ids)
 											.group('produtos.codigo_sistema_legado, produtos.nome')
-											.order('SUM(nota_fiscais.quantidade * nota_fiscais.valor) DESC')
+											.order('SUM(nota_fiscais.valor) DESC')
 											.limit(10)
 
 		data_table = GoogleVisualr::DataTable.new
@@ -140,13 +140,13 @@ class GraficoDistribuidor < ActiveRecord::Base
 		unidade_ids = current_usuario.entidade.unidades.pluck(:id)
 
 		itens = NotaFiscal.select('unidades.nome')
-											.select('SUM((nota_fiscais.quantidade * nota_fiscais.valor)) AS total_vendas')
+											.select('SUM(nota_fiscais.valor) AS total_vendas')
 											.joins(:unidade)
 											.where('data_emissao >= ?', data_inicial)
 											.where('data_emissao <= ?', data_final)
 											.where(unidade_id: unidade_ids)
 											.group('unidades.id')
-											.order('SUM(nota_fiscais.quantidade * nota_fiscais.valor) DESC')
+											.order('SUM(nota_fiscais.valor) DESC')
 
 		data_table = GoogleVisualr::DataTable.new
 		data_table.new_column('string', '')

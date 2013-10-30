@@ -26,9 +26,9 @@ class RelatorioDistribuidor < ActiveRecord::Base
 
 			if params[:tipo_ranking].to_i == FATURAMENTO
 				if params[:ordenacao].to_i == MAIORES
-					ordenacao = 'SUM(nota_fiscais.quantidade * nota_fiscais.valor) DESC'
+					ordenacao = 'SUM(nota_fiscais.valor) DESC'
 				elsif params[:ordenacao].to_i == MENORES
-					ordenacao = 'SUM(nota_fiscais.quantidade * nota_fiscais.valor) ASC'
+					ordenacao = 'SUM(nota_fiscais.valor) ASC'
 				end
 			elsif params[:tipo_ranking].to_i == QUANTIDADE
 				if params[:ordenacao].to_i == MAIORES
@@ -40,7 +40,7 @@ class RelatorioDistribuidor < ActiveRecord::Base
 
 			itens = NotaFiscal.select('produtos.codigo_sistema_legado')
 												.select('produtos.nome')
-												.select('SUM((nota_fiscais.quantidade * nota_fiscais.valor)) AS faturamento')
+												.select('SUM(nota_fiscais.valor) AS faturamento')
 												.select('COUNT(produtos.codigo_sistema_legado) AS quantidade')
 												.joins(:produto)
 
@@ -79,9 +79,9 @@ class RelatorioDistribuidor < ActiveRecord::Base
 
 			if params[:tipo_ranking].to_i == FATURAMENTO
 				if params[:ordenacao].to_i == MAIORES
-					ordenacao = 'SUM(nota_fiscais.quantidade * nota_fiscais.valor) DESC'
+					ordenacao = 'SUM(nota_fiscais.valor) DESC'
 				elsif params[:ordenacao].to_i == MENORES
-					ordenacao = 'SUM(nota_fiscais.quantidade * nota_fiscais.valor) ASC'
+					ordenacao = 'SUM(nota_fiscais.valor) ASC'
 				end
 			elsif params[:tipo_ranking].to_i == QUANTIDADE
 				if params[:ordenacao].to_i == MAIORES
@@ -93,7 +93,7 @@ class RelatorioDistribuidor < ActiveRecord::Base
 
 			itens = NotaFiscal.select('clientes.codigo_sistema_legado')
 												.select('clientes.nome_razao_social')
-												.select('SUM((nota_fiscais.quantidade * nota_fiscais.valor)) AS faturamento')
+												.select('SUM(nota_fiscais.valor) AS faturamento')
 												.select('COUNT(clientes.codigo_sistema_legado) AS quantidade')
 												.joins(:cliente)
 
@@ -129,13 +129,13 @@ class RelatorioDistribuidor < ActiveRecord::Base
 			total_vendas = 0
 
 			if params[:ordenacao].to_i == MAIORES
-				ordenacao = 'SUM(nota_fiscais.quantidade * nota_fiscais.valor) DESC'
+				ordenacao = 'SUM(nota_fiscais.valor) DESC'
 			elsif params[:ordenacao].to_i == MENORES
-				ordenacao = 'SUM(nota_fiscais.quantidade * nota_fiscais.valor) ASC'
+				ordenacao = 'SUM(nota_fiscais.valor) ASC'
 			end
 
 			itens = NotaFiscal.select('unidades.nome')
-												.select('SUM((nota_fiscais.quantidade * nota_fiscais.valor)) AS total_vendas')
+												.select('SUM(nota_fiscais.valor) AS total_vendas')
 												.joins(:unidade)
 
 			if params[:data_inicial].present?
@@ -170,13 +170,13 @@ class RelatorioDistribuidor < ActiveRecord::Base
 		else
 			total_vendas = 0
 			if params[:ordenacao].to_i == MAIORES
-				ordenacao = 'SUM(nota_fiscais.quantidade * nota_fiscais.valor) DESC'
+				ordenacao = 'SUM(nota_fiscais.valor) DESC'
 			elsif params[:ordenacao].to_i == MENORES
-				ordenacao = 'SUM(nota_fiscais.quantidade * nota_fiscais.valor) ASC'
+				ordenacao = 'SUM(nota_fiscais.valor) ASC'
 			end
 
 			itens = NotaFiscal.select('produtos.codigo_sistema_legado, produtos.nome AS nome_produto')
-												.select('SUM((nota_fiscais.quantidade * nota_fiscais.valor)) AS total_vendas')
+												.select('SUM(nota_fiscais.valor) AS total_vendas')
 												.joins(:produto)
 												.group('produtos.codigo_sistema_legado, produtos.nome')
 												.order(ordenacao)
