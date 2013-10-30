@@ -1,0 +1,4 @@
+PG::Error: ERROR:  syntax error at or near ","
+LINE 1: COPY cliente_temps(,unidade_id) FROM '/Users/paulozeferino/p...
+                           ^
+: COPY cliente_temps(,unidade_id) FROM '/Users/paulozeferino/projetos/devconnit/pdvcheck/gestao-carteira/public/uploads/agendamento/arquivo/4/4.csv' DELIMITER ';' CSV

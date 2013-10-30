@@ -1,0 +1,2 @@
+PG::Error: ERROR:  column "numero_documento" of relation "produto_temps" does not exist
+: COPY produto_temps(numero_documento,vendedor_id,cliente_id,unidade_id) FROM '/Users/paulozeferino/projetos/devconnit/pdvcheck/gestao-carteira/public/uploads/agendamento/arquivo/5/5.csv' DELIMITER ';' CSV

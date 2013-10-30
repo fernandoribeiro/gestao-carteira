@@ -105,6 +105,7 @@ class Importacao < ActiveRecord::Base
 		path = self.arquivo.file.path
 	    operacao = RETORNAR_CABECALHO
 	    retorno = []
+	    pasta = "importacao"
 	    tipo_importacao = XLS
 	    index_sheet = indice
 	    importacao_id = 0
@@ -112,7 +113,7 @@ class Importacao < ActiveRecord::Base
 	    tabela_destino = 0
 	    de_para = "null"
 	    p "java -jar -Xmx1024m #{PATH_JAVA} #{path} #{operacao} #{tipo_importacao} #{index_sheet} #{importacao_id} #{item_importacao} #{tabela_destino} #{de_para} #{unidade_id}"
-	    saida = %x{java -jar -Xmx1024m #{PATH_JAVA} #{path} #{operacao} #{tipo_importacao} #{index_sheet} #{importacao_id} #{item_importacao} #{tabela_destino} #{de_para} #{unidade_id}}
+	    saida = %x{java -jar -Xmx1024m #{PATH_JAVA} #{path} #{operacao} #{tipo_importacao} #{index_sheet} #{importacao_id} #{item_importacao} #{tabela_destino} #{de_para} #{unidade_id} #{pasta}}
 	    p saida
 		saida.split("\t").reject!(&:blank?)
 	end
@@ -121,13 +122,14 @@ class Importacao < ActiveRecord::Base
 		unidade_id = self.unidade_id
 	    path = self.arquivo.file.path
 	    operacao = RETORNAR_COLUNAS
+	    pasta = "importacao"
 	    tipo_importacao = CSV
 	    index_sheet = 0
 	    importacao_id = 0
 	    item_importacao = 0
 	    tabela_destino = 0
 	    de_para = "null"
-	    saida = %x{java -jar -Xmx1024m #{PATH_JAVA} #{path} #{operacao} #{tipo_importacao} #{index_sheet} #{importacao_id} #{item_importacao} #{tabela_destino} #{de_para} #{unidade_id}}
+	    saida = %x{java -jar -Xmx1024m #{PATH_JAVA} #{path} #{operacao} #{tipo_importacao} #{index_sheet} #{importacao_id} #{item_importacao} #{tabela_destino} #{de_para} #{unidade_id} #{pasta}}
 	    saida		
 	end
 
@@ -135,6 +137,7 @@ class Importacao < ActiveRecord::Base
 		unidade_id = self.unidade_id
 	    path = self.arquivo.file.path
 	    operacao = RETORNAR_ABAS
+	    pasta = "importacao"
 	    retorno = []
 	    tipo_importacao = XLS
 	    index_sheet = 0
@@ -143,7 +146,7 @@ class Importacao < ActiveRecord::Base
 	    tabela_destino = 0
 	    de_para = "null"
 	    p "java -jar -Xmx1024m #{PATH_JAVA} #{path} #{operacao} #{tipo_importacao} #{index_sheet} #{importacao_id} #{item_importacao} #{tabela_destino} #{de_para} #{unidade_id}"
-	    saida = %x{java -jar -Xmx1024m #{PATH_JAVA} #{path} #{operacao} #{tipo_importacao} #{index_sheet} #{importacao_id} #{item_importacao} #{tabela_destino} #{de_para} #{unidade_id}}
+	    saida = %x{java -jar -Xmx1024m #{PATH_JAVA} #{path} #{operacao} #{tipo_importacao} #{index_sheet} #{importacao_id} #{item_importacao} #{tabela_destino} #{de_para} #{unidade_id} #{pasta}}
 
 	    saida.split("\n").each_with_index do |dado,index|
 	      retorno << [dado, index]

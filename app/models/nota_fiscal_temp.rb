@@ -73,7 +73,7 @@ class NotaFiscalTemp < ActiveRecord::Base
                     active: true
                   }
         new_nota_fiscal = NotaFiscal.new(params)
-        if new_nota_fiscal.save
+        if new_nota_fiscal.save(:validate=>false)
           nota_fiscal_temp.update_column(:error_messages, nil)
           nota_fiscal_temp.update_column(:sent_to_master, true)
         else

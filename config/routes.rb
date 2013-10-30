@@ -41,7 +41,12 @@ TrippingOcto::Application.routes.draw do
       end
 
       resources :unidades
-      resources :agendamentos
+
+      resources :agendamentos do 
+        member do 
+          get :download_file
+        end
+      end
 
       resources :clientes
       resources :cliente_temps

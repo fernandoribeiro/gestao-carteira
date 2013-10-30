@@ -1,0 +1,5 @@
+PG::Error: ERROR:  syntax error at or near "Objeto"
+LINE 1: Objeto: {"21":"NotaFiscal.produto_id","3":"NotaFiscal.numero...
+        ^
+: Objeto: {"21":"NotaFiscal.produto_id","3":"NotaFiscal.numero_documento","7":"NotaFiscal.vendedor_id","23":"NotaFiscal.data_emissao","24":"NotaFiscal.valor_porcentagem_desconto","9":"NotaFiscal.cliente_id","28":"NotaFiscal.valor","29":"NotaFiscal.quantidade"}
+COPY produto_temps(numero_documento,vendedor_id,cliente_id,unidade_id) FROM '/Users/paulozeferino/projetos/devconnit/pdvcheck/gestao-carteira/public/uploads/agendamento/arquivo/6/6.csv' DELIMITER ';' CSV

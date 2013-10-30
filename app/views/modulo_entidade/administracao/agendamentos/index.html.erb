@@ -4,6 +4,8 @@
       <th>Nome</th>
       <th>Unidade</th>
       <th>Situação</th>
+      <th>Ações</th>
+      <th>Arquivo</th>
     </tr>
   </thead>
   <tbody>
@@ -36,6 +38,15 @@
                 </li>
               </ul>
             </div>
+          </td>
+          <td>
+            <%if objeto.status == Agendamento::EXECUTADA_COM_ERROS %>
+              <%= link_to "Download",[:download_file,:entidade,:administracao,objeto] %>
+            <%elsif objeto.status == Agendamento::CRIADA %>
+              Criada
+            <%elsif objeto.status == Agendamento::EXECUTADA%>
+              Executada sem erros
+            <%end%>
           </td>
         </tr>
       <% end %>
