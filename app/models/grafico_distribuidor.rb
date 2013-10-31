@@ -9,13 +9,13 @@ class GraficoDistribuidor < ActiveRecord::Base
 
 		itens = NotaFiscal.select('clientes.codigo_sistema_legado')
 											.select('clientes.nome_razao_social')
-											.select('COUNT(clientes.codigo_sistema_legado) AS quantidade')
+											.select('SUM(nota_fiscais.quantidade) AS quantidade')
 											.joins(:cliente)
 											.where('data_emissao >= ?', data_inicial)
 											.where('data_emissao <= ?', data_final)
 											.where(unidade_id: unidade_ids)
 											.group('clientes.codigo_sistema_legado, clientes.nome_razao_social')
-											.order('COUNT(clientes.codigo_sistema_legado) DESC, clientes.nome_razao_social ASC')
+											.order('SUM(nota_fiscais.quantidade) DESC, clientes.nome_razao_social ASC')
 											.limit(10)
 
 		data_table = GoogleVisualr::DataTable.new
@@ -75,13 +75,13 @@ class GraficoDistribuidor < ActiveRecord::Base
 
 		itens = NotaFiscal.select('produtos.codigo_sistema_legado')
 											.select('produtos.nome')
-											.select('COUNT(produtos.codigo_sistema_legado) AS quantidade')
+											.select('SUM(nota_fiscais.quantidade) AS quantidade')
 											.joins(:produto)
 											.where('data_emissao >= ?', data_inicial)
 											.where('data_emissao <= ?', data_final)
 											.where(unidade_id: unidade_ids)
 											.group('produtos.codigo_sistema_legado, produtos.nome')
-											.order('COUNT(produtos.codigo_sistema_legado) DESC, produtos.nome ASC')
+											.order('SUM(nota_fiscais.quantidade) DESC, produtos.nome ASC')
 											.limit(10)
 
 		data_table = GoogleVisualr::DataTable.new
