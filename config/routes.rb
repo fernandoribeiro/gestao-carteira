@@ -2,6 +2,8 @@ TrippingOcto::Application.routes.draw do
 
   root :to => 'main#index'
 
+  match "/delayed_job" => DelayedJobWeb, :anchor => false
+
   match "administracao" => "administracao#index"
   namespace :administracao do
 
