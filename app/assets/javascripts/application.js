@@ -91,5 +91,6 @@ function initializeDatePickers() {
     weekStart: 1,
     autoclose: true,
     orientation: 'top auto',
-  })
+  });
+  $('.auto-datepicker').mask('99/99/9999');
 }

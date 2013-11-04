@@ -10,6 +10,9 @@
 			<td class="right">
 				<%= number_to_currency(ranking[:total_vendas], unit: '', precision: 2, separator: ',', delimiter: '.') %>
 			</td>
+			<td class="right">
+				<%= ranking[:perc_vendas] %>%
+			</td>
 		</tr>
 	<% end %>
 
@@ -18,10 +21,11 @@
 		<td class="right" colspan="2">
 			<%= number_to_currency(@resultado[2], precision: 2, separator: ',', delimiter: '.')  %>
 		</td>
+		<td class="right">100,00%</td>
 	</tr>
 <% else %>
 	<tr>
-		<td class="totais" colspan="3">
+		<td class="totais" colspan="4">
 			<%= @resultado.last %>
 		</td>
 	</tr>
