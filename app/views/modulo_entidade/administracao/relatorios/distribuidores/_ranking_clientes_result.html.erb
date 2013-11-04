@@ -8,7 +8,13 @@
 				<%= number_to_currency(ranking[:faturamento], unit: '', precision: 2, separator: ',', delimiter: '.') %>
 			</td>
 			<td class="right">
+				<%= ranking[:perc_faturamento] %>
+			</td>
+			<td class="right">
 				<%= number_to_currency(ranking[:quantidade], unit: '', precision: 2, separator: ',', delimiter: '') %>
+			</td>
+			<td class="right">
+				<%= ranking[:perc_quantidade] %>
 			</td>
 		</tr>
 	<% end %>
@@ -18,9 +24,11 @@
 		<td class="right">
 			<%= number_to_currency(@resultado[2], precision: 2, separator: ',', delimiter: '.')  %>
 		</td>
+		<td></td>
 		<td class="right">
 			<%= number_to_currency(@resultado[3], unit: '', precision: 2, separator: ',', delimiter: '')  %>
 		</td>
+		<td></td>
 	</tr>
 <% else %>
 	<tr>

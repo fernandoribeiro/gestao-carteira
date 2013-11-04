@@ -23,6 +23,7 @@ class RelatorioDistribuidor < ActiveRecord::Base
 		else
 			faturamento_total = 0
 			quantidade_total  = 0
+			sql_porcentagem   = 'nota_fiscais.valor >= 0'
 
 			if params[:tipo_ranking].to_i == FATURAMENTO
 				if params[:ordenacao].to_i == MAIORES
@@ -43,18 +44,41 @@ class RelatorioDistribuidor < ActiveRecord::Base
 												.select('SUM(nota_fiscais.valor) AS faturamento')
 												.select('SUM(nota_fiscais.quantidade) AS quantidade')
 												.joins(:produto)
+												.where('nota_fiscais.valor >= 0')
 
 			if params[:data_inicial].present?
 				itens = itens.where('data_emissao >= ?', params[:data_inicial].to_date)
+				sql_porcentagem += " AND data_emissao >= '#{params[:data_inicial].to_date}'"
 			end
 
 			if params[:data_final].present?
 				itens = itens.where('data_emissao <= ?', params[:data_final].to_date)
+				sql_porcentagem += " AND data_emissao <= '#{params[:data_final].to_date}'"
 			end
 
 			if params[:unidade_ids].present? && params[:unidade_ids].reject(&:blank?).present?
 				itens = itens.where(unidade_id: params[:unidade_ids].reject(&:blank?))
+				sql_porcentagem += " AND nota_fiscais.unidade_id IN(#{params[:unidade_ids].reject(&:blank?).join(', ')})"
 			end
+
+			itens = itens.select("to_char(ROUND(CAST(float8(
+	   												(
+	   													SUM(nota_fiscais.valor) /
+	   													(SELECT SUM(nota_fiscais.valor)
+	    												 FROM nota_fiscais
+																	INNER JOIN produtos ON produtos.id = nota_fiscais.produto_id
+	    												 WHERE #{sql_porcentagem}    															 			 
+	   													)) * 100
+														) AS numeric), 2), '990D99') AS perc_faturamento")
+		itens = itens.select("to_char(ROUND(CAST(float8(
+													(
+	   												SUM(nota_fiscais.quantidade) /
+	   												(SELECT SUM(nota_fiscais.quantidade)
+	    											 FROM nota_fiscais
+																INNER JOIN produtos ON produtos.id = nota_fiscais.produto_id
+	    											 WHERE #{sql_porcentagem}
+	    											)) * 100
+													) AS numeric), 2), '990D99') AS perc_quantidade")
 
 			itens = itens.group('produtos.codigo_sistema_legado, produtos.nome')
 			itens = itens.order(ordenacao)
@@ -76,6 +100,7 @@ class RelatorioDistribuidor < ActiveRecord::Base
 		else
 			faturamento_total = 0
 			quantidade_total  = 0
+			sql_porcentagem		= 'nota_fiscais.valor >= 0'
 
 			if params[:tipo_ranking].to_i == FATURAMENTO
 				if params[:ordenacao].to_i == MAIORES
@@ -96,18 +121,41 @@ class RelatorioDistribuidor < ActiveRecord::Base
 												.select('SUM(nota_fiscais.valor) AS faturamento')
 												.select('SUM(nota_fiscais.quantidade) AS quantidade')
 												.joins(:cliente)
+												.where('nota_fiscais.valor >= 0')
 
 			if params[:data_inicial].present?
 				itens = itens.where('data_emissao >= ?', params[:data_inicial].to_date)
+				sql_porcentagem += " AND data_emissao >= '#{params[:data_inicial].to_date}'"
 			end
 
 			if params[:data_final].present?
 				itens = itens.where('data_emissao <= ?', params[:data_final].to_date)
+				sql_porcentagem += " AND data_emissao <= '#{params[:data_final].to_date}'"
 			end
 
 			if params[:unidade_ids].present? && params[:unidade_ids].reject(&:blank?).present?
 				itens = itens.where(unidade_id: params[:unidade_ids].reject(&:blank?))
+				sql_porcentagem += " AND nota_fiscais.unidade_id IN(#{params[:unidade_ids].reject(&:blank?).join(', ')})"
 			end
+
+			itens = itens.select("to_char(ROUND(CAST(float8(
+	   												(
+	   													SUM(nota_fiscais.valor) /
+	   													(SELECT SUM(nota_fiscais.valor)
+	    												 FROM nota_fiscais
+																	INNER JOIN clientes ON clientes.id = nota_fiscais.cliente_id
+	    												 WHERE #{sql_porcentagem}
+	   													)) * 100
+														) AS numeric), 2), '990D99') AS perc_faturamento")
+			itens = itens.select("to_char(ROUND(CAST(float8(
+														(
+	   													SUM(nota_fiscais.quantidade) /
+	   													(SELECT SUM(nota_fiscais.quantidade)
+	    												 FROM nota_fiscais
+																	INNER JOIN clientes ON clientes.id = nota_fiscais.cliente_id
+	    												 WHERE #{sql_porcentagem}
+	    												)) * 100
+														) AS numeric), 2), '990D99') AS perc_quantidade")
 
 			itens = itens.group('clientes.codigo_sistema_legado, clientes.nome_razao_social')
 			itens = itens.order(ordenacao)
@@ -127,6 +175,7 @@ class RelatorioDistribuidor < ActiveRecord::Base
 			[false, 'Sem registros encontrados. Verifique os parâmetros da pesquisa.']
 		else
 			total_vendas = 0
+			sql_porcentagem = ''
 
 			if params[:ordenacao].to_i == MAIORES
 				ordenacao = 'SUM(nota_fiscais.valor) DESC'
@@ -137,6 +186,7 @@ class RelatorioDistribuidor < ActiveRecord::Base
 			itens = NotaFiscal.select('unidades.nome')
 												.select('SUM(nota_fiscais.valor) AS total_vendas')
 												.joins(:unidade)
+												.where('nota_fiscais.valor >= 0')
 
 			if params[:data_inicial].present?
 				itens = itens.where('data_emissao >= ?', params[:data_inicial].to_date)
@@ -148,11 +198,23 @@ class RelatorioDistribuidor < ActiveRecord::Base
 
 			if params[:unidade_ids].present? && params[:unidade_ids].reject(&:blank?).present?
 				itens = itens.where(unidade_id: params[:unidade_ids].reject(&:blank?))
+				sql_porcentagem += " AND unidade_id IN(#{params[:unidade_ids].reject(&:blank?).join(', ')})"
 			end
 
 			if params[:produto_ids].present? && params[:produto_ids].reject(&:blank?).present?
 				itens = itens.where(produto_id: params[:produto_ids].reject(&:blank?))
+				sql_porcentagem += " AND produto_id IN(#{params[:produto_ids].reject(&:blank?).join(', ')})"
 			end
+
+			itens = itens.select("to_char(ROUND(CAST(float8(
+														(
+															SUM(nota_fiscais.valor) /
+	 														(SELECT SUM(nota_fiscais.valor)
+	 		 												 FROM nota_fiscais
+	 		 												 WHERE	data_emissao >= '01/01/2013' AND
+																			data_emissao <= '31/12/2013' #{sql_porcentagem}
+	 														)
+	 													) * 100) AS numeric), 2), '990D99') AS perc_vendas")
 
 			itens = itens.group('unidades.id')
 			itens = itens.order(ordenacao)
@@ -178,6 +240,7 @@ class RelatorioDistribuidor < ActiveRecord::Base
 			itens = NotaFiscal.select('produtos.codigo_sistema_legado, produtos.nome AS nome_produto')
 												.select('SUM(nota_fiscais.valor) AS total_vendas')
 												.joins(:produto)
+												.where('nota_fiscais.valor >= 0')
 												.group('produtos.codigo_sistema_legado, produtos.nome')
 												.order(ordenacao)
 
