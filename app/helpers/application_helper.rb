@@ -46,4 +46,12 @@ module ApplicationHelper
     ]
   end
 
+  def tipo_visoes_for_select
+    [
+      ['Cliente', RelatorioDistribuidor::CLIENTES],
+      ['Distribuidor', RelatorioDistribuidor::UNIDADES],
+      ['Produto', RelatorioDistribuidor::PRODUTOS]
+    ]
+  end
+
 end

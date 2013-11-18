@@ -59,6 +59,20 @@ class ModuloEntidade::Administracao::Relatorios::DistribuidoresController < Modu
 ### CURVA ABC DE RODUTOS
 
 
+### ACOMPANHAMENTO MES A MES
+  def acompanhamento_mes_a_mes_index
+    params[:relatorios] ||= {}
+  end
+
+  def acompanhamento_mes_a_mes_run
+    @resultado = RelatorioDistribuidor.acompanhamento_mes_a_mes(params[:relatorios])
+    respond_to do |format|
+      format.js
+    end
+  end
+### ACOMPANHAMENTO MES A MES
+
+
   private
 
     def load_title_end_subtitle
@@ -68,6 +82,7 @@ class ModuloEntidade::Administracao::Relatorios::DistribuidoresController < Modu
         when 'ranking_clientes_index' then 'Ranking de Clientes (Quantidade e Faturamento)'
         when 'vendas_distribuidores_index' then 'Vendas por Distribuidor'
         when 'curva_abc_produtos_index' then 'Curva ABC de Produtos'
+        when 'acompanhamento_mes_a_mes_index' then 'Acompanhamento mês a mês'
         else 'Subtitle'
       end
     end

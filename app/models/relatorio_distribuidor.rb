@@ -15,6 +15,11 @@ class RelatorioDistribuidor < ActiveRecord::Base
   DISTRIBUIDOR = 34223
   VENDA_GERAL	 = 25267
 
+	### TIPO DE VISÕES
+	CLIENTES = 34232
+	PRODUTOS = 10998
+	UNIDADES = 78554
+
 
 	def self.ranking_produtos(params)
 		if params[:data_inicial].blank? || params[:data_final].blank? || params[:tipo_ranking].blank? ||
@@ -48,12 +53,12 @@ class RelatorioDistribuidor < ActiveRecord::Base
 
 			if params[:data_inicial].present?
 				itens = itens.where('nota_fiscais.data_emissao >= ?', params[:data_inicial].to_date)
-				sql_porcentagem += " AND nota_fiscais.data_emissao >= '#{params[:data_inicial].to_date}'"
+				sql_porcentagem += " AND nota_fiscais.data_emissao >= '#{params[:data_inicial].to_date.strftime('%Y-%m-%d')}'"
 			end
 
 			if params[:data_final].present?
 				itens = itens.where('nota_fiscais.data_emissao <= ?', params[:data_final].to_date)
-				sql_porcentagem += " AND nota_fiscais.data_emissao <= '#{params[:data_final].to_date}'"
+				sql_porcentagem += " AND nota_fiscais.data_emissao <= '#{params[:data_final].to_date.strftime('%Y-%m-%d')}'"
 			end
 
 			if params[:unidade_ids].present? && params[:unidade_ids].reject(&:blank?).present?
@@ -70,15 +75,15 @@ class RelatorioDistribuidor < ActiveRecord::Base
 	    												 WHERE #{sql_porcentagem}    															 			 
 	   													)) * 100
 														) AS numeric), 2), '990D99') AS perc_faturamento")
-		itens = itens.select("to_char(ROUND(CAST(float8(
-													(
+			itens = itens.select("to_char(ROUND(CAST(float8(
+													 (
 	   												SUM(nota_fiscais.quantidade) /
 	   												(SELECT SUM(nota_fiscais.quantidade)
 	    											 FROM nota_fiscais
 																INNER JOIN produtos ON produtos.id = nota_fiscais.produto_id
 	    											 WHERE #{sql_porcentagem}
 	    											)) * 100
-													) AS numeric), 2), '990D99') AS perc_quantidade")
+													 ) AS numeric), 2), '990D99') AS perc_quantidade")
 
 			itens = itens.group('produtos.codigo_sistema_legado, produtos.nome')
 			itens = itens.order(ordenacao)
@@ -125,12 +130,12 @@ class RelatorioDistribuidor < ActiveRecord::Base
 
 			if params[:data_inicial].present?
 				itens = itens.where('nota_fiscais.data_emissao >= ?', params[:data_inicial].to_date)
-				sql_porcentagem += " AND nota_fiscais.data_emissao >= '#{params[:data_inicial].to_date}'"
+				sql_porcentagem += " AND nota_fiscais.data_emissao >= '#{params[:data_inicial].to_date.strftime('%Y-%m-%d')}'"
 			end
 
 			if params[:data_final].present?
 				itens = itens.where('nota_fiscais.data_emissao <= ?', params[:data_final].to_date)
-				sql_porcentagem += " AND nota_fiscais.data_emissao <= '#{params[:data_final].to_date}'"
+				sql_porcentagem += " AND nota_fiscais.data_emissao <= '#{params[:data_final].to_date.strftime('%Y-%m-%d')}'"
 			end
 
 			if params[:unidade_ids].present? && params[:unidade_ids].reject(&:blank?).present?
@@ -190,12 +195,12 @@ class RelatorioDistribuidor < ActiveRecord::Base
 
 			if params[:data_inicial].present?
 				itens = itens.where('nota_fiscais.data_emissao >= ?', params[:data_inicial].to_date)
-				sql_porcentagem += " AND nota_fiscais.data_emissao >= '#{params[:data_inicial].to_date}'"
+				sql_porcentagem += " AND nota_fiscais.data_emissao >= '#{params[:data_inicial].to_date.strftime('%Y-%m-%d')}'"
 			end
 
 			if params[:data_final].present?
 				itens = itens.where('nota_fiscais.data_emissao <= ?', params[:data_final].to_date)
-				sql_porcentagem += " AND nota_fiscais.data_emissao <= '#{params[:data_final].to_date}'"
+				sql_porcentagem += " AND nota_fiscais.data_emissao <= '#{params[:data_final].to_date.strftime('%Y-%m-%d')}'"
 			end
 
 			if params[:unidade_ids].present? && params[:unidade_ids].reject(&:blank?).present?
@@ -216,7 +221,7 @@ class RelatorioDistribuidor < ActiveRecord::Base
 	 		 												 WHERE #{sql_porcentagem}
 	 														)) * 100
 														) AS numeric), 2), '990D99') AS perc_vendas")
-
+			
 			itens = itens.group('unidades.id')
 			itens = itens.order(ordenacao)
 
@@ -225,6 +230,7 @@ class RelatorioDistribuidor < ActiveRecord::Base
 			[true, itens, total_vendas]
 		end
 	end
+
 
 	def self.curva_abc_produtos(params)
 		if params[:data_inicial].blank? || params[:data_final].blank? || params[:ordenacao].blank? ||
@@ -254,12 +260,12 @@ class RelatorioDistribuidor < ActiveRecord::Base
 
 			if params[:data_inicial].present?
 				itens = itens.where('nota_fiscais.data_emissao >= ?', params[:data_inicial].to_date)
-				sql_porcentagem += " AND nota_fiscais.data_emissao >= '#{params[:data_inicial].to_date}'"
+				sql_porcentagem += " AND nota_fiscais.data_emissao >= '#{params[:data_inicial].to_date.strftime('%Y-%m-%d')}'"
 			end
 
 			if params[:data_final].present?
 				itens = itens.where('nota_fiscais.data_emissao <= ?', params[:data_final].to_date)
-				sql_porcentagem += " AND nota_fiscais.data_emissao <= '#{params[:data_final].to_date}'"
+				sql_porcentagem += " AND nota_fiscais.data_emissao <= '#{params[:data_final].to_date.strftime('%Y-%m-%d')}'"
 			end
 
 			if params[:unidade_ids].present? && params[:unidade_ids].reject(&:blank?).present?
@@ -287,6 +293,129 @@ class RelatorioDistribuidor < ActiveRecord::Base
 			itens.each{|item| total_vendas += item[:total_vendas].to_f }
 
 			[true, itens, total_vendas]
+		end
+	end
+
+
+	def self.acompanhamento_mes_a_mes(params)
+		if params[:data_inicial].blank? || params[:data_final].blank? || params[:tipo_ranking].blank? ||
+			 params[:tipo_visao].blank? || params[:ordenacao].blank?
+			[false, 'Sem registros encontrados. Verifique os parâmetros da pesquisa.']
+		else
+			resultado ||= {}
+
+			if params[:tipo_ranking].to_i == FATURAMENTO
+				if params[:ordenacao].to_i == MAIORES
+					ordenacao = 'SUM(nota_fiscais.valor) DESC'
+				elsif params[:ordenacao].to_i == MENORES
+					ordenacao = 'SUM(nota_fiscais.valor) ASC'
+				end
+			elsif params[:tipo_ranking].to_i == QUANTIDADE
+				if params[:ordenacao].to_i == MAIORES
+					ordenacao = 'SUM(nota_fiscais.quantidade) DESC'
+				elsif params[:ordenacao].to_i == MENORES
+					ordenacao = 'SUM(nota_fiscais.quantidade) ASC'
+				end
+			end
+
+			if params[:tipo_visao].to_i == CLIENTES
+				itens = NotaFiscal.select('clientes.codigo_sistema_legado')
+													.select('clientes.nome_razao_social')
+													.joins(:cliente)
+													.where('nota_fiscais.valor >= 0')
+													.group('clientes.codigo_sistema_legado, clientes.nome_razao_social')
+			elsif params[:tipo_visao].to_i == PRODUTOS
+				itens = NotaFiscal.select('produtos.codigo_sistema_legado')
+													.select('produtos.nome')
+													.joins(:produto)
+													.where('nota_fiscais.valor >= 0')
+													.group('produtos.codigo_sistema_legado, produtos.nome')
+			elsif params[:tipo_visao].to_i == UNIDADES
+				itens = NotaFiscal.select('unidades.nome')
+													.joins(:unidade)
+													.where('nota_fiscais.valor >= 0')
+													.group('unidades.id')
+			end
+			
+			if params[:data_inicial].present?
+				itens = itens.where('nota_fiscais.data_emissao >= ?', params[:data_inicial].to_date)
+				#sql_porcentagem += " AND nota_fiscais.data_emissao >= '#{params[:data_inicial].to_date.strftime('%Y-%m-%d')}'"
+			end
+
+			if params[:data_final].present?
+				itens = itens.where('nota_fiscais.data_emissao <= ?', params[:data_final].to_date)
+				#sql_porcentagem += " AND nota_fiscais.data_emissao <= '#{params[:data_final].to_date.strftime('%Y-%m-%d')}'"
+			end
+
+			if params[:unidade_ids].present? && params[:unidade_ids].reject(&:blank?).present?
+				itens = itens.where(unidade_id: params[:unidade_ids].reject(&:blank?))
+				#sql_porcentagem += " AND nota_fiscais.unidade_id IN(#{params[:unidade_ids].reject(&:blank?).join(', ')})"
+			end
+
+			if params[:produto_ids].present? && params[:produto_ids].reject(&:blank?).present?
+				itens = itens.where(produto_id: params[:produto_ids].reject(&:blank?))
+				#sql_porcentagem += " AND nota_fiscais.produto_id IN(#{params[:produto_ids].reject(&:blank?).join(', ')})"
+			end
+
+			itens = itens.order(ordenacao)
+
+			if itens.present?
+				itens.each do |item|
+					(params[:data_inicial].to_date.year..params[:data_final].to_date.year).each do |ano|
+						(params[:data_inicial].to_date.month..params[:data_final].to_date.month).each do |mes|
+							if params[:tipo_visao].to_i == CLIENTES
+								mensal = NotaFiscal.select('SUM(nota_fiscais.valor) AS vendas_mensal')
+															 		 .select('SUM(nota_fiscais.quantidade) AS quantidade_mensal')
+																	 .joins(:cliente)
+																	 .where('nota_fiscais.valor >= 0')
+																	 .where("date_part('MONTH', nota_fiscais.data_emissao) = '#{mes}'")
+																	 .where("date_part('YEAR', nota_fiscais.data_emissao) = '#{ano}'")
+																	 .where("clientes.codigo_sistema_legado = '#{item[:codigo_sistema_legado].strip}'")
+																	 .where("clientes.nome_razao_social = '#{item[:nome_razao_social].strip}'")
+								indice = "#{item[:codigo_sistema_legado]} - #{item[:nome_razao_social]}"
+							elsif params[:tipo_visao].to_i == PRODUTOS
+								mensal = NotaFiscal.select('SUM(nota_fiscais.valor) AS vendas_mensal')
+															 		 .select('SUM(nota_fiscais.quantidade) AS quantidade_mensal')
+																	 .joins(:produto)
+																	 .where('nota_fiscais.valor >= 0')
+																	 .where("date_part('MONTH', nota_fiscais.data_emissao) = '#{mes}'")
+																	 .where("date_part('YEAR', nota_fiscais.data_emissao) = '#{ano}'")
+																	 .where("produtos.codigo_sistema_legado = '#{item[:codigo_sistema_legado].strip}'")
+																	 .where("produtos.nome = '#{item[:nome].strip}'")
+								indice = "#{item[:codigo_sistema_legado]} - #{item[:nome]}"
+							elsif params[:tipo_visao].to_i == UNIDADES
+								mensal = NotaFiscal.select('SUM(nota_fiscais.valor) AS vendas_mensal')
+															 		 .select('SUM(nota_fiscais.quantidade) AS quantidade_mensal')
+																	 .joins(:unidade)
+																	 .where('nota_fiscais.valor >= 0')
+																	 .where("date_part('MONTH', nota_fiscais.data_emissao) = '#{mes}'")
+																	 .where("date_part('YEAR', nota_fiscais.data_emissao) = '#{ano}'")
+																	 .where("unidades.nome = '#{item[:nome].strip}'")
+								indice = item[:nome]
+							end
+
+							valor_mensal_vendas = mensal.first[:vendas_mensal].blank? ? 0 : mensal.first[:vendas_mensal].to_f
+							valor_mensal_quantidade = mensal.first[:quantidade_mensal].blank? ? 0 : mensal.first[:quantidade_mensal].to_f
+							resultado[indice] ||= {}
+							resultado[indice][ano] ||= {}
+							resultado[indice][ano][mes] ||= {}
+							resultado[indice][ano][mes][:vendas_mensal] = valor_mensal_vendas
+							resultado[indice][ano][mes][:quantidade_mensal] = valor_mensal_quantidade
+
+							resultado[:totais] ||= {}
+							resultado[:totais][ano] ||= {}
+							resultado[:totais][ano][mes] ||= {}
+							resultado[:totais][ano][mes][:total_vendas] ||= 0
+							resultado[:totais][ano][mes][:total_vendas] = resultado[:totais][ano][mes][:total_vendas] + valor_mensal_vendas
+							resultado[:totais][ano][mes][:total_quantidade] ||= 0
+							resultado[:totais][ano][mes][:total_quantidade] = resultado[:totais][ano][mes][:total_quantidade] + valor_mensal_quantidade
+						end
+					end
+				end
+				[true, resultado]
+			else
+				[false, 'Sem registros encontrados. Verifique os parâmetros da pesquisa.']
+			end
 		end
 	end
 

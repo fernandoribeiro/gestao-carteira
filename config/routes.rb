@@ -94,6 +94,8 @@ TrippingOcto::Application.routes.draw do
             post :vendas_distribuidores_run
             get  :curva_abc_produtos_index
             post :curva_abc_produtos_run
+            get  :acompanhamento_mes_a_mes_index
+            post :acompanhamento_mes_a_mes_run
           end
         end
 
