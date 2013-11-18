@@ -2,7 +2,7 @@
 
 class ModuloEntidade::Administracao::MetasController < ModuloEntidade::AdminitracaoController
   
-   def index
+  def index
     params[:pesquisa] ||= {}
     @metas = Meta.joins(:unidade).where("unidades.entidade_id = ?",current_entidade).page(params[:page]).per(20)
   end

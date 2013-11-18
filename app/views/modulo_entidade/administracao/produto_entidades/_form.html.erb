@@ -1,0 +1,53 @@
+<%= form_for [:entidade, :administracao, @produto_entidade], html: { class: 'form-horizontal' } do |f| %>
+  <div class="control-group <%= error_class_for f.object, :codigo %>">
+    <%= f.label :codigo, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :codigo, maxlength: 255 %>
+      <%= error_info_for f.object, :codigo  %>
+    </div>
+  </div>
+
+  <div class="control-group <%= error_class_for f.object, :descricao %>">
+    <%= f.label :descricao, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_area :descricao, rows: 3 %>
+      <%= error_info_for f.object, :descricao  %>
+    </div>
+  </div>
+
+  <div class="control-group <%= error_class_for f.object, :ean %>">
+    <%= f.label :ean, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :ean, maxlength: 255 %>
+      <%= error_info_for f.object, :ean  %>
+    </div>
+  </div>
+
+  <div class="control-group <%= error_class_for f.object, :marca %>">
+    <%= f.label :marca, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :marca, maxlength: 255 %>
+      <%= error_info_for f.object, :marca  %>
+    </div>
+  </div>
+
+  <div class="control-group <%= error_class_for f.object, :peso %>">
+    <%= f.label :peso, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :peso, maxlength: 255, class: 'decimal' %>
+      <%= error_info_for f.object, :peso  %>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit 'Salvar', class: 'btn btn-primary', data: { disable_with: 'Salvando...' } %>
+    <%= link_to 'Cancelar', [:entidade, :administracao, :produto_entidades], class: 'btn' %>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  jQuery(function($) {
+    initializeDecimalMask();
+  });
+</script>
+

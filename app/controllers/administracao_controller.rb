@@ -9,24 +9,26 @@ class AdministracaoController < ApplicationController
   def index
   end
 
+
   private
-  def authenticate_usuario!
-    unless user_authenticated?
-      redirect_to administracao_sign_in_path
+  
+    def authenticate_usuario!
+      unless user_authenticated?
+        redirect_to administracao_sign_in_path
+      end
     end
-  end
 
-  def user_authenticated?
-    current_user.present?
-  end
+    def user_authenticated?
+      current_user.present?
+    end
 
-  def current_user
-    @current_user ||= UsuarioAdministrador.find_by_active_and_autentication_token(true, cookies[:autentication_token]) if cookies[:autentication_token]
-  end
+    def current_user
+      @current_user ||= UsuarioAdministrador.find_by_active_and_autentication_token(true, cookies[:autentication_token]) if cookies[:autentication_token]
+    end
 
-  def load_title_end_subtitle
-    @title = 'Gestão de Carteira'
-    @subtitle = 'Administração'
-  end
+    def load_title_end_subtitle
+      @title = 'Gestão de Carteira'
+      @subtitle = 'Administração'
+    end
 
 end

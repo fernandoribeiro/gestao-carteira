@@ -30,17 +30,19 @@
                   <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
-                  <li><%= link_to 'Unidades', [:entidade, :administracao, :unidades] %></li>
-                  <li class="divider"></li>
                   <li><%= link_to 'Clientes', [:entidade, :administracao, :clientes] %></li>
+                  <li class="divider"></li>
+                  <li><%= link_to 'Metas', [:entidade, :administracao, :metas] %></li>
                   <li class="divider"></li>
                   <li><%= link_to 'Produtos', [:entidade, :administracao, :produtos] %></li>
                   <li class="divider"></li>
-                  <li><%= link_to 'Vendedores', [:entidade, :administracao, :vendedores] %></li>
+                  <li><%= link_to 'Produtos da Entidade', [:entidade, :administracao, :produto_entidades] %></li>
+                  <li class="divider"></li>
+                  <li><%= link_to 'Unidades', [:entidade, :administracao, :unidades] %></li>
                   <li class="divider"></li>
                   <li><%= link_to 'Usuários', [:entidade, :administracao, :usuario_entidades] %></li>
                   <li class="divider"></li>
-                  <li><%= link_to 'Metas', [:entidade, :administracao, :metas] %></li>
+                  <li><%= link_to 'Vendedores', [:entidade, :administracao, :vendedores] %></li>
                 </ul>
               </li>
 

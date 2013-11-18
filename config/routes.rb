@@ -62,6 +62,8 @@ TrippingOcto::Application.routes.draw do
       resources :vendedores
       resources :vendedor_temps
 
+      resources :produto_entidades
+
       resources :conjunto_indicadores do
         collection do
           match :validar_new

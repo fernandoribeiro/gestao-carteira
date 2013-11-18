@@ -1,0 +1,16 @@
+pt-BR:
+  activerecord:
+    attributes:
+      produto_entidade:
+        codigo: 'Código'
+        descricao: 'Descrição'
+        ean: 'EAN'
+        marca: 'Marca'
+        peso: 'Peso'
+        entidade: 'Entidade'
+        entidade_id: 'Entidade'
+    errors:
+      models:
+        produto_entidade:
+    models:
+      produto_entidade: 'Produto da Entidade'

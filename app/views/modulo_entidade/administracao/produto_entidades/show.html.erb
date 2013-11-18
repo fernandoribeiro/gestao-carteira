@@ -1,0 +1,11 @@
+<%= show_if_present('Código', @produto_entidade.codigo) %>
+<%= show_if_present('Marca', @produto_entidade.marca) %>
+<%= show_if_present('Descrição', @produto_entidade.descricao) %>
+<%= show_if_present('EAN', @produto_entidade.ean) %>
+<%= show_if_present('Peso', @produto_entidade.peso) %>
+<%= show_if_present('Entidade', @produto_entidade.entidade.nome) %>
+
+<div class="form-actions">
+	<%= link_to 'Alterar', [:edit, :entidade, :administracao, @produto_entidade], class: 'btn btn-primary' %>
+  <%= link_to 'Voltar', [:entidade, :administracao, :produto_entidades], class: 'btn' %>
+</div>
