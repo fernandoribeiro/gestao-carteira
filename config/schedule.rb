@@ -7,8 +7,5 @@ set :output, { error: 'log/error.log', standard: 'log/cron.log' }
 # end
 
 every 30.minutes do
-	runner "ClienteTemp.popula_tabela_master"
-	runner "ProdutoTemp.popula_tabela_master"
-	runner "VendedorTemp.popula_tabela_master"
-  runner "NotaFiscalTemp.popula_tabela_master"
+	runner "Agendamento.popula_tabelas_master"
 end
