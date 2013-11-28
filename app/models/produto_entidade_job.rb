@@ -3,10 +3,9 @@
 class ProdutoEntidadeJob < ActiveRecord::Base
 
 	### STATUS
-  ESPERA = 1
-  EXECUCAO = 2
-  SUCESSO = 3
-  ERROS = 4
+  ESPERA  = 19875
+  SUCESSO = 23545
+  ERROS   = 43587
 
   attr_accessible :nome
   attr_accessible :status
@@ -22,7 +21,7 @@ class ProdutoEntidadeJob < ActiveRecord::Base
   validates :nome, presence: true
   validates :arquivo, presence: true
   validates :entidade, presence: true
-  validates :status, inclusion: { in: [ESPERA, EXECUCAO, SUCESSO, ERROS] }
+  validates :status, inclusion: { in: [ESPERA, SUCESSO, ERROS] }
 
 
   def initialize(attributes = {})
@@ -33,7 +32,6 @@ class ProdutoEntidadeJob < ActiveRecord::Base
   def status_verbose
   	case status
     when ESPERA; 'Espera'
-	 	when EXECUCAO; 'Execução'
 	 	when SUCESSO; 'Sucesso'
 	 	when ERROS; 'Erros'
   	end
@@ -47,18 +45,18 @@ class ProdutoEntidadeJob < ActiveRecord::Base
       (2..spreadsheet.last_row).each do |i|
         row = Hash[[header, spreadsheet.row(i)].transpose]
 
-        categoria = row['CATEGORIA'].strip
-        descricao = row['DESCRIÇÃO'].strip
+        categoria = row['CATEGORIA'].strip.upcase
+        descricao = row['DESCRIÇÃO'].strip.upcase
         ean = row['EAN - 13'].to_s.gsub('.0', '').strip rescue nil
-        peso_unid = row['PESO UNID.'].strip
+        # peso_unid = row['PESO UNID.'].strip
 
         produto_base = ProdutoEntidade.find_by_entidade_id_and_marca_and_descricao(entidade_id, categoria, descricao)
         produto_base = ProdutoEntidade.new if produto_base.blank?
-				produto_base.codigo = ean
-				produto_base.descricao = descricao
-				produto_base.marca = categoria
-				produto_base.ean = ean
-				# produto_base.peso = peso
+				produto_base.codigo      = ean
+				produto_base.descricao   = descricao
+				produto_base.marca       = categoria
+				produto_base.ean         = ean
+				# produto_base.peso        = peso_unid
   			produto_base.entidade_id = entidade_id
         produto_base.save
       end

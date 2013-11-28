@@ -1,0 +1,30 @@
+<p>
+  <b>Nome:</b>
+  <%= @de_para_produto_job.nome %>
+</p>
+
+<p>
+  <b>Unidade:</b>
+  <%= @de_para_produto_job.unidade.nome %>
+</p>
+
+<p>
+  <b>Arquivo:</b>
+  <%= @de_para_produto_job.arquivo_url %>
+</p>
+
+<p>
+  <b>Situação:</b>
+  <%= @de_para_produto_job.status_verbose %>
+</p>
+
+<p>
+  <b>Resultado:</b>
+  <%= @de_para_produto_job.resultado %>
+  <%= link_to 'Download', [:download_file, :entidade, :administracao, @de_para_produto_job] if [DeParaProdutoJob::AVISOS, DeParaProdutoJob::ERROS].include?(@de_para_produto_job.status) %>  
+</p>
+
+<div class="form-actions">
+  <%= link_to 'Voltar', [:entidade, :administracao, :de_para_produto_jobs], class: 'btn' %>
+</div>
+

@@ -68,6 +68,12 @@ TrippingOcto::Application.routes.draw do
           get :download_file
         end
       end
+      resources :de_para_produtos
+      resources :de_para_produto_jobs do
+        member do 
+          get :download_file
+        end
+      end
 
       resources :conjunto_indicadores do
         collection do
