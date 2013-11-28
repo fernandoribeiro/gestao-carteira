@@ -1,0 +1,82 @@
+#encoding: UTF-8
+
+class ProdutoEntidadeJob < ActiveRecord::Base
+
+	### STATUS
+  ESPERA = 1
+  EXECUCAO = 2
+  SUCESSO = 3
+  ERROS = 4
+
+  attr_accessible :nome
+  attr_accessible :status
+  attr_accessible :resultado
+  attr_accessible :arquivo
+  attr_accessible :arquivo_cache
+  attr_accessible :entidade_id
+
+	mount_uploader :arquivo, ProdutoEntidadeJobUploader
+
+  belongs_to :entidade
+
+  validates :nome, presence: true
+  validates :arquivo, presence: true
+  validates :entidade, presence: true
+  validates :status, inclusion: { in: [ESPERA, EXECUCAO, SUCESSO, ERROS] }
+
+
+  def initialize(attributes = {})
+    attributes['status'] ||= ESPERA
+    super
+  end
+
+  def status_verbose
+  	case status
+    when ESPERA; 'Espera'
+	 	when EXECUCAO; 'Execução'
+	 	when SUCESSO; 'Sucesso'
+	 	when ERROS; 'Erros'
+  	end
+  end
+
+  def run_importacao
+  	begin
+      spreadsheet = Excel.new(self.arquivo.path, nil, :ignore)
+      header = spreadsheet.row(1)
+      entidade_id = self.entidade_id
+      (2..spreadsheet.last_row).each do |i|
+      	p i
+        row = Hash[[header, spreadsheet.row(i)].transpose]
+
+        categoria = row['CATEGORIA'].strip
+        descricao = row['DESCRIÇÃO'].strip
+        ean = row['EAN - 13'].strip
+        peso_unid = row['PESO UNID.'].strip
+
+        produto_base = ProdutoEntidade.find_by_entidade_id_and_categoria_and_descricao(entidade_id, categoria, descricao)
+        produto_base = ProdutoEntidade.new if produto_base.blank?
+				produto_base.codigo = ean
+				produto_base.descricao = descricao
+				produto_base.marca = categoria
+				produto_base.ean = ean
+				# produto_base.peso = peso
+  			produto_base.entidade_id = entidade_id
+        produto_base.save
+      end
+      self.status = EXECUTADA
+      self.resultado = 'Importação executada com sucesso!'
+      self.save
+      return true
+    rescue Exception => e
+      FileUtils.mkdir_p("#{Rails.root.to_s}/log/java/produtos_base/produtos_base_#{self.id}/")
+      File.open("#{Rails.root.to_s}/log/java/produtos_base/produtos_base_#{self.id}/erros_#{self.id}.log", "wb") do |f|
+        f.write(e)   
+      end
+      self.status = ERROS
+      self.resultado = 'A importação possui erros. Verifique o arquivo de log gerado.'
+      self.save
+      return false
+    end
+  end
+
+end

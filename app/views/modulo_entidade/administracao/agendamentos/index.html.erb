@@ -57,6 +57,9 @@
     <% end %>
   </tbody>
 </table>
+
+<%= paginate @agendamentos %>
+
 <div class="form-actions">
   <%= link_to [:new,:entidade,:administracao,:agendamento], class: "btn btn-primary" do %>
     <i class='icon-file icon-white'></i> Novo

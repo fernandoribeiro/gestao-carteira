@@ -153,8 +153,8 @@ class Agendamento < ActiveRecord::Base
       self.status = EXECUTADA
       self.save
       return true
-    rescue Exception=>e
-       FileUtils.mkdir_p("#{Rails.root.to_s}/log/java/agendamento/agendamento_#{self.id}/")
+    rescue Exception => e
+      FileUtils.mkdir_p("#{Rails.root.to_s}/log/java/agendamento/agendamento_#{self.id}/")
       File.open("#{Rails.root.to_s}/log/java/agendamento/agendamento_#{self.id}/erros_#{self.id}.log", "wb") do |f|     
         f.write(e)   
       end

@@ -63,6 +63,11 @@ TrippingOcto::Application.routes.draw do
       resources :vendedor_temps
 
       resources :produto_entidades
+      resources :produto_entidade_jobs do
+        member do 
+          get :download_file
+        end
+      end
 
       resources :conjunto_indicadores do
         collection do

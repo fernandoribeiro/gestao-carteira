@@ -1,0 +1,25 @@
+<%= form_for [:entidade, :administracao, @produto_entidade_job] do |f| %>
+
+  <div class="control-group <%= error_class_for f.object, :nome %>">
+    <%= f.label :nome, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :nome, class: 'input-xxlarge', maxlength: 255 %>
+      <%= error_info_for f.object, :nome %>
+    </div>
+  </div>
+
+  <div class="control-group <%= error_class_for f.object, :arquivo %>">
+    <%= f.label :arquivo, class: "control-label" %>
+    <div class="controls">
+      <%= f.file_field :arquivo %>
+      <%= f.hidden_field :arquivo_cache %>
+      <%= error_info_for f.object, :arquivo %>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit 'Salvar', class: 'btn btn-primary', data: { disable_with: 'Salvando...' } %>
+    <%= link_to 'Cancelar', [:entidade, :administracao, :produto_entidade_jobs], class: 'btn' %>
+  </div>
+
+<% end %>

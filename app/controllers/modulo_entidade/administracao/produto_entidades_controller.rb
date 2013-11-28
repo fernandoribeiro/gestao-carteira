@@ -41,22 +41,27 @@ class ModuloEntidade::Administracao::ProdutoEntidadesController < ModuloEntidade
   def destroy
     @produto_entidade = ProdutoEntidade.find(params[:id])
     @produto_entidade.destroy
-    redirect_to [:entidade, :administracao, :produto_entidades], notice: {success: 'Produto da Entidade removido com sucesso.'}
+    redirect_to [:entidade, :administracao, :produto_entidades], notice: { success: 'Produto da Entidade removido com sucesso.' }
+  end
+
+  def importacoes
+    @importacoes = ProdutoEntidadeJob.where(entidade_id: current_entidade.id).page(params[:page]).per(20)
   end
 
 
   private
 
-  def load_title_end_subtitle
-    @title = case params[:action]
-      when 'index' then 'Produtos da Entidade'
-      when 'new' then 'Novo Produto da Entidade'
-      when 'create' then 'Novo Produto da Entidade'
-      when 'edit' then 'Editar Produto da Entidade'
-      when 'update' then 'Atualizar Produto da Entidade'
-      when 'show' then 'Detalhes do Produto da Entidade'
-      else 'SubTitle'
+    def load_title_end_subtitle
+      @title = case params[:action]
+        when 'index' then 'Produtos da Entidade'
+        when 'new' then 'Novo Produto da Entidade'
+        when 'create' then 'Novo Produto da Entidade'
+        when 'edit' then 'Editar Produto da Entidade'
+        when 'update' then 'Atualizar Produto da Entidade'
+        when 'show' then 'Detalhes do Produto da Entidade'
+        when 'importacoes' then 'Importação de Produtos Base'
+        else 'SubTitle'
+      end
     end
-  end
 
 end

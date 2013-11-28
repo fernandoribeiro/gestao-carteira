@@ -1,0 +1,34 @@
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Resultado</th>
+      <th>Status</th>
+      <th>Log</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @produto_entidade_jobs.any? %>
+      <% @produto_entidade_jobs.each do |job| %>
+        <tr>
+          <td><%= job.nome %></td>
+          <td><%= job.retorno.html_safe rescue 'Não processado' %></td>
+          <td><%= job.status_verbose %></td>
+          <td><%= link_to 'Download', [:download_file, :entidade, :administracao, job] if job.status == ProdutoEntidadeJob::ERROS %></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="4">Nenhum dado para exibir.</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @produto_entidade_jobs %>
+
+<div class="form-actions">
+  <%= link_to [:new, :entidade, :administracao, :produto_entidade_job], class: 'btn btn-primary' do %>
+    <i class="icon-file icon-white"></i> Novo
+  <% end %>
+</div>

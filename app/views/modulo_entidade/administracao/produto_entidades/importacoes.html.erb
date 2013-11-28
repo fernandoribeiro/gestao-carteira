@@ -1,0 +1,36 @@
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>ID do Job</th>
+      <th>ID da Importação</th>
+      <th>Resultado</th>
+      <th>Status</th>
+      <th>Arquivo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @produto_entidade_jobs.any? %>
+      <% @produto_entidade_jobs.each do |job| %>
+        <tr>
+          <td><%= job.id %></td>
+          <td><%= job.item_importacao_id %></td>
+          <td><%= job.retorno.html_safe rescue 'Não processado' %></td>
+          <td><%= job.status_verbose %></td>
+          <td><%= link_to 'Download', [:download_file, :entidade, :administracao, job] if job.status == ItemImportacaoJob::ERROS %></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="5">Nenhum dado para exibir.</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @produto_entidade_jobs %>
+
+<div class="form-actions">
+  <%= link_to [:new, :entidade, :administracao, :produto_entidade_job], class: 'btn btn-primary' do %>
+    <i class="icon-file icon-white"></i> Novo
+  <% end %>
+</div>
