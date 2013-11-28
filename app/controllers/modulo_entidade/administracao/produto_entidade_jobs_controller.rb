@@ -29,6 +29,12 @@ class ModuloEntidade::Administracao::ProdutoEntidadeJobsController < ModuloEntid
     end
   end
 
+  def destroy
+    @produto_entidade_job = ProdutoEntidadeJob.find(params[:id])
+    @produto_entidade_job.destroy
+    redirect_to [:entidade, :administracao, :produto_entidade_jobs], notice: { success: 'Importação excluída com sucesso!' }
+  end
+
   def download_file
     @produto_entidade_job = ProdutoEntidadeJob.find(params[:id])
     send_file(Rails.root.join('log', 'java', 'produtos_base', "produtos_base_#{@produto_entidade_job.id}", "erros_#{@produto_entidade_job.id}.log"), type: 'text/plain', filename: "erros_#{@produto_entidade_job.id}.log")

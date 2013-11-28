@@ -45,15 +45,14 @@ class ProdutoEntidadeJob < ActiveRecord::Base
       header = spreadsheet.row(1)
       entidade_id = self.entidade_id
       (2..spreadsheet.last_row).each do |i|
-      	p i
         row = Hash[[header, spreadsheet.row(i)].transpose]
 
         categoria = row['CATEGORIA'].strip
         descricao = row['DESCRIÇÃO'].strip
-        ean = row['EAN - 13'].strip
+        ean = row['EAN - 13'].to_s.gsub('.0', '').strip rescue nil
         peso_unid = row['PESO UNID.'].strip
 
-        produto_base = ProdutoEntidade.find_by_entidade_id_and_categoria_and_descricao(entidade_id, categoria, descricao)
+        produto_base = ProdutoEntidade.find_by_entidade_id_and_marca_and_descricao(entidade_id, categoria, descricao)
         produto_base = ProdutoEntidade.new if produto_base.blank?
 				produto_base.codigo = ean
 				produto_base.descricao = descricao
@@ -63,7 +62,7 @@ class ProdutoEntidadeJob < ActiveRecord::Base
   			produto_base.entidade_id = entidade_id
         produto_base.save
       end
-      self.status = EXECUTADA
+      self.status = SUCESSO
       self.resultado = 'Importação executada com sucesso!'
       self.save
       return true

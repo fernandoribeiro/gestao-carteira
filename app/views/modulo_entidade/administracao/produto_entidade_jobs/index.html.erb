@@ -5,6 +5,7 @@
       <th>Resultado</th>
       <th>Status</th>
       <th>Log</th>
+      <th>Ações</th>
     </tr>
   </thead>
   <tbody>
@@ -15,11 +16,30 @@
           <td><%= job.retorno.html_safe rescue 'Não processado' %></td>
           <td><%= job.status_verbose %></td>
           <td><%= link_to 'Download', [:download_file, :entidade, :administracao, job] if job.status == ProdutoEntidadeJob::ERROS %></td>
+          <td>
+            <div class="btn-group">
+              <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+                Ações<span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <%= link_to [:entidade, :administracao, job] do %>
+                    <i class='icon-eye-open'></i> Detalhes
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to [:entidade, :administracao, job], method: :delete, data: { confirm: 'Deseja realmente excluir este registro?' } do %>
+                    <i class='icon-repeat'></i> Excluir
+                  <% end %>
+                </li>
+              </ul>
+            </div>
+          </td>
         </tr>
       <% end %>
     <% else %>
       <tr>
-        <td colspan="4">Nenhum dado para exibir.</td>
+        <td colspan="5">Nenhum dado para exibir.</td>
       </tr>
     <% end %>
   </tbody>

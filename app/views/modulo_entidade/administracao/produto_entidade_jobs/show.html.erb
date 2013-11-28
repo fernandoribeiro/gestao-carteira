@@ -1,0 +1,29 @@
+<p>
+  <b>Nome:</b>
+  <%= @produto_entidade_job.nome %>
+</p>
+
+<p>
+  <b>Entidade:</b>
+  <%= @produto_entidade_job.entidade.nome %>
+</p>
+
+<p>
+  <b>Arquivo:</b>
+  <%= @produto_entidade_job.arquivo_url %>
+</p>
+
+<p>
+  <b>Situação:</b>
+  <%= @produto_entidade_job.status_verbose %>
+</p>
+
+<p>
+  <b>Resultado:</b>
+  <%= @produto_entidade_job.resultado %>
+</p>
+
+<div class="form-actions">
+  <%= link_to 'Voltar', [:entidade, :administracao, :produto_entidade_jobs], class: 'btn' %>
+</div>
+
