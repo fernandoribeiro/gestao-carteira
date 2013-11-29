@@ -1,5 +1,7 @@
-<% params[:relatorios][:tipo_visao] = RelatorioDistribuidor::CLIENTES if params[:relatorios][:tipo_visao].to_i %>
-<% if params[:relatorios][:tipo_visao].to_i == RelatorioDistribuidor::CLIENTES %>
+<%# params[:relatorios][:tipo_visao] = RelatorioDistribuidor::CLIENTES if params[:relatorios][:tipo_visao].to_i %>
+<% if params[:relatorios][:tipo_visao].to_i == RelatorioDistribuidor::CATEGORIA %>
+	$('#result_table').html('<%= escape_javascript(render(partial: "acompanhamento_mes_a_mes_categorias_result")) %>');
+<% elsif params[:relatorios][:tipo_visao].to_i == RelatorioDistribuidor::CLIENTES %>
 	$('#result_table').html('<%= escape_javascript(render(partial: "acompanhamento_mes_a_mes_clientes_result")) %>');
 <% elsif params[:relatorios][:tipo_visao].to_i == RelatorioDistribuidor::PRODUTOS %>
 	$('#result_table').html('<%= escape_javascript(render(partial: "acompanhamento_mes_a_mes_produtos_result")) %>');

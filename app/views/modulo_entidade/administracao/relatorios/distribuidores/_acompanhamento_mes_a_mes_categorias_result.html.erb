@@ -15,7 +15,7 @@
 	    	<% end %>
 	    </tr>
 	    <tr>
-	    	<th>Produto</th>
+	    	<th>Categoria</th>
 	    	<% (params[:relatorios][:data_inicial].to_date.year..params[:relatorios][:data_final].to_date.year).each do |ano| %>
 	    		<% (params[:relatorios][:data_inicial].to_date.month..params[:relatorios][:data_final].to_date.month).each do |mes| %>
 	    			<th>Fat.</th>
@@ -25,10 +25,10 @@
 	    </tr>
 	  </thead>
   	<tbody id="resultado_relatorio">
-			<% @resultado.last.each do |produto, dados| %>
+			<% @resultado.last.each do |categoria, dados| %>
 				<tr>
-					<% if produto.is_a?(String) %>
-						<td><%= produto %></td>
+					<% if categoria.is_a?(String) %>
+						<td><%= categoria %></td>
 					<% end %>
 					<% dados.each do |ano, meses| %>
 						<% meses.each do |mes, valores| %>

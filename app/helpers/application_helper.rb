@@ -40,7 +40,7 @@ module ApplicationHelper
 
   def tipo_agrupamento_for_select
     [
-      # ['Categoria', RelatorioDistribuidor::CATEGORIA],
+      ['Categoria', RelatorioDistribuidor::CATEGORIA],
       ['Distribuidor', RelatorioDistribuidor::DISTRIBUIDOR],
       ['Venda geral', RelatorioDistribuidor::VENDA_GERAL]
     ]
@@ -48,6 +48,7 @@ module ApplicationHelper
 
   def tipo_visoes_for_select
     [
+      ['Categoria', RelatorioDistribuidor::CATEGORIA],
       ['Cliente', RelatorioDistribuidor::CLIENTES],
       ['Distribuidor', RelatorioDistribuidor::UNIDADES],
       ['Produto', RelatorioDistribuidor::PRODUTOS]

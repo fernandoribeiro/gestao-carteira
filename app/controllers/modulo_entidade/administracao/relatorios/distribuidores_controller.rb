@@ -73,6 +73,20 @@ class ModuloEntidade::Administracao::Relatorios::DistribuidoresController < Modu
 ### ACOMPANHAMENTO MES A MES
 
 
+### VENDAS POR CATEGORIA
+  def vendas_categorias_index
+    params[:relatorios] ||= {}
+  end
+
+  def vendas_categorias_run
+    @resultado = RelatorioDistribuidor.vendas_por_categoria(params[:relatorios])
+    respond_to do |format|
+      format.js
+    end
+  end
+### VENDAS POR CATEGORIA
+
+
   private
 
     def load_title_end_subtitle
@@ -83,6 +97,7 @@ class ModuloEntidade::Administracao::Relatorios::DistribuidoresController < Modu
         when 'vendas_distribuidores_index' then 'Vendas por Distribuidor'
         when 'curva_abc_produtos_index' then 'Curva ABC de Produtos'
         when 'acompanhamento_mes_a_mes_index' then 'Acompanhamento mês a mês'
+        when 'vendas_categorias_index' then 'Vendas por Categoria'
         else 'Subtitle'
       end
     end

@@ -30,6 +30,12 @@ div.medium {
   font-size: 10px !important;
 }
 
+.small-select-multilpe {
+  height: 70px !important;
+  width: 350px !important;
+  font-size: 10px !important; 
+}
+
 .medium-select-multilpe {
   height: 70px !important;
   width: 450px !important;
