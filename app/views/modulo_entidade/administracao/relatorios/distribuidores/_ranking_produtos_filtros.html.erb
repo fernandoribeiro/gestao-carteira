@@ -25,6 +25,12 @@
             prompt: 'DISTRIBUIDORES', multiple: true, :'data-filtro' => 'filtro_unidade',
             :'data-titulo' => 'Unidade', class: 'medium-select-multilpe'
         %>
+
+        <%= select_tag 'relatorios[categoria_ids]',
+            options_for_select(categorias_for_select, selected: params[:relatorios][:categoria_ids]),
+            prompt: 'CATEGORIAS', multiple: true, :'data-filtro' => 'filtro_categoria',
+            :'data-titulo' => 'Categoria', class: 'medium-select-multilpe'
+        %>
       </div>
     <% end %>
   </div>

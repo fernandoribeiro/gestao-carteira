@@ -17,13 +17,19 @@
         <%= select_tag 'relatorios[unidade_ids]',
             options_for_select(unidades_for_select, selected: params[:relatorios][:unidade_ids]),
             prompt: 'DISTRIBUIDORES', multiple: true, :'data-filtro' => 'filtro_unidade',
-            :'data-titulo' => 'Unidade', class: 'medium-select-multilpe'
+            :'data-titulo' => 'Unidade', class: 'small-select-multilpe'
+        %>
+
+        <%= select_tag 'relatorios[categoria_ids]',
+            options_for_select(categorias_for_select, selected: params[:relatorios][:categoria_ids]),
+            prompt: 'CATEGORIAS', multiple: true, :'data-filtro' => 'filtro_categoria',
+            :'data-titulo' => 'Categoria', class: 'small-select-multilpe'
         %>
 
         <%= select_tag 'relatorios[produto_ids]',
             options_for_select(produtos_for_select, selected: params[:relatorios][:produto_ids]),
             prompt: 'PRODUTOS', multiple: true, :'data-filtro' => 'filtro_produto',
-            :'data-titulo' => 'Produto', class: 'medium-select-multilpe'
+            :'data-titulo' => 'Produto', class: 'small-select-multilpe'
         %>
       </div>
     <% end %>
