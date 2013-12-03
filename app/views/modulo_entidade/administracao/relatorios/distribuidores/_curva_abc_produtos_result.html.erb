@@ -1,6 +1,12 @@
 <% if @resultado.first %>
+	<% acumulado_vendas 		 = 0 %>
+	<% acumulado_percentagem = 0 %>
+	<% indice = (@resultado.last == RelatorioDistribuidor::MAIORES ? 1 : @resultado[1].length) %>
 	<% @resultado[1].each do |ranking| %>
+		<% acumulado_vendas 		 += ranking[:total_vendas].to_f %>
+		<% acumulado_percentagem += ranking[:perc_vendas].strip.gsub(',', '.').to_f.round(2) %>
 		<tr>
+			<td><%= indice %></td>
 			<td>
 				<%= "#{ranking[:codigo_sistema_legado]} - #{ranking[:nome_produto]}" %>
 			</td>
@@ -11,17 +17,29 @@
 				<%= number_to_currency(ranking[:total_vendas], unit: '', precision: 2, separator: ',', delimiter: '.') %>
 			</td>
 			<td class="right">
+				<%= number_to_currency(acumulado_vendas, unit: '', precision: 2, separator: ',', delimiter: '.') %>
+			</td>
+			<td class="right">
 				<%= ranking[:perc_vendas] %>%
 			</td>
+			<td class="right"><%= acumulado_percentagem.round(2) %>%</td>
 		</tr>
+		<% if @resultado.last == RelatorioDistribuidor::MAIORES %>
+			<% indice += 1 %>
+		<% else %>
+			<% indice -= 1 %>
+		<% end %>
 	<% end %>
 
 	<tr class="totais">
-		<td>TOTAL</td>
-		<td class="right" colspan="2">
+		<td colspan="2">TOTAL</td>
+		<td></td>
+		<td class="right">
 			<%= number_to_currency(@resultado[2], precision: 2, separator: ',', delimiter: '.')  %>
 		</td>
+		<td></td>
 		<td class="right">100,00%</td>
+		<td></td>
 	</tr>
 <% else %>
 	<tr>

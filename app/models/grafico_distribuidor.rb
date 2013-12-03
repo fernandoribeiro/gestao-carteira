@@ -17,6 +17,12 @@ class GraficoDistribuidor < ActiveRecord::Base
 											.group('clientes.codigo_sistema_legado, clientes.nome_razao_social')
 											.order('SUM(nota_fiscais.quantidade) DESC, clientes.nome_razao_social ASC')
 											.limit(10)
+		if params[:categoria_ids].present? && params[:categoria_ids].reject(&:blank?).present?
+			itens = itens.joins(:produto)
+									 .joins('INNER JOIN de_para_produtos ON de_para_produtos.produto_id = produtos.id')
+									 .joins('INNER JOIN produto_entidades ON produto_entidades.id = de_para_produtos.produto_entidade_id')
+			itens = itens.where("produto_entidades.marca IN(#{params[:categoria_ids].reject(&:blank?).join(', ')})")
+		end
 
 		data_table = GoogleVisualr::DataTable.new
 		data_table.new_column('string', '')
@@ -49,6 +55,13 @@ class GraficoDistribuidor < ActiveRecord::Base
 											.group('clientes.codigo_sistema_legado, clientes.nome_razao_social')
 											.order('SUM(nota_fiscais.valor) DESC')
 											.limit(10)
+
+		if params[:categoria_ids].present? && params[:categoria_ids].reject(&:blank?).present?
+			itens = itens.joins(:produto)
+									 .joins('INNER JOIN de_para_produtos ON de_para_produtos.produto_id = produtos.id')
+									 .joins('INNER JOIN produto_entidades ON produto_entidades.id = de_para_produtos.produto_entidade_id')
+			itens = itens.where("produto_entidades.marca IN(#{params[:categoria_ids].reject(&:blank?).join(', ')})")
+		end
 
 		data_table = GoogleVisualr::DataTable.new
 		data_table.new_column('string', '')
@@ -84,6 +97,13 @@ class GraficoDistribuidor < ActiveRecord::Base
 											.order('SUM(nota_fiscais.quantidade) DESC, produtos.nome ASC')
 											.limit(10)
 
+		if params[:categoria_ids].present? && params[:categoria_ids].reject(&:blank?).present?
+			itens = itens.joins(:produto)
+									 .joins('INNER JOIN de_para_produtos ON de_para_produtos.produto_id = produtos.id')
+									 .joins('INNER JOIN produto_entidades ON produto_entidades.id = de_para_produtos.produto_entidade_id')
+			itens = itens.where("produto_entidades.marca IN(#{params[:categoria_ids].reject(&:blank?).join(', ')})")
+		end
+
 		data_table = GoogleVisualr::DataTable.new
 		data_table.new_column('string', '')
 		data_table.new_column('number', '')
@@ -117,6 +137,13 @@ class GraficoDistribuidor < ActiveRecord::Base
 											.order('SUM(nota_fiscais.valor) DESC')
 											.limit(10)
 
+		if params[:categoria_ids].present? && params[:categoria_ids].reject(&:blank?).present?
+			itens = itens.joins(:produto)
+									 .joins('INNER JOIN de_para_produtos ON de_para_produtos.produto_id = produtos.id')
+									 .joins('INNER JOIN produto_entidades ON produto_entidades.id = de_para_produtos.produto_entidade_id')
+			itens = itens.where("produto_entidades.marca IN(#{params[:categoria_ids].reject(&:blank?).join(', ')})")
+		end
+
 		data_table = GoogleVisualr::DataTable.new
 		data_table.new_column('string', '')
 		data_table.new_column('number', '')
@@ -147,6 +174,13 @@ class GraficoDistribuidor < ActiveRecord::Base
 											.where(unidade_id: unidade_ids)
 											.group('unidades.id')
 											.order('SUM(nota_fiscais.valor) DESC')
+
+		if params[:categoria_ids].present? && params[:categoria_ids].reject(&:blank?).present?
+			itens = itens.joins(:produto)
+									 .joins('INNER JOIN de_para_produtos ON de_para_produtos.produto_id = produtos.id')
+									 .joins('INNER JOIN produto_entidades ON produto_entidades.id = de_para_produtos.produto_entidade_id')
+			itens = itens.where("produto_entidades.marca IN(#{params[:categoria_ids].reject(&:blank?).join(', ')})")
+		end
 
 		data_table = GoogleVisualr::DataTable.new
 		data_table.new_column('string', '')

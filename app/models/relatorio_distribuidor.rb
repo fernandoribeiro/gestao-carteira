@@ -123,7 +123,7 @@ class RelatorioDistribuidor < ActiveRecord::Base
 				quantidade_total += item[:quantidade].to_f
 			end
 
-			[true, itens, faturamento_total, quantidade_total]
+			[true, itens, faturamento_total, quantidade_total, params[:ordenacao].to_i]
 		end
 	end
 
@@ -233,7 +233,7 @@ class RelatorioDistribuidor < ActiveRecord::Base
 				quantidade_total += item[:quantidade].to_f
 			end
 
-			[true, itens, faturamento_total, quantidade_total]
+			[true, itens, faturamento_total, quantidade_total, params[:ordenacao].to_i]
 		end
 	end
 
@@ -383,8 +383,9 @@ class RelatorioDistribuidor < ActiveRecord::Base
 			 params[:agrupamento].blank?
 			[false, 'Sem registros encontrados. Verifique os parâmetros da pesquisa.']
 		else
-			total_vendas = 0
-			sql_porcentagem = 'nota_fiscais.valor >= 0'
+			total_vendas 			= 0
+			sql_porcentagem 	= 'nota_fiscais.valor >= 0'
+			inner_porcentagem = ''
 
 			if params[:ordenacao].to_i == MAIORES
 				ordenacao = 'SUM(nota_fiscais.valor) DESC'
@@ -406,6 +407,9 @@ class RelatorioDistribuidor < ActiveRecord::Base
 										 .joins('INNER JOIN de_para_produtos ON de_para_produtos.produto_id = produtos.id')
 										 .joins('INNER JOIN produto_entidades ON produto_entidades.id = de_para_produtos.produto_entidade_id')
 										 .group('produto_entidades.marca')
+				inner_porcentagem += 'INNER JOIN produtos ON produtos.id = nota_fiscais.produto_id '
+	 		 	inner_porcentagem += 'INNER JOIN de_para_produtos ON de_para_produtos.produto_id = produtos.id '
+				inner_porcentagem += 'INNER JOIN produto_entidades ON produto_entidades.id = de_para_produtos.produto_entidade_id '
 			end
 
 			if params[:data_inicial].present?
@@ -424,7 +428,12 @@ class RelatorioDistribuidor < ActiveRecord::Base
 			end
 
 			if params[:categoria_ids].present? && params[:categoria_ids].reject(&:blank?).present?
-				itens = itens.where("produto_entidades.marca IN(#{params[:categoria_ids].reject(&:blank?).join(', ')})")
+				itens = itens.joins('INNER JOIN de_para_produtos ON de_para_produtos.produto_id = produtos.id')
+										 .joins('INNER JOIN produto_entidades ON produto_entidades.id = de_para_produtos.produto_entidade_id')
+										 .where("produto_entidades.marca IN(#{params[:categoria_ids].reject(&:blank?).join(', ')})")
+				inner_porcentagem += 'INNER JOIN produtos ON produtos.id = nota_fiscais.produto_id '
+	 		 	inner_porcentagem += 'INNER JOIN de_para_produtos ON de_para_produtos.produto_id = produtos.id '
+				inner_porcentagem += 'INNER JOIN produto_entidades ON produto_entidades.id = de_para_produtos.produto_entidade_id '
 				sql_porcentagem += " AND produto_entidades.marca IN(#{params[:categoria_ids].reject(&:blank?).join(', ')})"
 			end
 
@@ -433,35 +442,22 @@ class RelatorioDistribuidor < ActiveRecord::Base
 				sql_porcentagem += " AND nota_fiscais.produto_id IN(#{params[:produto_ids].reject(&:blank?).join(', ')})"
 			end
 
-			if params[:agrupamento].to_i == CATEGORIA
-				itens = itens.select("to_char(ROUND(CAST(float8(
-															(
-																SUM(nota_fiscais.valor) /
-		 														(SELECT SUM(nota_fiscais.valor)
-		 		 												 FROM nota_fiscais
-		 		 												 	INNER JOIN produtos ON produtos.id = nota_fiscais.produto_id
-		 		 												 	INNER JOIN de_para_produtos ON de_para_produtos.produto_id = produtos.id
-											 						INNER JOIN produto_entidades ON produto_entidades.id = de_para_produtos.produto_entidade_id
-		 		 												 WHERE #{sql_porcentagem}
-		 														)) * 100
-															) AS numeric), 2), '990D99') AS perc_vendas")
-			else
-				itens = itens.select("to_char(ROUND(CAST(float8(
-															(
-																SUM(nota_fiscais.valor) /
-		 														(SELECT SUM(nota_fiscais.valor)
-		 		 												 FROM nota_fiscais
-		 		 												 WHERE #{sql_porcentagem}
-		 														)) * 100
-															) AS numeric), 2), '990D99') AS perc_vendas")
-			end
+			itens = itens.select("to_char(ROUND(CAST(float8(
+														(
+															SUM(nota_fiscais.valor) /
+		 													(SELECT SUM(nota_fiscais.valor)
+		 		 											 FROM nota_fiscais
+		 		 											 #{inner_porcentagem}
+		 		 											 WHERE #{sql_porcentagem}
+		 													)) * 100
+														) AS numeric), 2), '990D99') AS perc_vendas")
 
 			itens = itens.group('produtos.codigo_sistema_legado, produtos.nome')
 			itens = itens.order(ordenacao)
 
 			itens.each{|item| total_vendas += item[:total_vendas].to_f }
 
-			[true, itens, total_vendas]
+			[true, itens, total_vendas, params[:ordenacao].to_i]
 		end
 	end
 

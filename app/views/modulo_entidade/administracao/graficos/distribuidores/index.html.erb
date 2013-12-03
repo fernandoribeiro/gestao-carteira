@@ -4,6 +4,13 @@
         class: 'medium-select' %>
     <%= select_tag 'graficos[ano]', options_for_select(anos_to_graficos_for_select, selected: params[:graficos][:ano]),
         class: 'medium-select' %>
+
+    <%= select_tag 'graficos[categoria_ids]',
+        options_for_select(categorias_for_select, selected: params[:graficos][:categoria_ids]),
+        prompt: 'CATEGORIAS', multiple: true, :'data-filtro' => 'filtro_categoria',
+        :'data-titulo' => 'Categoria', class: 'medium-select-multilpe'
+    %>
+
     <%= submit_tag 'Pesquisar', class: 'btn btn-inverse', data: { disable_with: 'Pesquisando...' } %>
   <% end %>
 </div>

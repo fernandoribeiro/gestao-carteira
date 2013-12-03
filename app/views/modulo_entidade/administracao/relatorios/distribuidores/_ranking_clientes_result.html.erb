@@ -1,6 +1,16 @@
 <% if @resultado.first %>
+	<% acumulado_faturamento 	= 0 %>
+	<% acumulado_perc_fatura 	= 0 %>
+	<% acumulado_quantidade 	= 0 %>
+	<% acumulado_perc_qtde 		= 0 %>
+	<% indice = (@resultado.last == RelatorioDistribuidor::MAIORES ? 1 : @resultado[1].length) %>
 	<% @resultado[1].each do |ranking| %>
+		<% acumulado_faturamento += ranking[:faturamento].to_f %>
+		<% acumulado_perc_fatura += ranking[:perc_faturamento].strip.gsub(',', '.').to_f.round(2) %>
+		<% acumulado_quantidade  += ranking[:quantidade].to_f %>
+		<% acumulado_perc_qtde	 += ranking[:perc_quantidade].strip.gsub(',', '.').to_f.round(2) %>
 		<tr>
+			<td><%= indice %></td>
 			<td>
 				<%= "#{ranking[:codigo_sistema_legado]} - #{ranking[:nome_razao_social]}" %>
 			</td>
@@ -8,27 +18,52 @@
 				<%= number_to_currency(ranking[:faturamento], unit: '', precision: 2, separator: ',', delimiter: '.') %>
 			</td>
 			<td class="right">
-				<%= ranking[:perc_faturamento] %>
+				<%= number_to_currency(acumulado_faturamento, unit: '', precision: 2, separator: ',', delimiter: '.') %>
+			</td>
+			<td class="right">
+				<%= ranking[:perc_faturamento] %>%
+			</td>
+			<td class="right">
+				<%= acumulado_perc_fatura.round(2) %>%
 			</td>
 			<td class="right">
 				<%= number_to_currency(ranking[:quantidade], unit: '', precision: 2, separator: ',', delimiter: '') %>
 			</td>
 			<td class="right">
+				<%= number_to_currency(acumulado_quantidade, unit: '', precision: 2, separator: ',', delimiter: '') %>
+			</td>
+			<td class="right">
 				<%= ranking[:perc_quantidade] %>%
 			</td>
+			<td class="right">
+				<%= acumulado_perc_qtde.round(2) %>%
+			</td>
 		</tr>
+		<% if @resultado.last == RelatorioDistribuidor::MAIORES %>
+			<% indice += 1 %>
+		<% else %>
+			<% indice -= 1 %>
+		<% end %>
 	<% end %>
 
 	<tr class="totais">
-		<td>TOTAL</td>
+		<td colspan="2">TOTAL</td>
 		<td class="right">
 			<%= number_to_currency(@resultado[2], precision: 2, separator: ',', delimiter: '.')  %>
 		</td>
-		<td></td>
+		<td class="right">
+			<%= number_to_currency(@resultado[2], precision: 2, separator: ',', delimiter: '.')  %>
+		</td>
+		<td class="right">100,00%</td>
+		<td class="right">100,00%</td>
+		<td class="right">
+			<%= number_to_currency(@resultado[3], unit: '', precision: 2, separator: ',', delimiter: '')  %>
+		</td>
 		<td class="right">
 			<%= number_to_currency(@resultado[3], unit: '', precision: 2, separator: ',', delimiter: '')  %>
 		</td>
 		<td class="right">100,00%</td>
+		<td class="right"></td>
 	</tr>
 <% else %>
 	<tr>
