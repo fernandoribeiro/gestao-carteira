@@ -291,7 +291,7 @@ class RelatorioDistribuidor < ActiveRecord::Base
 
 			itens.each{|item|	total_vendas += item[:total_vendas].to_f}
 
-			[true, itens, total_vendas]
+			[true, itens, total_vendas, params[:ordenacao].to_i]
 		end
 	end
 
@@ -353,7 +353,7 @@ class RelatorioDistribuidor < ActiveRecord::Base
 
 			itens.each{|item|	total_vendas += item[:total_vendas].to_f}
 
-			[true, itens, total_vendas]
+			[true, itens, total_vendas, params[:ordenacao].to_i]
 		end
 	end
 

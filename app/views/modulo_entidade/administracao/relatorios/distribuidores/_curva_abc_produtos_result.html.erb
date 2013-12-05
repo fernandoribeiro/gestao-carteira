@@ -22,7 +22,9 @@
 			<td class="right">
 				<%= ranking[:perc_vendas] %>%
 			</td>
-			<td class="right"><%= acumulado_percentagem.round(2) %>%</td>
+			<td class="right">
+				<%= acumulado_percentagem.round(2) %>%
+			</td>
 		</tr>
 		<% if @resultado.last == RelatorioDistribuidor::MAIORES %>
 			<% indice += 1 %>
@@ -37,9 +39,11 @@
 		<td class="right">
 			<%= number_to_currency(@resultado[2], precision: 2, separator: ',', delimiter: '.')  %>
 		</td>
-		<td></td>
+		<td class="right">
+			<%= number_to_currency(@resultado[2], precision: 2, separator: ',', delimiter: '.')  %>
+		</td>
 		<td class="right">100,00%</td>
-		<td></td>
+		<td class="right">100,00%</td>
 	</tr>
 <% else %>
 	<tr>
