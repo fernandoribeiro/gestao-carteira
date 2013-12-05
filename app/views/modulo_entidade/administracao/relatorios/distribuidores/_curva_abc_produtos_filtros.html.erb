@@ -35,7 +35,7 @@
         <%= select_tag 'relatorios[produto_ids]',
             options_for_select(produtos_for_select, selected: params[:relatorios][:produto_ids]),
             prompt: 'PRODUTOS', multiple: true, :'data-filtro' => 'filtro_produto',
-            :'data-titulo' => 'Produto', class: 'small-select-multilpe'
+            :'data-titulo' => 'Produto', class: 'medium-select-multilpe'
         %>
       </div>
     <% end %>
