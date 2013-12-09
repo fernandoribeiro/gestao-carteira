@@ -1,0 +1,27 @@
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>Unidade</th>
+      <th>Código</th>
+      <th>Produto</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @produtos.any? %>
+      <% @produtos.each do |produto| %>
+        <tr>
+          <td><%= produto.id %></td>
+          <td><%= produto.unidade.nome rescue 'Sem unidade' %></td>
+          <td><%= produto.codigo_sistema_legado %></td>
+          <td><%= produto.nome %></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="5">Nenhum dado para exibir.</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @produtos %>

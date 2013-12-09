@@ -16,6 +16,18 @@ class ModuloEntidade::Administracao::DeParaProdutosController < ModuloEntidade::
     redirect_to [:entidade, :administracao, :de_para_produtos], notice: { success: 'De-Para excluída com sucesso!' }
   end
 
+  def index_sem_de_para
+    produtos_de_para_ids = DeParaProduto.where(produto_id: Produto.where(unidade_id: Unidade.where(entidade_id: current_entidade.id))
+                                                                  .pluck(:id))
+                                        .pluck(:produto_id)
+                                        .uniq
+    @produtos = Produto.joins(:unidade)
+                       .where(unidade_id: Unidade.where(entidade_id: current_entidade.id))
+                       .where('produtos.id NOT IN(?)', produtos_de_para_ids.sort)
+                       .order('unidades.nome, produtos.codigo_sistema_legado, produtos.nome')
+                       .page(params[:page]).per(50)
+  end
+
 
   private
 
