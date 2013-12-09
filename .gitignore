@@ -66,3 +66,6 @@ nbactions.xml
 
 #Ignore Exportation files
 /app/assets/exportacoes
+
+# Ignore Sass-Cached
+.sass-cache/
