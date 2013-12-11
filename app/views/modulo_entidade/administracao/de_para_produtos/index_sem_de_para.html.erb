@@ -10,7 +10,6 @@
     <% if @produtos.any? %>
       <% @produtos.each do |produto| %>
         <tr>
-          <td><%= produto.id %></td>
           <td><%= produto.unidade.nome rescue 'Sem unidade' %></td>
           <td><%= produto.codigo_sistema_legado %></td>
           <td><%= produto.nome %></td>
