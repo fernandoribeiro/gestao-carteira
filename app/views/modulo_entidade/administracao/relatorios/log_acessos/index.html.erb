@@ -1,0 +1,41 @@
+<%= form_tag [:entidade, :administracao, :relatorios, :log_acessos], class: 'form-inline', method: :get do %>
+  <div class="row-fluid">
+    <div class="control-group">
+      <div class="controls">
+        <%= text_field_tag 'pesquisa[texto]', (params[:pesquisa][:texto] rescue ''), placeholder: 'insira aqui o nome ou login do usuário', class: 'input-xxlarge' %>
+
+        <%= text_field_tag 'pesquisa[data_inicial]', (params[:pesquisa][:data_inicial] rescue ''), placeholder: 'data inicial', class: 'input-small auto-datepicker-no-style' %>
+        <%= text_field_tag 'pesquisa[data_final]', (params[:pesquisa][:data_final] rescue ''), placeholder: 'data final', class: 'input-small auto-datepicker-no-style' %>
+        <%= submit_tag 'Pesquisar', class: 'btn' %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<hr/>
+
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Usuário</th>
+      <th>Acessado em</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @log_acessos.any? %>
+      <% @log_acessos.each do |log_acesso| %>
+        <tr>
+          <td><%= log_acesso.usuario_entidade.nome rescue nil %></td>
+          <td><%= log_acesso.usuario_entidade.username rescue nil %></td>
+          <td><%= log_acesso.created_at.strftime('%d/%m/%Y - %H:%M:%S') %></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="6">Nenhum dado para exibir!</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @log_acessos %>

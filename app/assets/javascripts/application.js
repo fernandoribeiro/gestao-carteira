@@ -13,6 +13,7 @@ jQuery(function($) {
   // inicializar_selectable();
   // inicializar_um_selectable();
   initializeDatePickers();
+  initializeDatePickersSemClasse();
 });
 
 var $NOTICE = {
@@ -93,4 +94,15 @@ function initializeDatePickers() {
     orientation: 'top auto',
   });
   $('.auto-datepicker').mask('99/99/9999');
+}
+
+function initializeDatePickersSemClasse() {
+  $('.auto-datepicker-no-style').datepicker({
+    format: 'dd/mm/yyyy',
+    language: 'pt-BR',
+    weekStart: 1,
+    autoclose: true,
+    orientation: 'top auto',
+  });
+  $('.auto-datepicker-no-style').mask('99/99/9999');
 }

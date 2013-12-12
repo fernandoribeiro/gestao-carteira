@@ -120,6 +120,8 @@ TrippingOcto::Application.routes.draw do
           end
         end
 
+        resources :log_acessos
+
       end
 
       namespace :graficos do

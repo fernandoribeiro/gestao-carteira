@@ -18,6 +18,10 @@ class ModuloEntidade::SessionController < EntidadeController
       else
         redirect_to [:entidade, :select_unidades]
       end
+      ### REGISTRANDO O ACESSO
+      LogAcesso.create({ usuario_entidade_id: @user.id,
+                         entidade_id: current_entidade.id
+                      })
     else
       render action: 'new'
     end
