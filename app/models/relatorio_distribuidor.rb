@@ -515,7 +515,6 @@ class RelatorioDistribuidor < ActiveRecord::Base
 					 					 .joins('INNER JOIN produto_entidades ON produto_entidades.id = de_para_produtos.produto_entidade_id')
 										 .where("produto_entidades.id IN(#{params[:produto_ids].reject(&:blank?).join(', ')})")
 			end
-
 			itens = itens.order(ordenacao)
 
 			if itens.present?
@@ -632,6 +631,93 @@ class RelatorioDistribuidor < ActiveRecord::Base
 					end
 				end
 				[true, resultado]
+			else
+				[false, 'Sem registros encontrados. Verifique os parâmetros da pesquisa.']
+			end
+		end
+	end
+
+
+	def self.evolucao_clientes(params)
+		if params[:data_inicial].blank? || params[:data_final].blank? || params[:tipo_ranking].blank? ||
+			 params[:ordenacao].blank?
+			[false, 'Sem registros encontrados. Verifique os parâmetros da pesquisa.']
+		else
+			resultado ||= {}
+
+			if params[:tipo_ranking].to_i == FATURAMENTO
+				if params[:ordenacao].to_i == MAIORES
+					ordenacao = 'SUM(nota_fiscais.valor) DESC'
+				elsif params[:ordenacao].to_i == MENORES
+					ordenacao = 'SUM(nota_fiscais.valor) ASC'
+				end
+			elsif params[:tipo_ranking].to_i == QUANTIDADE
+				if params[:ordenacao].to_i == MAIORES
+					ordenacao = 'SUM(nota_fiscais.quantidade) DESC'
+				elsif params[:ordenacao].to_i == MENORES
+					ordenacao = 'SUM(nota_fiscais.quantidade) ASC'
+				end
+			end
+
+			itens = NotaFiscal.select('unidades.nome')
+												.joins(:unidade)
+												.where('nota_fiscais.valor >= 0')
+												.group('unidades.id')
+
+			if params[:data_inicial].present?
+				itens = itens.where('nota_fiscais.data_emissao >= ?', params[:data_inicial].to_date)
+			end
+
+			if params[:data_final].present?
+				itens = itens.where('nota_fiscais.data_emissao <= ?', params[:data_final].to_date)
+			end
+
+			if params[:unidade_ids].present? && params[:unidade_ids].reject(&:blank?).present?
+				itens = itens.where(unidade_id: params[:unidade_ids].reject(&:blank?))
+			end
+			itens = itens.order(ordenacao)
+
+			if itens.present?
+				meses_anos = (params[:data_inicial].to_date..params[:data_final].to_date).map{ |date| date.strftime("%m/%Y") }.uniq
+				itens.each do |item|
+					meses_anos.each do |mes_ano|
+						mes = mes_ano.split('/').first
+						ano = mes_ano.split('/').last
+						mensal = NotaFiscal.select('COUNT(DISTINCT nota_fiscais.cliente_id) AS clientes')
+															 .select('SUM(nota_fiscais.valor) AS vendas_mensal')
+													 		 .select('SUM(nota_fiscais.quantidade) AS quantidade_mensal')
+															 .joins(:unidade)
+															 .joins(:produto)
+										 					 .joins('INNER JOIN de_para_produtos ON de_para_produtos.produto_id = produtos.id')
+										 					 .joins('INNER JOIN produto_entidades ON produto_entidades.id = de_para_produtos.produto_entidade_id')
+															 .where('nota_fiscais.valor >= 0')
+															 .where("date_part('MONTH', nota_fiscais.data_emissao) = '#{mes}'")
+															 .where("date_part('YEAR', nota_fiscais.data_emissao) = '#{ano}'")
+															 .where("unidades.nome = '#{item[:nome].strip}'")
+						indice = item[:nome]
+
+						clientes = mensal.first[:clientes].blank? ? 0 : mensal.first[:clientes].to_f
+						valor_mensal_vendas = mensal.first[:vendas_mensal].blank? ? 0 : mensal.first[:vendas_mensal].to_f
+						valor_mensal_quantidade = mensal.first[:quantidade_mensal].blank? ? 0 : mensal.first[:quantidade_mensal].to_f
+						resultado[indice] ||= {}
+						resultado[indice][ano] ||= {}
+						resultado[indice][ano][mes] ||= {}
+						resultado[indice][ano][mes][:clientes] = clientes
+						resultado[indice][ano][mes][:vendas_mensal] = valor_mensal_vendas
+						resultado[indice][ano][mes][:quantidade_mensal] = valor_mensal_quantidade
+
+						resultado[:totais] ||= {}
+						resultado[:totais][ano] ||= {}
+						resultado[:totais][ano][mes] ||= {}
+						resultado[:totais][ano][mes][:total_clientes] ||= 0
+						resultado[:totais][ano][mes][:total_clientes] = resultado[:totais][ano][mes][:total_clientes] + clientes
+						resultado[:totais][ano][mes][:total_vendas] ||= 0
+						resultado[:totais][ano][mes][:total_vendas] = resultado[:totais][ano][mes][:total_vendas] + valor_mensal_vendas
+						resultado[:totais][ano][mes][:total_quantidade] ||= 0
+						resultado[:totais][ano][mes][:total_quantidade] = resultado[:totais][ano][mes][:total_quantidade] + valor_mensal_quantidade
+					end
+				end
+				[true, meses_anos, resultado]
 			else
 				[false, 'Sem registros encontrados. Verifique os parâmetros da pesquisa.']
 			end

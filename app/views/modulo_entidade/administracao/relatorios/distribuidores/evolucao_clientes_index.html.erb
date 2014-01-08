@@ -1,0 +1,17 @@
+<div class="accordion" id="filtros_pesquisa">
+  <div class="accordion-group">
+    <div class="accordion-heading" data-toggle="collapse" data-parent="#filtros_pesquisa" href="#filtros_master">
+      <span>PESQUISA</span>
+    </div>
+    <%= render 'modulo_entidade/administracao/relatorios/distribuidores/evolucao_clientes_filtros' %>
+  </div>
+</div>
+
+<div id="result_table"></div>
+
+<script type="text/javascript">
+  jQuery(function($) {
+    corrige_tamanho_div_conteudo_da_pagina(); //DIMINUI A DIV DO CONTEÚDO
+    corrige_tamanho_div_titulo(); //DIMINUI A DIV DO TÍTULO
+  })
+</script>

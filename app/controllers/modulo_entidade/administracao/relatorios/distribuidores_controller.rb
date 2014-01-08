@@ -87,6 +87,20 @@ class ModuloEntidade::Administracao::Relatorios::DistribuidoresController < Modu
 ### VENDAS POR CATEGORIA
 
 
+### EVOLUÇÃO DE CLIENTES
+  def evolucao_clientes_index
+    params[:relatorios] ||= {}
+  end
+
+  def evolucao_clientes_run
+    @resultado = RelatorioDistribuidor.evolucao_clientes(params[:relatorios])
+    respond_to do |format|
+      format.js
+    end
+  end
+### EVOLUÇÃO DE CLIENTES
+
+
   private
 
     def load_title_end_subtitle
@@ -98,6 +112,7 @@ class ModuloEntidade::Administracao::Relatorios::DistribuidoresController < Modu
         when 'curva_abc_produtos_index' then 'Curva ABC de Produtos'
         when 'acompanhamento_mes_a_mes_index' then 'Acompanhamento mês a mês'
         when 'vendas_categorias_index' then 'Vendas por Categoria'
+        when 'evolucao_clientes_index' then 'Evolução de Clientes'
         else 'Subtitle'
       end
     end

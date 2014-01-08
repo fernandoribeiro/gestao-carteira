@@ -117,6 +117,8 @@ TrippingOcto::Application.routes.draw do
             post :acompanhamento_mes_a_mes_run
             get  :vendas_categorias_index
             post :vendas_categorias_run
+            get  :evolucao_clientes_index
+            post :evolucao_clientes_run
           end
         end
 

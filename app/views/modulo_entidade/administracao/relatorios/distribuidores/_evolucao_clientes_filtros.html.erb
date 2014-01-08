@@ -1,0 +1,31 @@
+<div id="filtros_master" class="accordion-body collapse in">
+  <div class="accordion-inner2">
+    <%= form_tag [:evolucao_clientes_run, :entidade, :administracao, :relatorios, :distribuidores], id: 'form_relatorio', class: 'form-inline', method: :post, remote: true do %>
+      <div class="sub">
+        <%= text_field_tag 'relatorios[data_inicial]', nil, class: 'auto-datepicker', placeholder: 'data inicial' %>
+        <%= text_field_tag 'relatorios[data_final]', nil, class: 'auto-datepicker', placeholder: 'data final' %>
+
+        <%= select_tag 'relatorios[tipo_ranking]',
+            options_for_select(tipo_rankings_for_select, selected: params[:relatorios][:tipo_ranking]),
+            prompt: 'TIPO DE RANKING', :'data-filtro' => 'filtro_ranking', :'data-titulo' => 'Ranking',
+            class: 'medium-select'
+        %>
+
+        <%= select_tag 'relatorios[ordenacao]',
+            options_for_select(tipo_ordenacao_for_select, selected: params[:relatorios][:ordenacao]),
+            prompt: 'ORDENAÇÃO', :'data-filtro' => 'filtro_ordenacao', :'data-titulo' => 'Ordenação',
+            class: 'medium-select'
+        %>
+
+        <%= submit_tag 'Pesquisar', class: 'btn btn-inverse', data: { disable_with: 'Pesquisando...' } %>
+      </div>
+      <div class="sub">
+        <%= select_tag 'relatorios[unidade_ids]',
+            options_for_select(unidades_for_select, selected: params[:relatorios][:unidade_ids]),
+            prompt: 'DISTRIBUIDORES', multiple: true, :'data-filtro' => 'filtro_unidade',
+            :'data-titulo' => 'Unidade', class: 'medium-select-multilpe'
+        %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -2,10 +2,10 @@
 
 class UsuarioEntidade < ActiveRecord::Base
 
-  # ACTIVE
-  ATIVO = true
+  ### ACTIVE
+  ATIVO   = true
   INATIVO = false
-  # EH_ADMINISTRADOR
+  ### EH_ADMINISTRADOR
   SIM = true
   NAO = false
 
@@ -49,11 +49,11 @@ class UsuarioEntidade < ActiveRecord::Base
     user ||= new
 
     if user.new_record?
-      user.errors.add :username, :invalid
+      user.errors.add(:username, :invalid)
     elsif !user.authenticate password
-      user.errors.add :password, :invalid
+      user.errors.add(:password, :invalid)
     elsif !user.active?
-      user.errors.add :username, :invalid
+      user.errors.add(:username, :invalid)
     end
     user
   end
