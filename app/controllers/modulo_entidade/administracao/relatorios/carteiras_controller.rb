@@ -2,6 +2,8 @@
 
 class ModuloEntidade::Administracao::Relatorios::CarteirasController < ModuloEntidade::AdminitracaoController
 
+    skip_before_filter :authenticate_usuario_is_admin!
+
   def index
     params[:relatorios] ||= {}
   end

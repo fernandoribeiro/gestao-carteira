@@ -2,6 +2,8 @@
 
 class ModuloEntidade::Administracao::Graficos::DistribuidoresController  < ModuloEntidade::AdminitracaoController
 
+	skip_before_filter :authenticate_usuario_is_admin!
+
 	def index
 		params[:graficos] ||= { mes: Date.today.month, ano: Date.today.year }
 		@ranking_clientes_quantidade = GraficoDistribuidor.ranking_clientes_quantidade(params[:graficos], current_user)

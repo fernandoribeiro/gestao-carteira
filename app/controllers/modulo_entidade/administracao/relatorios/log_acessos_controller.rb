@@ -2,6 +2,8 @@
 
 class ModuloEntidade::Administracao::Relatorios::LogAcessosController < ModuloEntidade::AdminitracaoController
 
+  skip_before_filter :authenticate_usuario_is_admin!
+  
 	def index
     params[:pesquisa] ||= {}
     @log_acessos = LogAcesso.pesquisa(current_entidade.id, params[:pesquisa]).page(params[:page]).per(20)

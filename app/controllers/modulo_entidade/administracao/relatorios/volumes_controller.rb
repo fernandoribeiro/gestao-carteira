@@ -1,5 +1,6 @@
 class ModuloEntidade::Administracao::Relatorios::VolumesController < ModuloEntidade::AdminitracaoController
   
+  skip_before_filter :authenticate_usuario_is_admin!
   
 private
 

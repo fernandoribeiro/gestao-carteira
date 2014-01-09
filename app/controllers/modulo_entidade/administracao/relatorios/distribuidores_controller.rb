@@ -2,6 +2,7 @@
 
 class ModuloEntidade::Administracao::Relatorios::DistribuidoresController < ModuloEntidade::AdminitracaoController
 
+skip_before_filter :authenticate_usuario_is_admin!
 
 ### RANKING DE PRODUTOS
 	def ranking_produtos_index

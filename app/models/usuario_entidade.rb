@@ -19,6 +19,7 @@ class UsuarioEntidade < ActiveRecord::Base
   attr_accessible :eh_administrador
   attr_accessible :entidade_id
   attr_accessible :unidade_ids
+  
 
   has_secure_password
 
@@ -81,6 +82,7 @@ class UsuarioEntidade < ActiveRecord::Base
   def notIsAdministrador?
     !eh_administrador
   end
+
 
   def toggle_active
     update_attribute :active, (active ? INATIVO : ATIVO)

@@ -109,8 +109,29 @@
               </li>
 
             <% else %>
-              <li><%= link_to 'Dashboard', [:entidade, :dashboards] %></li>
-              <li><%= link_to 'Relatórios', '#' %></li>
+              <li><%= link_to 'Dashboard', [:entidade, :administracao, :graficos, :distribuidores] %></li>
+              <li class="dropdown">
+                <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">Relatórios
+                  <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
+                  <li><%= link_to 'Acompanhamento mês a mês', [:acompanhamento_mes_a_mes_index, :entidade, :administracao, :relatorios, :distribuidores] %></li>
+                  <li class="divider"></li>
+                  <li><%= link_to 'Curva ABC de Produtos', [:curva_abc_produtos_index, :entidade, :administracao, :relatorios, :distribuidores] %></li>
+                  <li class="divider"></li>
+                  <li><%= link_to 'Evolução de Clientes', [:evolucao_clientes_index, :entidade, :administracao, :relatorios, :distribuidores] %></li>
+                  <li class="divider"></li>
+                  <li><%= link_to 'Ranking de Clientes', [:ranking_clientes_index, :entidade, :administracao, :relatorios, :distribuidores] %></li>
+                  <li class="divider"></li>
+                  <li><%= link_to 'Ranking de Produtos', [:ranking_produtos_index, :entidade, :administracao, :relatorios, :distribuidores] %></li>
+                  <li class="divider"></li>
+                  <li><%= link_to 'Vendas por Categoria', [:vendas_categorias_index, :entidade, :administracao, :relatorios, :distribuidores] %></li>
+                  <li class="divider"></li>
+                  <li><%= link_to 'Vendas por Distribuidor', [:vendas_distribuidores_index, :entidade, :administracao, :relatorios, :distribuidores] %></li>
+                  <li class="divider"></li>
+                  <li><%= link_to 'Histórico de acessos', [:entidade, :administracao, :relatorios, :log_acessos] %></li>
+                </ul>
+              </li>
             <% end %>
           </ul>
           <ul class="nav pull-right">
