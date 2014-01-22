@@ -18,8 +18,8 @@ private
   end
 
   def load_title_end_subtitle
-    @title = "Title"
-    @subtitle = "SubTitle"
+    @title = 'Title'
+    @subtitle = 'SubTitle'
   end
   
 end

@@ -37,28 +37,28 @@ group :production do
   gem 'newrelic_rpm'
 end
 
-#File Uploader
+# File Uploader
 gem 'carrierwave'
 
-#Auditoria
+# Auditoria
 gem 'paper_trail', '~> 2'
 
-#Erro de Bundle
+# Erro de Bundle
 gem 'libv8', '~> 3.11.8'
 
-#Daemon workers
+# Daemon workers
 gem 'daemons'
 
-#Schedule Methods
+# Schedule Methods
 gem 'whenever', require: false
 
-#Leitura de xls,xlsx,csv,etc...
+# Leitura de xls,xlsx,csv,etc...
 gem 'roo'
 
-#Delayed Job
+# Delayed Job
 gem 'delayed_job_active_record'
 
-#Delayed Job Web
+# Delayed Job Web
 gem 'delayed_job_web'
 
 # Bootstrap Datepicker
