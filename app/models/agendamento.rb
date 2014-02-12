@@ -77,7 +77,7 @@ class Agendamento < ActiveRecord::Base
 
   def importacao_geral_excel
     begin
-      spreadsheet = Excel.new(self.arquivo.path, nil, :ignore)
+      spreadsheet = Roo::Excel.new(self.arquivo.path, nil, :ignore)
       header = spreadsheet.row(1)
       unidade_id = self.unidade_id
       (2..spreadsheet.last_row).each do |i|
