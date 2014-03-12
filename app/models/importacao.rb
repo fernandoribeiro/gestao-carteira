@@ -90,7 +90,7 @@ class Importacao < ActiveRecord::Base
 		path = self.arquivo.file.path
 		case self.get_extension_of_file
 		    	when '.csv' then Csv.new(path, nil, :ignore)
-			when '.xls' then Excel.new(path, nil, :ignore)
+			when '.xls' then Roo::Excel.new(path, nil, :ignore)
 			when '.xlsx' then Excelx.new(path, nil, :ignore)
 			else raise "Tipo de arquivo desconhcido: #{file.original_filename}"
 		end

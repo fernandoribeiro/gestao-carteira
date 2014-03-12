@@ -41,7 +41,7 @@ class DeParaProdutoJob < ActiveRecord::Base
 
   def run_importacao
   	begin
-      spreadsheet = Excel.new(self.arquivo.path, nil, :ignore)
+      spreadsheet = Roo::Excel.new(self.arquivo.path, nil, :ignore)
       header = spreadsheet.row(1)
       erros  = []
       (2..spreadsheet.last_row).each do |i|

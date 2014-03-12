@@ -39,7 +39,7 @@ class ProdutoEntidadeJob < ActiveRecord::Base
 
   def run_importacao
   	begin
-      spreadsheet = Excel.new(self.arquivo.path, nil, :ignore)
+      spreadsheet = Roo::Excel.new(self.arquivo.path, nil, :ignore)
       header = spreadsheet.row(1)
       entidade_id = self.entidade_id
       (2..spreadsheet.last_row).each do |i|
